@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netstandard1.2</TargetFramework>
+		<RootNamespace>NeonWindows</RootNamespace>
+		<LangVersion>12.0</LangVersion>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<ProductVersion>0.3.0.0</ProductVersion>
+		<FileVersion>$(ProductVersion)</FileVersion>
+		<CheckNotRecommendedTargetFramework>false</CheckNotRecommendedTargetFramework>
+		<NoWarn>$(NoWarn);NETSDK1215</NoWarn>
+	</PropertyGroup>
+	<ItemGroup>
+	  <Folder Include="ApplicationModel\" />
+	</ItemGroup>
+
+</Project>
