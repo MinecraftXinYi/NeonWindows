@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using NeonWindows.ABI.UI.Scaling;
+using NeonWindows.UI.Scaling;
 
 // https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x804 上介绍了“空白页”项模板
 
@@ -30,13 +30,9 @@ namespace NWBDpiApiTestUwp
 
         private void LoadButton_Click(object sender, RoutedEventArgs e)
         {
-            DPI_AWARENESS_CONTEXT d0 = ThreadDpiContextApi.GetThreadDpiAwarenessContext();
-            infoblock1.Text = $"Current thread dpi awareness context: {(long)d0}";
-        }
-
-        private void SetButton_Click(object sender, RoutedEventArgs e)
-        {
-            ThreadDpiContextApi.SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE);
+            infoblock1.Text = $"CurrentProcessDpiAwarenessMode: {AppDpiAwareness.CurrentProcessDpiAwarenessMode}";
+            infoblock2.Text = $"CurrentThreadDpiAwarenessMode: {AppDpiAwareness2.CurrentThreadDpiAwarenessMode}";
+            infoblock3.Text = $"IsThreadBasedDpiAwarenessSupported: {AppDpiAwareness2.IsThreadBasedDpiAwarenessSupported}";
         }
     }
 }
