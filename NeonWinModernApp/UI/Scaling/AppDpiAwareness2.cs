@@ -9,10 +9,8 @@ namespace NeonWindows.UI.Scaling;
 public static class AppDpiAwareness2
 {
     /// <summary>
-    /// 获取或设置当前线程的 DPI 感知模式。
+    /// 当前线程的 DPI 感知模式。
     /// </summary>
-    /// <exception cref="ArgumentException"></exception>
-    /// <exception cref="PlatformNotSupportedException"></exception>
     public static DpiAwarenessMode CurrentThreadDpiAwarenessMode
     {
         get
@@ -26,36 +24,25 @@ public static class AppDpiAwareness2
                 return AppDpiAwareness.CurrentProcessDpiAwarenessMode;
             }
         }
-        set
-        {
-            try
-            {
-                DPI_AWARENESS_CONTEXT dpiContext = DpiModeEnumConvert.ToDpiAwarenessContext(value);
-                if (dpiContext.IsNull) throw new ArgumentException();
-                if (ThreadDpiContextApi.SetThreadDpiAwarenessContext(dpiContext).IsNull) throw new PlatformNotSupportedException();
-            }
-            catch (TypeLoadException)
-            {
-                throw new PlatformNotSupportedException();
-            }
-        }
     }
 
     /// <summary>
-    /// 尝试设置当前线程的 DPI 感知模式。
+    /// 设置当前线程的 DPI 感知模式。
     /// </summary>
     /// <param name="mode">要设置的 DPI 感知模式。</param>
-    /// <returns>指示操作是否成功。</returns>
-    public static bool TrySetCurrentThreadDpiAwarenessMode(DpiAwarenessMode mode)
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="PlatformNotSupportedException"></exception>
+    public static void SetCurrentThreadDpiAwarenessMode(DpiAwarenessMode mode)
     {
         try
         {
-            CurrentThreadDpiAwarenessMode = mode;
-            return true;
+            DPI_AWARENESS_CONTEXT dpiContext = DpiModeEnumConvert.ToDpiAwarenessContext(mode);
+            if (dpiContext.IsNull) throw new ArgumentException();
+            if (ThreadDpiContextApi.SetThreadDpiAwarenessContext(dpiContext).IsNull) throw new PlatformNotSupportedException();
         }
-        catch (Exception)
+        catch (TypeLoadException)
         {
-            return false;
+            throw new PlatformNotSupportedException();
         }
     }
 
@@ -68,7 +55,8 @@ public static class AppDpiAwareness2
         {
             try
             {
-                return DpiAwarenessContextApi.IsValidDpiAwarenessContext(ThreadDpiContextApi.GetThreadDpiAwarenessContext());
+                _ = ThreadDpiContextApi.SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT.Null);
+                return !ThreadDpiContextApi.GetThreadDpiAwarenessContext().IsNull;
             }
             catch (TypeLoadException)
             {

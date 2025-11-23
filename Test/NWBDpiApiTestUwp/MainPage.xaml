@@ -10,13 +10,21 @@
 
     <Grid Margin="10">
         <StackPanel>
-            <TextBlock x:Name="infoblock1" FontSize="15" IsTextSelectionEnabled="True"/>
-            <TextBlock x:Name="infoblock2" FontSize="15" IsTextSelectionEnabled="True"/>
-            <TextBlock x:Name="infoblock3" FontSize="15" IsTextSelectionEnabled="True"/>
-            <TextBlock x:Name="infoblock4" FontSize="15" IsTextSelectionEnabled="True"/>
-            <TextBlock x:Name="infoblock5" FontSize="15" IsTextSelectionEnabled="True"/>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Load" Click="LoadButton_Click"/>
+            <StackPanel>
+                <TextBlock Text="Common API Call" Style="{StaticResource CaptionTextBlockStyle}"/>
+                <TextBlock x:Name="infoblock1" FontSize="15" IsTextSelectionEnabled="True"/>
+                <TextBlock x:Name="infoblock2" FontSize="15" IsTextSelectionEnabled="True"/>
+                <TextBlock x:Name="infoblock3" FontSize="15" IsTextSelectionEnabled="True"/>
+                <TextBlock x:Name="infoblock4" FontSize="15" IsTextSelectionEnabled="True"/>
+                <TextBlock x:Name="infoblock5" FontSize="15" IsTextSelectionEnabled="True"/>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Text="Native API Call" Style="{StaticResource CaptionTextBlockStyle}"/>
+                <TextBlock x:Name="infoblock6" FontSize="15" IsTextSelectionEnabled="True"/>
+                <TextBlock x:Name="infoblock7" FontSize="15" IsTextSelectionEnabled="True"/>
+                <TextBlock x:Name="infoblock8" FontSize="15" IsTextSelectionEnabled="True"/>
+                <TextBlock x:Name="infoblock9" FontSize="15" IsTextSelectionEnabled="True"/>
+                <TextBlock x:Name="infoblock10" FontSize="15" IsTextSelectionEnabled="True"/>
             </StackPanel>
         </StackPanel>
     </Grid>

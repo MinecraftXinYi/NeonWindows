@@ -21,7 +21,7 @@ public static class AppDpiAwareness
             {
                 return GetDpiAwarenessModeForProcess(0)!.Value;
             }
-            catch (Exception)
+            catch (PlatformNotSupportedException)
             {
                 return DpiModeEnumConvert.FromBool(ClassicDpiAwarenessApi.IsProcessDPIAware());
             }
@@ -44,31 +44,22 @@ public static class AppDpiAwareness
         {
             try
             {
-                int hr = ProcessDpiAwarenessApi.GetProcessDpiAwareness(hProcess, out PROCESS_DPI_AWARENESS dpiAwareness);
-                return hr == CommonHR.S_OK ? DpiModeEnumConvert.FromProcessDpiAwarenessEnum(dpiAwareness) : null;
+                try
+                {
+                    int hr = ProcessDpiAwarenessApi.GetProcessDpiAwareness(hProcess, out PROCESS_DPI_AWARENESS dpiAwareness);
+                    return hr == CommonHR.S_OK ? DpiModeEnumConvert.FromProcessDpiAwarenessEnum(dpiAwareness) : null;
+                }
+                catch (TypeLoadException)
+                {
+                    if (ProcessDpiAwarenessApi2.GetProcessDpiAwarenessInternal(hProcess, out PROCESS_DPI_AWARENESS dpiAwareness))
+                        return DpiModeEnumConvert.FromProcessDpiAwarenessEnum(dpiAwareness);
+                    else return null;
+                }
             }
             catch (TypeLoadException)
             {
                 throw new PlatformNotSupportedException();
             }
-        }
-    }
-
-    /// <summary>
-    /// 尝试设置当前进程的 DPI 感知模式。
-    /// </summary>
-    /// <param name="mode">要设置的 DPI 感知模式。</param>
-    /// <returns>指示操作是否成功。</returns>
-    public static bool TrySetCurrentProcessDpiAwarenessMode(DpiAwarenessMode mode)
-    {
-        try
-        {
-            SetCurrentProcessDpiAwarenessMode(mode);
-            return true;
-        }
-        catch (Exception)
-        {
-            return false;
         }
     }
 
@@ -102,17 +93,41 @@ public static class AppDpiAwareness
             {
                 PROCESS_DPI_AWARENESS? dpiAwareness = DpiModeEnumConvert.ToProcessDpiAwarenessEnum(mode);
                 if (!dpiAwareness.HasValue) throw new PlatformNotSupportedException();
-                int hr = ProcessDpiAwarenessApi.SetProcessDpiAwareness(dpiAwareness.Value);
-                switch (hr)
+                try
                 {
-                    case CommonHR.S_OK: return;
-                    case CommonHR.E_ACCESSDENIED: throw new InvalidOperationException();
-                    default: throw Marshal.GetExceptionForHR(hr);
+                    int hr = ProcessDpiAwarenessApi.SetProcessDpiAwareness(dpiAwareness.Value);
+                    if (hr != CommonHR.S_OK)
+                        throw hr switch
+                        {
+                            CommonHR.E_ACCESSDENIED => new InvalidOperationException(),
+                            _ => Marshal.GetExceptionForHR(hr)
+                        };
+                }
+                catch (TypeLoadException)
+                {
+                    if (!ProcessDpiAwarenessApi2.SetProcessDpiAwarenessInternal(dpiAwareness.Value))
+                    {
+                        int hr = Marshal.GetHRForLastWin32Error();
+                        throw hr switch
+                        {
+                            CommonHR.E_ACCESSDENIED => new InvalidOperationException(),
+                            _ => Marshal.GetExceptionForHR(hr)
+                        };
+                    }
                 }
             }
             catch (TypeLoadException)
             {
-                throw new PlatformNotSupportedException();
+                if (mode == DpiAwarenessMode.Unaware) return;
+                try
+                {
+                    if (mode != DpiAwarenessMode.System) throw new PlatformNotSupportedException();
+                    if (!ClassicDpiAwarenessApi.SetProcessDPIAware()) throw new InvalidOperationException();
+                }
+                catch (TypeLoadException)
+                {
+                    throw new PlatformNotSupportedException();
+                }
             }
         }
     }
