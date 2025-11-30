@@ -19,7 +19,7 @@ public static class AppDpiAwareness
         {
             try
             {
-                return GetDpiAwarenessModeForProcess(0)!.Value;
+                return GetDpiAwarenessModeForProcess(default)!.Value;
             }
             catch (PlatformNotSupportedException)
             {
@@ -149,7 +149,7 @@ public static class AppDpiAwareness
         {
             try
             {
-                _ = ProcessDpiAwarenessApi.GetProcessDpiAwareness(0, out _);
+                _ = ProcessDpiAwarenessApi.GetProcessDpiAwareness(default, out _);
                 return DpiModeEnumConvert.ToProcessDpiAwarenessEnum(mode).HasValue;
             }
             catch (TypeLoadException)

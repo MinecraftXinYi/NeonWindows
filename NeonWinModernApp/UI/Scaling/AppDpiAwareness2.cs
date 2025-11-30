@@ -47,6 +47,24 @@ public static class AppDpiAwareness2
     }
 
     /// <summary>
+    /// 获取指定窗口的 DPI 感知模式。
+    /// </summary>
+    /// <param name="hWnd">检索其 DPI 感知模式的窗口句柄。</param>
+    /// <returns>指定窗口的 DPI 感知模式。</returns>
+    /// <exception cref="PlatformNotSupportedException"></exception>
+    public static DpiAwarenessMode? GetDpiAwarenessModeForWindow(nint hWnd)
+    {
+        try
+        {
+            return DpiModeEnumConvert.FromDpiAwarenessContext(WindowDpiContextApi.GetWindowDpiAwarenessContext(hWnd));
+        }
+        catch (TypeLoadException)
+        {
+            throw new PlatformNotSupportedException();
+        }
+    }
+
+    /// <summary>
     /// 确定当前的操作系统平台是否支持线程级 DPI 感知模型。
     /// </summary>
     public static bool IsThreadBasedDpiAwarenessSupported
