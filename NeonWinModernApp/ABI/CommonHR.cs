@@ -1,6 +1,6 @@
 ﻿namespace NeonWindows.ABI;
 
-internal static class CommonHR
+public static class CommonHR
 {
     public const int
         S_OK = 0x00000000,

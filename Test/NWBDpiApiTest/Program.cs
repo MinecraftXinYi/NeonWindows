@@ -1,5 +1,6 @@
 ﻿using NeonWindows.UI.Scaling;
 using NeonWindows.ABI.UI.Scaling;
+using System.Runtime.InteropServices;
 
 // See https://aka.ms/new-console-template for more information
 Console.WriteLine("Hello, World!");
@@ -41,3 +42,9 @@ Console.WriteLine(!ThreadDpiContextApi.SetThreadDpiAwarenessContext(DPI_AWARENES
 Console.ReadKey();
 Console.WriteLine($"CurrentThreadDpiAwarenessMode: {AppDpiAwareness2.CurrentThreadDpiAwarenessMode}");
 Console.ReadKey();
+Console.WriteLine($"ConsoleWindowDpiAwarenessMode: {AppDpiAwareness2.GetDpiAwarenessModeForWindow(GetConsoleWindow())}");
+Console.ReadKey();
+
+[DllImport("kernel32.dll", ExactSpelling = true)]
+[DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+static extern nint GetConsoleWindow();

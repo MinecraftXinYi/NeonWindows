@@ -2,15 +2,16 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard1.2</TargetFramework>
 		<RootNamespace>NeonWindows</RootNamespace>
-		<LangVersion>12.0</LangVersion>
+		<LangVersion>10.0</LangVersion>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<ProductVersion>0.4.5.0</ProductVersion>
+		<ProductVersion>0.4.6.1</ProductVersion>
 		<FileVersion>$(ProductVersion)</FileVersion>
 		<CheckNotRecommendedTargetFramework>false</CheckNotRecommendedTargetFramework>
 		<NoWarn>$(NoWarn);NETSDK1215</NoWarn>
 	</PropertyGroup>
 	<ItemGroup>
 	  <Folder Include="ApplicationModel\" />
+	  <Folder Include="UI\Immersive\" />
 	</ItemGroup>
 
 </Project>

@@ -33,9 +33,6 @@ internal static class DpiModeEnumConvert
         _ => null
     };
 
-    internal static DpiAwarenessMode FromBool(bool value)
-        => value ? DpiAwarenessMode.System : DpiAwarenessMode.Unaware;
-
     internal static DPI_AWARENESS_CONTEXT ToDpiAwarenessContext(DpiAwarenessMode mode) => mode switch
     {
         DpiAwarenessMode.Unaware => DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE,

@@ -23,7 +23,7 @@ public static class AppDpiAwareness
             }
             catch (PlatformNotSupportedException)
             {
-                return DpiModeEnumConvert.FromBool(ClassicDpiAwarenessApi.IsProcessDPIAware());
+                return ClassicDpiAwarenessApi.IsProcessDPIAware() ? DpiAwarenessMode.System : DpiAwarenessMode.Unaware;
             }
         }
     }
@@ -149,7 +149,14 @@ public static class AppDpiAwareness
         {
             try
             {
-                _ = ProcessDpiAwarenessApi.GetProcessDpiAwareness(default, out _);
+                try
+                {
+                    _ = ProcessDpiAwarenessApi.GetProcessDpiAwareness(default, out _);
+                }
+                catch (TypeLoadException)
+                {
+                    _ = ProcessDpiAwarenessApi2.GetProcessDpiAwarenessInternal(default, out _);
+                }
                 return DpiModeEnumConvert.ToProcessDpiAwarenessEnum(mode).HasValue;
             }
             catch (TypeLoadException)

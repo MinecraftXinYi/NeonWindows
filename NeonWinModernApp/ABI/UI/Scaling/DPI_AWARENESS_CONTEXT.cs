@@ -12,7 +12,7 @@ public readonly struct DPI_AWARENESS_CONTEXT
 
     public DPI_AWARENESS_CONTEXT(nint value) => this.Value = value;
 
-    public static DPI_AWARENESS_CONTEXT Null => default;
+    public static readonly DPI_AWARENESS_CONTEXT Null = default;
 
     public bool IsNull => Value == default;
 
