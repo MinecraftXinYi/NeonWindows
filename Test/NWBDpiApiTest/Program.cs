@@ -16,6 +16,9 @@ Console.ReadKey();
 Console.WriteLine($"CurrentProcessDpiAwarenessMode: {AppDpiAwareness.CurrentProcessDpiAwarenessMode}");
 Console.WriteLine($"CurrentThreadDpiAwarenessMode: {AppDpiAwareness2.CurrentThreadDpiAwarenessMode}");
 Console.ReadKey();
+Console.WriteLine($"SystemScaleFactor: {ScaleInfo.DpiToScaleFactor(ScaleInfo.SystemDpi)}");
+Console.WriteLine($"SystemScaleFactorDirect: {ScaleInfo.DpiToScaleFactor(ScaleInfo.SystemDpiDirect)}");
+Console.ReadKey();
 Console.WriteLine("Setting CurrentProcessDpiAwarenessMode to PerMonitor...");
 AppDpiAwareness.SetCurrentProcessDpiAwarenessMode(DpiAwarenessMode.PerMonitor);
 Console.WriteLine($"CurrentProcessDpiAwarenessMode: {AppDpiAwareness.CurrentProcessDpiAwarenessMode}");
@@ -42,7 +45,12 @@ Console.WriteLine(!ThreadDpiContextApi.SetThreadDpiAwarenessContext(DPI_AWARENES
 Console.ReadKey();
 Console.WriteLine($"CurrentThreadDpiAwarenessMode: {AppDpiAwareness2.CurrentThreadDpiAwarenessMode}");
 Console.ReadKey();
+Console.WriteLine($"SystemScaleFactor: {ScaleInfo.DpiToScaleFactor(ScaleInfo.SystemDpi)}");
+Console.WriteLine($"SystemScaleFactorDirect: {ScaleInfo.DpiToScaleFactor(ScaleInfo.SystemDpiDirect)}");
+Console.ReadKey();
 Console.WriteLine($"ConsoleWindowDpiAwarenessMode: {AppDpiAwareness2.GetDpiAwarenessModeForWindow(GetConsoleWindow())}");
+Console.ReadKey();
+Console.WriteLine($"ConsoleWindowScaleFactor: {ScaleInfo.DpiToScaleFactor(ScaleInfo.WindowDpi(GetConsoleWindow()))}");
 Console.ReadKey();
 
 [DllImport("kernel32.dll", ExactSpelling = true)]
