@@ -35,12 +35,14 @@ public readonly struct DPI_AWARENESS_CONTEXT
     public static readonly DPI_AWARENESS_CONTEXT DPI_AWARENESS_CONTEXT_UNAWARE_MIXED = new(24592);
 
     /// <summary>
-    /// 系统 DPI 感知。 此窗口不会缩放 DPI 更改。 它将查询 DPI 一次，并在进程的生存期内使用该值。 如果 DPI 发生更改，该过程将不会调整为新的 DPI 值。 当 DPI 从系统值发生更改时，系统会自动纵向扩展或缩减它。
+    /// 系统 DPI 感知。 此窗口不会缩放 DPI 更改。 它将查询 DPI 一次，并在进程的生存期内使用该值。
+    /// 如果 DPI 发生更改，该过程将不会调整为新的 DPI 值。 当 DPI 从系统值发生更改时，系统会自动纵向扩展或缩减它。
     /// </summary>
     public static readonly DPI_AWARENESS_CONTEXT DPI_AWARENESS_CONTEXT_SYSTEM_AWARE = new(-2);
 
     /// <summary>
-    /// 系统 DPI 感知。 此窗口不会缩放 DPI 更改。 它将查询 DPI 一次，并在进程的生存期内使用该值。 如果 DPI 发生更改，该过程将不会调整为新的 DPI 值。 当 DPI 从系统值发生更改时，系统会自动纵向扩展或缩减它。
+    /// 系统 DPI 感知。 此窗口不会缩放 DPI 更改。 它将查询 DPI 一次，并在进程的生存期内使用该值。
+    /// 如果 DPI 发生更改，该过程将不会调整为新的 DPI 值。 当 DPI 从系统值发生更改时，系统会自动纵向扩展或缩减它。
     /// </summary>
     public static readonly DPI_AWARENESS_CONTEXT DPI_AWARENESS_CONTEXT_SYSTEM_AWARE_MIXED = new(30737);
 

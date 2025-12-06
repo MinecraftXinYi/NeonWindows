@@ -11,7 +11,8 @@ public enum PROCESS_DPI_AWARENESS
     PROCESS_DPI_UNAWARE,
 
     /// <summary>
-    /// 系统 DPI 感知。 此应用不会缩放 DPI 更改。 它将查询 DPI 一次，并在应用的生存期内使用该值。 如果 DPI 发生更改，应用将不会调整为新的 DPI 值。 当 DPI 与系统值发生更改时，系统会自动纵向扩展或缩减它。
+    /// 系统 DPI 感知。 此应用不会缩放 DPI 更改。 它将查询 DPI 一次，并在应用的生存期内使用该值。
+    /// 如果 DPI 发生更改，应用将不会调整为新的 DPI 值。 当 DPI 与系统值发生更改时，系统会自动纵向扩展或缩减它。
     /// </summary>
     PROCESS_SYSTEM_DPI_AWARE,
 

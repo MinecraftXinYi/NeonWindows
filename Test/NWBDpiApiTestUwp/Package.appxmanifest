@@ -9,7 +9,7 @@
   <Identity
     Name="ad81675d-9f98-495e-a0f8-eb551470941a"
     Publisher="CN=MinecraftXinYi"
-    Version="3.0.1.0" />
+    Version="4.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="ad81675d-9f98-495e-a0f8-eb551470941a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
