@@ -11,7 +11,7 @@ public static class ClassicDpiAwarenessApi
     /// <returns>如果进程可识别 dpi，则为 TRUE;否则为 FALSE。</returns>
     [DllImport(Win32DllName.User32, ExactSpelling = true)]
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
-    [return:MarshalAs(UnmanagedType.Bool)]
+    [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool IsProcessDPIAware();
 
     /// <summary>
@@ -20,6 +20,6 @@ public static class ClassicDpiAwarenessApi
     /// <returns>如果该函数成功，则返回值为非零值。 否则返回值为零。</returns>
     [DllImport(Win32DllName.User32, ExactSpelling = true)]
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
-    [return:MarshalAs(UnmanagedType.Bool)]
+    [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool SetProcessDPIAware();
 }

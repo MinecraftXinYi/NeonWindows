@@ -14,7 +14,7 @@ public unsafe static class WindowCompositionNativeApi
     /// <returns>TRUE if the function succeeds; otherwise, FALSE.</returns>
     [DllImport(Win32DllName.ApiMsWinRTCoreNtUserPrivateL110, ExactSpelling = true)]
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
-    [return:MarshalAs(UnmanagedType.Bool)]
+    [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool GetWindowCompositionAttribute(nint hwnd, WindowCompositionAttribData* pwcad);
 
     /// <summary>
@@ -25,6 +25,6 @@ public unsafe static class WindowCompositionNativeApi
     /// <returns>TRUE if the function succeeds; otherwise, FALSE.</returns>
     [DllImport(Win32DllName.ApiMsWinRTCoreNtUserPrivateL110, ExactSpelling = true)]
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
-    [return:MarshalAs(UnmanagedType.Bool)]
+    [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool SetWindowCompositionAttribute(nint hwnd, WindowCompositionAttribData* pwcad);
 }

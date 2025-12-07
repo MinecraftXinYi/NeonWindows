@@ -4,13 +4,12 @@
 		<RootNamespace>NeonWindows</RootNamespace>
 		<LangVersion>10.0</LangVersion>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<ProductVersion>0.5.0.0</ProductVersion>
+		<ProductVersion>0.5.1.0</ProductVersion>
 		<FileVersion>$(ProductVersion)</FileVersion>
 		<CheckNotRecommendedTargetFramework>false</CheckNotRecommendedTargetFramework>
 		<NoWarn>$(NoWarn);NETSDK1215</NoWarn>
 	</PropertyGroup>
 	<ItemGroup>
-	  <Folder Include="ABI\ApplicationModel\" />
 	  <Folder Include="ApplicationModel\" />
 	</ItemGroup>
 

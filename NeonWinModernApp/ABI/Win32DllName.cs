@@ -14,4 +14,8 @@ internal static class Win32DllName
 
     internal const string
         CoreMessaging = "CoreMessaging.dll";
+
+    internal const string
+        ApiMsWinAppModelRuntimeL112 = "api-ms-win-appmodel-runtime-l1-1-2",
+        KernelBase = "KernelBase.dll";
 }

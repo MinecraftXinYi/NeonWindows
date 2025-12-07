@@ -20,6 +20,6 @@ public static class ProcessDpiContextApi
     /// <returns>如果操作成功，此函数返回 TRUE，否则返回 FALSE。 要获得更多的错误信息，请调用 GetLastError。</returns>
     [DllImport(Win32DllName.ExtMsWinRTCoreNtUserDPIL120, ExactSpelling = true, SetLastError = true)]
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
-    [return:MarshalAs(UnmanagedType.Bool)]
+    [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT value);
 }
