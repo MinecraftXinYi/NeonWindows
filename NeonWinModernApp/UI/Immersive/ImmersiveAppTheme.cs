@@ -26,7 +26,7 @@ public static class ImmersiveAppTheme
     /// </summary>
     /// <param name="hWnd">要检索的窗口。</param>
     /// <param name="enabled">是否开启沉浸式深色模式。</param>
-    /// <returns>一个 <see cref="bool"/> 值，指示操作是否成功。</returns>
+    /// <returns>指示操作是否成功。</returns>
     public unsafe static bool GetImmersiveDarkModeForWindow(nint hWnd, out bool enabled)
     {
         int useDarkMode = default;
@@ -44,7 +44,7 @@ public static class ImmersiveAppTheme
     /// </summary>
     /// <param name="hWnd">要设置的窗口。</param>
     /// <param name="enabled">是否开启沉浸式深色模式。</param>
-    /// <returns>一个 <see cref="bool"/> 值，指示操作是否成功。</returns>
+    /// <returns>指示操作是否成功。</returns>
     public unsafe static bool SetImmersiveDarkModeForWindow(nint hWnd, bool enabled)
     {
         int useDarkMode = enabled ? 1 : 0;

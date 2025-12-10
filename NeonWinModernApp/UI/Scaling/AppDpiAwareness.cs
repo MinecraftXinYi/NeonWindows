@@ -74,7 +74,7 @@ public static class AppDpiAwareness
     {
         try
         {
-            DPI_AWARENESS_CONTEXT dpiContext = DpiModeEnumConvert.ToDpiAwarenessContext(mode);
+            DPI_AWARENESS_CONTEXT dpiContext = DpiModeEnumConvert.ToCommonDpiAwarenessContext(mode);
             if (dpiContext.IsNull) throw new ArgumentException();
             if (!ProcessDpiContextApi.SetProcessDpiAwarenessContext(dpiContext))
             {
@@ -141,7 +141,7 @@ public static class AppDpiAwareness
     {
         try
         {
-            DPI_AWARENESS_CONTEXT dpiContext = DpiModeEnumConvert.ToDpiAwarenessContext(mode);
+            DPI_AWARENESS_CONTEXT dpiContext = DpiModeEnumConvert.ToCommonDpiAwarenessContext(mode);
             if (dpiContext.IsNull) return false;
             return DpiAwarenessContextApi.IsValidDpiAwarenessContext(dpiContext);
         }

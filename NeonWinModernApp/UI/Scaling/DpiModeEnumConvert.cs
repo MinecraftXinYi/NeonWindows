@@ -33,13 +33,23 @@ internal static class DpiModeEnumConvert
         _ => null
     };
 
-    internal static DPI_AWARENESS_CONTEXT ToDpiAwarenessContext(DpiAwarenessMode mode) => mode switch
+    internal static DPI_AWARENESS_CONTEXT ToCommonDpiAwarenessContext(DpiAwarenessMode mode) => mode switch
     {
         DpiAwarenessMode.Unaware => DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE,
         DpiAwarenessMode.System => DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_SYSTEM_AWARE,
         DpiAwarenessMode.PerMonitor => DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE,
         DpiAwarenessMode.PerMonitorV2 => DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2,
         DpiAwarenessMode.UnawareGdiScaled => DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED,
+        _ => DPI_AWARENESS_CONTEXT.Null
+    };
+
+    internal static DPI_AWARENESS_CONTEXT ToMixedDpiAwarenessContext(DpiAwarenessMode mode) => mode switch
+    {
+        DpiAwarenessMode.Unaware => DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE_MIXED,
+        DpiAwarenessMode.System => DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_SYSTEM_AWARE_MIXED,
+        DpiAwarenessMode.PerMonitor => DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_MIXED,
+        DpiAwarenessMode.PerMonitorV2 => DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2_MIXED,
+        DpiAwarenessMode.UnawareGdiScaled => DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED_MIXED,
         _ => DPI_AWARENESS_CONTEXT.Null
     };
 

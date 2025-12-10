@@ -4,7 +4,7 @@ using System;
 namespace NeonWindows.UI.Scaling;
 
 /// <summary>
-/// 提供线程级别的应用程序 DPI 感知管理功能。
+/// 提供线程与窗口级别的应用程序 DPI 感知管理功能。
 /// </summary>
 public static class AppDpiAwareness2
 {
@@ -36,7 +36,7 @@ public static class AppDpiAwareness2
     {
         try
         {
-            DPI_AWARENESS_CONTEXT dpiContext = DpiModeEnumConvert.ToDpiAwarenessContext(mode);
+            DPI_AWARENESS_CONTEXT dpiContext = DpiModeEnumConvert.ToCommonDpiAwarenessContext(mode);
             if (dpiContext.IsNull) throw new ArgumentException();
             if (ThreadDpiContextApi.SetThreadDpiAwarenessContext(dpiContext).IsNull) throw new PlatformNotSupportedException();
         }
@@ -57,6 +57,31 @@ public static class AppDpiAwareness2
         try
         {
             return DpiModeEnumConvert.FromDpiAwarenessContext(WindowDpiContextApi.GetWindowDpiAwarenessContext(hWnd));
+        }
+        catch (TypeLoadException)
+        {
+            throw new PlatformNotSupportedException();
+        }
+    }
+
+    /// <summary>
+    /// 设置当前进程的 DPI 感知模式，并提供更多功能。
+    /// </summary>
+    /// <param name="mode">要设置的 DPI 感知模式。</param>
+    /// <param name="enforced">如果此项为 <see cref="true"/>，则将忽略通过此前的 API 调用或在应用程序清单设置的进程的默认 DPI 感知模式。</param>
+    /// <param name="applyToThread">指示是否将该 DPI 感知模式设置到当前线程。</param>
+    /// <returns>指示操作是否成功。</returns>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="PlatformNotSupportedException"></exception>
+    public static bool ExSetCurrentProcessDpiAwarenessMode(DpiAwarenessMode mode, bool enforced = false, bool applyToThread = false)
+    {
+        try
+        {
+            DPI_AWARENESS_CONTEXT dpiContext = DpiModeEnumConvert.ToMixedDpiAwarenessContext(mode);
+            if (dpiContext.IsNull) throw new ArgumentException();
+            if (!ProcessDpiContextApi.NtUserSetProcessDpiAwarenessContext(dpiContext, enforced)) return false;
+            if (applyToThread) ThreadDpiContextApi.SetThreadDpiAwarenessContext(dpiContext);
+            return true;
         }
         catch (TypeLoadException)
         {
