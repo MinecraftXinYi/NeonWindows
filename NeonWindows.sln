@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWBDpiApiTestUwp", "Test\NW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWBNtUserDpiContextApiTest", "Test\NWBNtUserDpiContextApiTest\NWBNtUserDpiContextApiTest.csproj", "{77914E6C-1B68-45A8-9F01-C3D44CB0FDD9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeonWinModernCoreI", "NeonWinModernCoreI\NeonWinModernCoreI.csproj", "{41CB8C21-CE18-413B-B7A6-728B73493B04}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,14 @@ Global
 		{77914E6C-1B68-45A8-9F01-C3D44CB0FDD9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{77914E6C-1B68-45A8-9F01-C3D44CB0FDD9}.Release|x86.ActiveCfg = Release|Any CPU
 		{77914E6C-1B68-45A8-9F01-C3D44CB0FDD9}.Release|x86.Build.0 = Release|Any CPU
+		{41CB8C21-CE18-413B-B7A6-728B73493B04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41CB8C21-CE18-413B-B7A6-728B73493B04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41CB8C21-CE18-413B-B7A6-728B73493B04}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{41CB8C21-CE18-413B-B7A6-728B73493B04}.Debug|x86.Build.0 = Debug|Any CPU
+		{41CB8C21-CE18-413B-B7A6-728B73493B04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41CB8C21-CE18-413B-B7A6-728B73493B04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41CB8C21-CE18-413B-B7A6-728B73493B04}.Release|x86.ActiveCfg = Release|Any CPU
+		{41CB8C21-CE18-413B-B7A6-728B73493B04}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

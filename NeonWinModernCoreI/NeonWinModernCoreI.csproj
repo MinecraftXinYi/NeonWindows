@@ -1,14 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>netstandard1.2</TargetFramework>
+		<TargetFramework>netstandard2.0</TargetFramework>
 		<RootNamespace>NeonWindows</RootNamespace>
 		<LangVersion>10.0</LangVersion>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<Nullable>enable</Nullable>
-		<ProductVersion>0.7.0.0</ProductVersion>
+		<ProductVersion>0.6.1.0</ProductVersion>
 		<FileVersion>$(ProductVersion)</FileVersion>
 		<CheckNotRecommendedTargetFramework>false</CheckNotRecommendedTargetFramework>
 		<NoWarn>$(NoWarn);NETSDK1215</NoWarn>
 	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\NeonWinModernApp\NeonWinModernApp.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="System\" />
+	</ItemGroup>
 
 </Project>

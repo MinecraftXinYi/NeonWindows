@@ -10,7 +10,7 @@ public static class DispatcherQueueApi
     /// <param name="options">创建的 DispatcherQueueController 的线程关联和 COM 单元类型。</param>
     /// <param name="dispatcherQueueController">创建的调度程序队列控制器。</param>
     /// <returns>成功 S_OK; 否则为失败代码。</returns>
-    [DllImport(Win32DllName.CoreMessaging, ExactSpelling = true)]
+    [DllImport(WinRTDllName.CoreMessaging, ExactSpelling = true)]
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
     public static extern int CreateDispatcherQueueController(DispatcherQueueOptions options, out nint dispatcherQueueController);
 }

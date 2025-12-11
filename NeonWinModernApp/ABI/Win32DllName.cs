@@ -13,9 +13,8 @@ internal static class Win32DllName
         ExtMsWinUxThemeThemesL112 = "ext-ms-win-uxtheme-themes-l1-1-2";
 
     internal const string
-        CoreMessaging = "CoreMessaging.dll";
-
-    internal const string
         ApiMsWinAppModelRuntimeL112 = "api-ms-win-appmodel-runtime-l1-1-2",
-        KernelBase = "KernelBase.dll";
+        KernelBase = "KernelBase.dll",
+        Kernel32 = "kernel32.dll",
+        Advapi32 = "advapi32.dll";
 }

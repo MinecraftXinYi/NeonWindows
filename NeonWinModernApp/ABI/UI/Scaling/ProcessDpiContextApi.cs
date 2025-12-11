@@ -26,6 +26,5 @@ public static class ProcessDpiContextApi
     [DllImport(Win32DllName.Win32U, ExactSpelling = true)]
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static extern bool NtUserSetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT mixedValue,
-        [MarshalAs(UnmanagedType.Bool)] bool enforced);
+    public static extern bool NtUserSetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT mixedValue, [MarshalAs(UnmanagedType.Bool)] bool enforced);
 }
