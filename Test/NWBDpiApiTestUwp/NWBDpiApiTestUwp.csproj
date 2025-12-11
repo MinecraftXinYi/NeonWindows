@@ -163,9 +163,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\NeonWinModernApp\NeonWinModernApp.csproj">
+    <ProjectReference Include="..\..\NeonWinModernBase\NeonWinModernBase.csproj">
       <Project>{27cd073e-5d01-498f-9a50-f08f7c18a82e}</Project>
-      <Name>NeonWinModernApp</Name>
+      <Name>NeonWinModernBase</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

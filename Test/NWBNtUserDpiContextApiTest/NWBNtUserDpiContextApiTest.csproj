@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\NeonWinModernApp\NeonWinModernApp.csproj" />
+    <ProjectReference Include="..\..\NeonWinModernBase\NeonWinModernBase.csproj" />
   </ItemGroup>
 
 </Project>
