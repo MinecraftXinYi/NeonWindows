@@ -3,7 +3,7 @@
 /// <summary>
 /// 指定可应用于应用程序的不同 DPI 感知模式。
 /// </summary>
-public enum DpiAwarenessMode
+public enum DpiAwarenessMode : byte
 {
     /// <summary>
     /// 应用程序窗口不会随着 DPI 更改而缩放，始终假定缩放比例为 100%。

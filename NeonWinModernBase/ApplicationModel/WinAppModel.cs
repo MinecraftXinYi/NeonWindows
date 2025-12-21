@@ -1,5 +1,5 @@
-﻿using NeonWindows.ABI;
-using NeonWindows.ABI.ApplicationModel;
+﻿using NeonWindows.ABI.ApplicationModel;
+using NeonWindows.ABI.System;
 using System;
 
 namespace NeonWindows.ApplicationModel;
@@ -49,23 +49,57 @@ public static class WinAppModel
                 }
                 catch (TypeLoadException)
                 {
-                    return false;
+                    return true;
                 }
             }
         }
     }
 
     /// <summary>
-    /// 指示当前进程是否在 AppContainer 环境中运行。
+    /// 检索指定进程是否属于 APPX 应用。
     /// </summary>
-    public unsafe static bool IsAppContainer
+    /// <param name="hProcess">要检索的进程句柄。</param>
+    /// <returns>指示进程是否属于 APPX 应用。</returns>
+    public static bool IsProcessAPPX(nint hProcess)
     {
-        get
+        if (hProcess == default) return false;
+        try
         {
-            uint isAppContainer = 0;
-            SecurityBaseApi.GetTokenInformation(ProcessThreadsApi.GetCurrentProcessToken(), SecurityBaseApi.TOKEN_INFORMATION_CLASS_TokenIsAppContainer,
-                &isAppContainer, sizeof(uint), out _);
-            return isAppContainer != 0;
+            uint length = 0;
+            return AppModelApi.GetPackageFullName(hProcess, ref length, null) != AppModelApi.APPMODEL_ERROR_NO_PACKAGE;
+        }
+        catch (TypeLoadException)
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// 检索指定进程是否属于 UWP 应用。
+    /// </summary>
+    /// <param name="hProcess">要检索的进程句柄。</param>
+    /// <returns>指示进程是否属于 UWP 应用。</returns>
+    public static bool IsProcessUWP(nint hProcess)
+    {
+        if (!IsProcessAPPX(hProcess)) return false;
+        if (!ProcessThreadsApi.OpenProcessToken(hProcess, TOKEN_ACCESS_MASK.TOKEN_READ, out nint hToken)) return false;
+        try
+        {
+            AppModelApi.AppPolicyGetWindowingModel(hToken, out AppPolicyWindowingModel windowingModel);
+            HandleApi.CloseHandle(hToken);
+            return windowingModel == AppPolicyWindowingModel.Universal;
+        }
+        catch (TypeLoadException)
+        {
+            HandleApi.CloseHandle(hToken);
+            try
+            {
+                return WinUserImmersiveProcessApi.IsImmersiveProcess(hProcess);
+            }
+            catch (TypeLoadException)
+            {
+                return true;
+            }
         }
     }
 }

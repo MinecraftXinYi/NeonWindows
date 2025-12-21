@@ -29,7 +29,7 @@ public static class ImmersiveAppTheme
     /// <returns>指示操作是否成功。</returns>
     public unsafe static bool GetImmersiveDarkModeForWindow(nint hWnd, out bool enabled)
     {
-        int useDarkMode = default;
+        int useDarkMode = 0;
         WindowCompositionAttribData dwAttribute;
         dwAttribute.Attrib = WindowCompositionAttrib.WCA_USEDARKMODECOLORS;
         dwAttribute.pvData = &useDarkMode;

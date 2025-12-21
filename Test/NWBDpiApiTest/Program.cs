@@ -27,7 +27,7 @@ Console.ReadKey();
 Console.WriteLine("Trying to set CurrentProcessDpiAwarenessMode to PerMonitorV2...x2");
 try
 {
-    Console.WriteLine(AppDpiAwareness2.ExSetCurrentProcessDpiAwarenessMode(DpiAwarenessMode.PerMonitorV2, true, false));
+    Console.WriteLine(AppDpiAwareness2.SetCurrentProcessDpiAwarenessModeEx(DpiAwarenessMode.PerMonitorV2, true, false));
 }
 catch (Exception e)
 {

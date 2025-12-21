@@ -30,6 +30,31 @@ public static class AppModelApi
         }
     }
 
+    /// <summary>
+    /// 获取指定进程的包全名。
+    /// </summary>
+    /// <param name="hProcess">具有 PROCESS_QUERY_INFORMATION 或 PROCESS_QUERY_LIMITED_INFORMATION 访问权限的进程句柄。 有关详细信息，请参阅进程安全性和访问权限。</param>
+    /// <param name="packageFullNameLength">输入时， packageFullName 缓冲区的大小（以字符为单位）。 输出时，返回包全名的大小（以字符为单位），包括 null 终止符。</param>
+    /// <param name="packageFullName">包全名。</param>
+    /// <returns>如果函数成功，则返回 ERROR_SUCCESS。 否则，函数将返回错误代码。</returns>
+    public static long GetPackageFullName(nint hProcess, ref uint packageFullNameLength, StringBuilder? packageFullName)
+    {
+        try
+        {
+            [DllImport(Win32DllName.KernelBase, ExactSpelling = true)]
+            [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+            static extern long GetPackageFullName(nint hProcess, ref uint packageFullNameLength, StringBuilder? packageFullName);
+            return GetPackageFullName(hProcess, ref packageFullNameLength, packageFullName);
+        }
+        catch (TypeLoadException)
+        {
+            [DllImport(Win32DllName.Kernel32, ExactSpelling = true)]
+            [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+            static extern long GetPackageFullName(nint hProcess, ref uint packageFullNameLength, StringBuilder? packageFullName);
+            return GetPackageFullName(hProcess, ref packageFullNameLength, packageFullName);
+        }
+    }
+
     public const long APPMODEL_ERROR_NO_PACKAGE = 15700L;
 
     /// <summary>

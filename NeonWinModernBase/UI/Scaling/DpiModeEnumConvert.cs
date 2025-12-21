@@ -1,4 +1,5 @@
 ﻿using NeonWindows.ABI.UI.Scaling;
+using System;
 
 namespace NeonWindows.UI.Scaling;
 
@@ -17,12 +18,19 @@ internal static class DpiModeEnumConvert
         if (value == DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2_MIXED) return DpiAwarenessMode.PerMonitorV2;
         if (value == DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED) return DpiAwarenessMode.UnawareGdiScaled;
         if (value == DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED_MIXED) return DpiAwarenessMode.UnawareGdiScaled;
-        if (DpiAwarenessContextApi.AreDpiAwarenessContextsEqual(value, DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE)) return DpiAwarenessMode.Unaware;
-        if (DpiAwarenessContextApi.AreDpiAwarenessContextsEqual(value, DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_SYSTEM_AWARE)) return DpiAwarenessMode.System;
-        if (DpiAwarenessContextApi.AreDpiAwarenessContextsEqual(value, DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE)) return DpiAwarenessMode.PerMonitor;
-        if (DpiAwarenessContextApi.AreDpiAwarenessContextsEqual(value, DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2)) return DpiAwarenessMode.PerMonitorV2;
-        if (DpiAwarenessContextApi.AreDpiAwarenessContextsEqual(value, DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED)) return DpiAwarenessMode.UnawareGdiScaled;
-        return DpiAwarenessContextApi.IsValidDpiAwarenessContext(value) ? ReservedDpiModeEnum : null;
+        try
+        {
+            if (DpiAwarenessContextApi.AreDpiAwarenessContextsEqual(value, DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE)) return DpiAwarenessMode.Unaware;
+            if (DpiAwarenessContextApi.AreDpiAwarenessContextsEqual(value, DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_SYSTEM_AWARE)) return DpiAwarenessMode.System;
+            if (DpiAwarenessContextApi.AreDpiAwarenessContextsEqual(value, DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE)) return DpiAwarenessMode.PerMonitor;
+            if (DpiAwarenessContextApi.AreDpiAwarenessContextsEqual(value, DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2)) return DpiAwarenessMode.PerMonitorV2;
+            if (DpiAwarenessContextApi.AreDpiAwarenessContextsEqual(value, DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED)) return DpiAwarenessMode.UnawareGdiScaled;
+            return DpiAwarenessContextApi.IsValidDpiAwarenessContext(value) ? ReservedDpiModeEnum : null;
+        }
+        catch (TypeLoadException)
+        {
+            return ReservedDpiModeEnum;
+        }
     }
 
     internal static DpiAwarenessMode? FromProcessDpiAwarenessEnum(PROCESS_DPI_AWARENESS value) => value switch
@@ -33,7 +41,7 @@ internal static class DpiModeEnumConvert
         _ => null
     };
 
-    internal static DPI_AWARENESS_CONTEXT ToCommonDpiAwarenessContext(DpiAwarenessMode mode) => mode switch
+    internal static DPI_AWARENESS_CONTEXT ToCommonDpiAwarenessContext(DpiAwarenessMode value) => value switch
     {
         DpiAwarenessMode.Unaware => DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE,
         DpiAwarenessMode.System => DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_SYSTEM_AWARE,
@@ -43,7 +51,7 @@ internal static class DpiModeEnumConvert
         _ => DPI_AWARENESS_CONTEXT.Null
     };
 
-    internal static DPI_AWARENESS_CONTEXT ToMixedDpiAwarenessContext(DpiAwarenessMode mode) => mode switch
+    internal static DPI_AWARENESS_CONTEXT ToMixedDpiAwarenessContext(DpiAwarenessMode value) => value switch
     {
         DpiAwarenessMode.Unaware => DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE_MIXED,
         DpiAwarenessMode.System => DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_SYSTEM_AWARE_MIXED,
@@ -53,7 +61,7 @@ internal static class DpiModeEnumConvert
         _ => DPI_AWARENESS_CONTEXT.Null
     };
 
-    internal static PROCESS_DPI_AWARENESS? ToProcessDpiAwarenessEnum(DpiAwarenessMode mode) => mode switch
+    internal static PROCESS_DPI_AWARENESS? ToProcessDpiAwarenessEnum(DpiAwarenessMode value) => value switch
     {
         DpiAwarenessMode.Unaware => PROCESS_DPI_AWARENESS.PROCESS_DPI_UNAWARE,
         DpiAwarenessMode.System => PROCESS_DPI_AWARENESS.PROCESS_SYSTEM_DPI_AWARE,
@@ -61,5 +69,5 @@ internal static class DpiModeEnumConvert
         _ => null
     };
 
-    internal const DpiAwarenessMode ReservedDpiModeEnum = (DpiAwarenessMode)int.MaxValue;
+    internal const DpiAwarenessMode ReservedDpiModeEnum = (DpiAwarenessMode)byte.MaxValue;
 }

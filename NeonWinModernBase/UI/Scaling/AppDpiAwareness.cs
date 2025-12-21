@@ -21,9 +21,16 @@ public static class AppDpiAwareness
             {
                 return GetDpiAwarenessModeForProcess(default)!.Value;
             }
-            catch (PlatformNotSupportedException)
+            catch (Exception)
             {
-                return ClassicDpiAwarenessApi.IsProcessDPIAware() ? DpiAwarenessMode.System : DpiAwarenessMode.Unaware;
+                try
+                {
+                    return ClassicDpiAwarenessApi.IsProcessDPIAware() ? DpiAwarenessMode.System : DpiAwarenessMode.Unaware;
+                }
+                catch (TypeLoadException)
+                {
+                    return DpiAwarenessMode.Unaware;
+                }
             }
         }
     }

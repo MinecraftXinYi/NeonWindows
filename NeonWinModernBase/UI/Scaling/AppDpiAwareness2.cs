@@ -1,4 +1,6 @@
-﻿using NeonWindows.ABI.UI.Scaling;
+﻿using NeonWindows.ABI.System;
+using NeonWindows.ABI.UI.Scaling;
+using NeonWindows.ABI.UI.Windowing;
 using System;
 
 namespace NeonWindows.UI.Scaling;
@@ -60,7 +62,28 @@ public static class AppDpiAwareness2
         }
         catch (TypeLoadException)
         {
-            throw new PlatformNotSupportedException();
+            uint pid;
+            try
+            {
+                if (WindowProcessThreadApi.GetWindowThreadProcessId(hWnd, out pid) == 0) return null;
+            }
+            catch (TypeLoadException)
+            {
+                throw new PlatformNotSupportedException();
+            }
+            nint hProcess = ProcessThreadsApi.OpenProcess(PROCESS_ACCESS_RIGHTS.PROCESS_QUERY_INFORMATION | PROCESS_ACCESS_RIGHTS.PROCESS_VM_READ, false, pid);
+            if (hProcess == default) return null;
+            try
+            {
+                DpiAwarenessMode? dpiMode = AppDpiAwareness.GetDpiAwarenessModeForProcess(hProcess);
+                HandleApi.CloseHandle(hProcess);
+                return dpiMode;
+            }
+            catch (PlatformNotSupportedException e)
+            {
+                HandleApi.CloseHandle(hProcess);
+                throw e;
+            }
         }
     }
 
@@ -73,14 +96,14 @@ public static class AppDpiAwareness2
     /// <returns>指示操作是否成功。</returns>
     /// <exception cref="ArgumentException"></exception>
     /// <exception cref="PlatformNotSupportedException"></exception>
-    public static bool ExSetCurrentProcessDpiAwarenessMode(DpiAwarenessMode mode, bool enforced = false, bool applyToThread = false)
+    public static bool SetCurrentProcessDpiAwarenessModeEx(DpiAwarenessMode mode, bool enforced = false, bool applyToThread = true)
     {
         try
         {
-            DPI_AWARENESS_CONTEXT dpiContext = DpiModeEnumConvert.ToMixedDpiAwarenessContext(mode);
-            if (dpiContext.IsNull) throw new ArgumentException();
-            if (!ProcessDpiContextApi.NtUserSetProcessDpiAwarenessContext(dpiContext, enforced)) return false;
-            if (applyToThread) ThreadDpiContextApi.SetThreadDpiAwarenessContext(dpiContext);
+            DPI_AWARENESS_CONTEXT mixedContext = DpiModeEnumConvert.ToMixedDpiAwarenessContext(mode);
+            if (mixedContext.IsNull) throw new ArgumentException();
+            if (!ProcessDpiContextApi.NtUserSetProcessDpiAwarenessContext(mixedContext, enforced)) return false;
+            if (applyToThread) ThreadDpiContextApi.SetThreadDpiAwarenessContext(mixedContext);
             return true;
         }
         catch (TypeLoadException)
