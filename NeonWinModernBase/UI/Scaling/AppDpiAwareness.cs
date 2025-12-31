@@ -1,7 +1,5 @@
-﻿using NeonWindows.ABI;
-using NeonWindows.ABI.UI.Scaling;
+﻿using NeonWindows.ABI.UI.Scaling;
 using System;
-using System.Runtime.InteropServices;
 
 namespace NeonWindows.UI.Scaling;
 
@@ -39,7 +37,7 @@ public static class AppDpiAwareness
     /// 获取指定进程的 DPI 感知模式。
     /// </summary>
     /// <param name="hProcess">检索其 DPI 感知模式的进程句柄。</param>
-    /// <returns>指定进程的 DPI 感知模式。</returns>
+    /// <returns>指定进程的 DPI 感知模式。若发生错误，则返回 null 。</returns>
     /// <exception cref="PlatformNotSupportedException"></exception>
     public static DpiAwarenessMode? GetDpiAwarenessModeForProcess(nint hProcess)
     {
@@ -53,15 +51,15 @@ public static class AppDpiAwareness
             {
                 try
                 {
-                    int hr = ProcessDpiAwarenessApi.GetProcessDpiAwareness(hProcess, out PROCESS_DPI_AWARENESS dpiAwareness);
-                    return hr == CommonHR.S_OK ? DpiModeEnumConvert.FromProcessDpiAwarenessEnum(dpiAwareness) : null;
+                    if (ProcessDpiAwarenessApi.GetProcessDpiAwareness(hProcess, out PROCESS_DPI_AWARENESS dpiAwareness) == 0x00000000)
+                        return DpiModeEnumConvert.FromProcessDpiAwarenessEnum(dpiAwareness);
                 }
                 catch (TypeLoadException)
                 {
                     if (ProcessDpiAwarenessApi2.GetProcessDpiAwarenessInternal(hProcess, out PROCESS_DPI_AWARENESS dpiAwareness))
                         return DpiModeEnumConvert.FromProcessDpiAwarenessEnum(dpiAwareness);
-                    else return null;
                 }
+                return null;
             }
             catch (TypeLoadException)
             {
@@ -74,66 +72,42 @@ public static class AppDpiAwareness
     /// 设置当前进程的 DPI 感知模式。
     /// </summary>
     /// <param name="mode">要设置的 DPI 感知模式。</param>
+    /// <returns>指示操作是否成功。</returns>
     /// <exception cref="ArgumentException"></exception>
-    /// <exception cref="PlatformNotSupportedException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
-    public static void SetCurrentProcessDpiAwarenessMode(DpiAwarenessMode mode)
+    public static bool SetCurrentProcessDpiAwarenessMode(DpiAwarenessMode mode)
     {
         try
         {
             DPI_AWARENESS_CONTEXT dpiContext = DpiModeEnumConvert.ToCommonDpiAwarenessContext(mode);
             if (dpiContext.IsNull) throw new ArgumentException();
-            if (!ProcessDpiContextApi.SetProcessDpiAwarenessContext(dpiContext))
-            {
-                int hr = Marshal.GetHRForLastWin32Error();
-                throw hr switch
-                {
-                    CommonHR.E_INVALIDARG => new PlatformNotSupportedException(),
-                    CommonHR.E_ACCESSDENIED => new InvalidOperationException(),
-                    _ => Marshal.GetExceptionForHR(hr)
-                };
-            }
+            return ProcessDpiContextApi.SetProcessDpiAwarenessContext(dpiContext);
         }
         catch (TypeLoadException)
         {
             try
             {
                 PROCESS_DPI_AWARENESS? dpiAwareness = DpiModeEnumConvert.ToProcessDpiAwarenessEnum(mode);
-                if (!dpiAwareness.HasValue) throw new PlatformNotSupportedException();
+                if (!dpiAwareness.HasValue) return false;
                 try
                 {
-                    int hr = ProcessDpiAwarenessApi.SetProcessDpiAwareness(dpiAwareness.Value);
-                    if (hr != CommonHR.S_OK)
-                        throw hr switch
-                        {
-                            CommonHR.E_ACCESSDENIED => new InvalidOperationException(),
-                            _ => Marshal.GetExceptionForHR(hr)
-                        };
+                    return ProcessDpiAwarenessApi.SetProcessDpiAwareness(dpiAwareness.Value) == 0x00000000;
                 }
                 catch (TypeLoadException)
                 {
-                    if (!ProcessDpiAwarenessApi2.SetProcessDpiAwarenessInternal(dpiAwareness.Value))
-                    {
-                        int hr = Marshal.GetHRForLastWin32Error();
-                        throw hr switch
-                        {
-                            CommonHR.E_ACCESSDENIED => new InvalidOperationException(),
-                            _ => Marshal.GetExceptionForHR(hr)
-                        };
-                    }
+                    return ProcessDpiAwarenessApi2.SetProcessDpiAwarenessInternal(dpiAwareness.Value);
                 }
             }
             catch (TypeLoadException)
             {
-                if (mode == DpiAwarenessMode.Unaware) return;
+                if (mode == DpiAwarenessMode.Unaware) return true;
                 try
                 {
-                    if (mode != DpiAwarenessMode.System) throw new PlatformNotSupportedException();
-                    if (!ClassicDpiAwarenessApi.SetProcessDPIAware()) throw new InvalidOperationException();
+                    if (mode != DpiAwarenessMode.System) return false;
+                    return ClassicDpiAwarenessApi.SetProcessDPIAware();
                 }
                 catch (TypeLoadException)
                 {
-                    throw new PlatformNotSupportedException();
+                    return false;
                 }
             }
         }

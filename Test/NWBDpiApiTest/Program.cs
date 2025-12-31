@@ -14,15 +14,7 @@ AppDpiAwareness.SetCurrentProcessDpiAwarenessMode(DpiAwarenessMode.PerMonitor);
 Console.WriteLine($"CurrentProcessDpiAwarenessMode: {AppDpiAwareness.CurrentProcessDpiAwarenessMode}");
 Console.ReadKey();
 Console.WriteLine("Trying to set CurrentProcessDpiAwarenessMode to PerMonitorV2...");
-try
-{
-    AppDpiAwareness.SetCurrentProcessDpiAwarenessMode(DpiAwarenessMode.PerMonitorV2);
-    Console.WriteLine(true);
-}
-catch (Exception e)
-{
-    Console.WriteLine(e.GetType().Name);
-}
+Console.WriteLine(AppDpiAwareness.SetCurrentProcessDpiAwarenessMode(DpiAwarenessMode.PerMonitorV2));
 Console.ReadKey();
 Console.WriteLine("Trying to set CurrentProcessDpiAwarenessMode to PerMonitorV2...x2");
 try
@@ -43,8 +35,6 @@ Console.WriteLine($"CurrentThreadDpiAwarenessMode: {AppDpiAwareness2.CurrentThre
 Console.ReadKey();
 Console.WriteLine($"SystemScaleFactor: {ScaleInfo.DpiToScaleFactor(ScaleInfo.SystemDpi)}");
 Console.WriteLine($"SystemScaleFactorDirect: {ScaleInfo.DpiToScaleFactor(ScaleInfo.SystemDpiDirect)}");
-Console.ReadKey();
-Console.WriteLine($"ConsoleWindowDpiAwarenessMode: {AppDpiAwareness2.GetDpiAwarenessModeForWindow(GetConsoleWindow())}");
 Console.ReadKey();
 Console.WriteLine($"ConsoleWindowScaleFactor: {ScaleInfo.DpiToScaleFactor(ScaleInfo.WindowDpi(GetConsoleWindow()))}");
 Console.ReadKey();

@@ -82,7 +82,7 @@ public static class WinAppModel
     public static bool IsProcessUWP(nint hProcess)
     {
         if (!IsProcessAPPX(hProcess)) return false;
-        if (!ProcessThreadsApi.OpenProcessToken(hProcess, TOKEN_ACCESS_MASK.TOKEN_READ, out nint hToken)) return false;
+        if (!ProcessThreadsApi.OpenProcessToken(hProcess, ProcessThreadsApi.TOKEN_READ, out nint hToken)) return false;
         try
         {
             AppModelApi.AppPolicyGetWindowingModel(hToken, out AppPolicyWindowingModel windowingModel);

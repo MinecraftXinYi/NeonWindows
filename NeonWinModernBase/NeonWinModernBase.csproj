@@ -5,10 +5,9 @@
 		<LangVersion>10.0</LangVersion>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<Nullable>enable</Nullable>
-		<ProductVersion>0.9.0.0</ProductVersion>
+		<ProductVersion>0.10.0.0</ProductVersion>
 		<FileVersion>$(ProductVersion)</FileVersion>
 		<CheckNotRecommendedTargetFramework>false</CheckNotRecommendedTargetFramework>
-		<NoWarn>$(NoWarn);NETSDK1215</NoWarn>
 	</PropertyGroup>
 
 </Project>

@@ -3,9 +3,17 @@ using System;
 
 namespace NeonWindows.UI.Scaling;
 
-internal static class DpiModeEnumConvert
+/// <summary>
+/// 在 <see cref="DpiAwarenessMode"/> 枚举和本机 API 数据类型之间进行转换。
+/// </summary>
+public static class DpiModeEnumConvert
 {
-    internal static DpiAwarenessMode? FromDpiAwarenessContext(DPI_AWARENESS_CONTEXT value)
+    /// <summary>
+    /// 将 <see cref="DPI_AWARENESS_CONTEXT"/> 句柄转换为 <see cref="DpiAwarenessMode"/> 枚举。
+    /// </summary>
+    /// <param name="value">要转换的 <see cref="DPI_AWARENESS_CONTEXT"/> 句柄。</param>
+    /// <returns>转换结果。若 <see cref="DPI_AWARENESS_CONTEXT"/> 句柄无效，则返回 null 。</returns>
+    public static DpiAwarenessMode? FromDpiAwarenessContext(DPI_AWARENESS_CONTEXT value)
     {
         if (value.IsNull) return null;
         if (value == DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE) return DpiAwarenessMode.Unaware;
@@ -25,15 +33,20 @@ internal static class DpiModeEnumConvert
             if (DpiAwarenessContextApi.AreDpiAwarenessContextsEqual(value, DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE)) return DpiAwarenessMode.PerMonitor;
             if (DpiAwarenessContextApi.AreDpiAwarenessContextsEqual(value, DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2)) return DpiAwarenessMode.PerMonitorV2;
             if (DpiAwarenessContextApi.AreDpiAwarenessContextsEqual(value, DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED)) return DpiAwarenessMode.UnawareGdiScaled;
-            return DpiAwarenessContextApi.IsValidDpiAwarenessContext(value) ? ReservedDpiModeEnum : null;
+            return DpiAwarenessContextApi.IsValidDpiAwarenessContext(value) ? ReservedDpiAwarenessMode : null;
         }
         catch (TypeLoadException)
         {
-            return ReservedDpiModeEnum;
+            return ReservedDpiAwarenessMode;
         }
     }
 
-    internal static DpiAwarenessMode? FromProcessDpiAwarenessEnum(PROCESS_DPI_AWARENESS value) => value switch
+    /// <summary>
+    /// 将 <see cref="PROCESS_DPI_AWARENESS"/> 枚举转换为 <see cref="DpiAwarenessMode"/> 枚举。
+    /// </summary>
+    /// <param name="value">要转换的 <see cref="PROCESS_DPI_AWARENESS"/> 枚举。</param>
+    /// <returns>转换结果。若 <see cref="PROCESS_DPI_AWARENESS"/> 枚举无效，则返回 null 。</returns>
+    public static DpiAwarenessMode? FromProcessDpiAwarenessEnum(PROCESS_DPI_AWARENESS value) => value switch
     {
         PROCESS_DPI_AWARENESS.PROCESS_DPI_UNAWARE => DpiAwarenessMode.Unaware,
         PROCESS_DPI_AWARENESS.PROCESS_SYSTEM_DPI_AWARE => DpiAwarenessMode.System,
@@ -41,7 +54,12 @@ internal static class DpiModeEnumConvert
         _ => null
     };
 
-    internal static DPI_AWARENESS_CONTEXT ToCommonDpiAwarenessContext(DpiAwarenessMode value) => value switch
+    /// <summary>
+    /// 将 <see cref="DpiAwarenessMode"/> 枚举转换为 <see cref="DPI_AWARENESS_CONTEXT"/> 句柄。
+    /// </summary>
+    /// <param name="value">要转换的 <see cref="DpiAwarenessMode"/> 枚举。</param>
+    /// <returns>转换结果。若 <see cref="DpiAwarenessMode"/> 枚举无效，则返回 null 。</returns>
+    public static DPI_AWARENESS_CONTEXT ToCommonDpiAwarenessContext(DpiAwarenessMode value) => value switch
     {
         DpiAwarenessMode.Unaware => DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE,
         DpiAwarenessMode.System => DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_SYSTEM_AWARE,
@@ -51,7 +69,12 @@ internal static class DpiModeEnumConvert
         _ => DPI_AWARENESS_CONTEXT.Null
     };
 
-    internal static DPI_AWARENESS_CONTEXT ToMixedDpiAwarenessContext(DpiAwarenessMode value) => value switch
+    /// <summary>
+    /// 将 <see cref="DpiAwarenessMode"/> 枚举转换为 <see cref="DPI_AWARENESS_CONTEXT"/> 句柄 (MIXED)。
+    /// </summary>
+    /// <param name="value">要转换的 <see cref="DpiAwarenessMode"/> 枚举。</param>
+    /// <returns>转换结果。若 <see cref="DpiAwarenessMode"/> 枚举无效，则返回 null 。</returns>
+    public static DPI_AWARENESS_CONTEXT ToMixedDpiAwarenessContext(DpiAwarenessMode value) => value switch
     {
         DpiAwarenessMode.Unaware => DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE_MIXED,
         DpiAwarenessMode.System => DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_SYSTEM_AWARE_MIXED,
@@ -61,7 +84,12 @@ internal static class DpiModeEnumConvert
         _ => DPI_AWARENESS_CONTEXT.Null
     };
 
-    internal static PROCESS_DPI_AWARENESS? ToProcessDpiAwarenessEnum(DpiAwarenessMode value) => value switch
+    /// <summary>
+    /// 将 <see cref="DpiAwarenessMode"/> 枚举转换为 <see cref="PROCESS_DPI_AWARENESS"/> 枚举。
+    /// </summary>
+    /// <param name="value">要转换的 <see cref="DpiAwarenessMode"/> 枚举。</param>
+    /// <returns>转换结果。若 <see cref="DpiAwarenessMode"/> 枚举无效，则返回 null 。</returns>
+    public static PROCESS_DPI_AWARENESS? ToProcessDpiAwarenessEnum(DpiAwarenessMode value) => value switch
     {
         DpiAwarenessMode.Unaware => PROCESS_DPI_AWARENESS.PROCESS_DPI_UNAWARE,
         DpiAwarenessMode.System => PROCESS_DPI_AWARENESS.PROCESS_SYSTEM_DPI_AWARE,
@@ -69,5 +97,8 @@ internal static class DpiModeEnumConvert
         _ => null
     };
 
-    internal const DpiAwarenessMode ReservedDpiModeEnum = (DpiAwarenessMode)byte.MaxValue;
+    /// <summary>
+    /// 为系统保留的 <see cref="DpiAwarenessMode"/> 枚举值，用作输入参数时无效。
+    /// </summary>
+    public const DpiAwarenessMode ReservedDpiAwarenessMode = (DpiAwarenessMode)byte.MaxValue;
 }

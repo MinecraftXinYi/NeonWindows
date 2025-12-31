@@ -22,10 +22,10 @@ public static class XDpiInfoApi
     public static extern uint GetDpiForWindow(nint hwnd);
 
     /// <summary>
-    /// 从给定的 DPI_AWARENESS_CONTEXT 句柄检索 DPI。 这使你可以确定线程的 DPI，而无需检查在该线程中创建的窗口。
+    /// 从给定的 <see cref="DPI_AWARENESS_CONTEXT"/> 句柄检索 DPI。 这使你可以确定线程的 DPI，而无需检查在该线程中创建的窗口。
     /// </summary>
-    /// <param name="value">要检查的 DPI_AWARENESS_CONTEXT 句柄。</param>
-    /// <returns>与 DPI_AWARENESS_CONTEXT 句柄关联的 DPI 值。</returns>
+    /// <param name="value">要检查的 <see cref="DPI_AWARENESS_CONTEXT"/> 句柄。</param>
+    /// <returns>与 <see cref="DPI_AWARENESS_CONTEXT"/> 句柄关联的 DPI 值。</returns>
     [DllImport(Win32DllName.ExtMsWinRTCoreNtUserDPIL120, ExactSpelling = true)]
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
     public static extern uint GetDpiFromDpiAwarenessContext(DPI_AWARENESS_CONTEXT value);

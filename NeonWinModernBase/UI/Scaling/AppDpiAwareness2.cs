@@ -1,6 +1,4 @@
-﻿using NeonWindows.ABI.System;
-using NeonWindows.ABI.UI.Scaling;
-using NeonWindows.ABI.UI.Windowing;
+﻿using NeonWindows.ABI.UI.Scaling;
 using System;
 
 namespace NeonWindows.UI.Scaling;
@@ -45,45 +43,6 @@ public static class AppDpiAwareness2
         catch (TypeLoadException)
         {
             throw new PlatformNotSupportedException();
-        }
-    }
-
-    /// <summary>
-    /// 获取指定窗口的 DPI 感知模式。
-    /// </summary>
-    /// <param name="hWnd">检索其 DPI 感知模式的窗口句柄。</param>
-    /// <returns>指定窗口的 DPI 感知模式。</returns>
-    /// <exception cref="PlatformNotSupportedException"></exception>
-    public static DpiAwarenessMode? GetDpiAwarenessModeForWindow(nint hWnd)
-    {
-        try
-        {
-            return DpiModeEnumConvert.FromDpiAwarenessContext(WindowDpiContextApi.GetWindowDpiAwarenessContext(hWnd));
-        }
-        catch (TypeLoadException)
-        {
-            uint pid;
-            try
-            {
-                if (WindowProcessThreadApi.GetWindowThreadProcessId(hWnd, out pid) == 0) return null;
-            }
-            catch (TypeLoadException)
-            {
-                throw new PlatformNotSupportedException();
-            }
-            nint hProcess = ProcessThreadsApi.OpenProcess(PROCESS_ACCESS_RIGHTS.PROCESS_QUERY_INFORMATION | PROCESS_ACCESS_RIGHTS.PROCESS_VM_READ, false, pid);
-            if (hProcess == default) return null;
-            try
-            {
-                DpiAwarenessMode? dpiMode = AppDpiAwareness.GetDpiAwarenessModeForProcess(hProcess);
-                HandleApi.CloseHandle(hProcess);
-                return dpiMode;
-            }
-            catch (PlatformNotSupportedException e)
-            {
-                HandleApi.CloseHandle(hProcess);
-                throw e;
-            }
         }
     }
 

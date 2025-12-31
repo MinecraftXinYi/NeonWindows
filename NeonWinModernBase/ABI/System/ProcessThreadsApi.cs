@@ -35,52 +35,32 @@ internal static class ProcessThreadsApi
         => -4;
 
     /// <summary>
-    /// 打开现有的本地进程对象。
-    /// </summary>
-    /// <param name="dwDesiredAccess">对进程对象的访问。 针对进程的安全描述符检查此访问权限。 此参数可以是一个或多个进程访问权限。</param>
-    /// <param name="bInheritHandle">如果此值为 TRUE，则此进程创建的进程将继承句柄。 否则，进程不会继承此句柄。</param>
-    /// <param name="dwProcessId">要打开的本地进程的标识符。</param>
-    /// <returns>如果函数成功，则返回值是指定进程的打开句柄。 如果函数失败，则返回值为 NULL。 要获得更多的错误信息，请调用 GetLastError。</returns>
-    internal static nint OpenProcess(PROCESS_ACCESS_RIGHTS dwDesiredAccess, bool bInheritHandle, uint dwProcessId)
-    {
-        try
-        {
-            [DllImport(Win32DllName.KernelBase, ExactSpelling = true, SetLastError = true)]
-            [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
-            static extern nint OpenProcess(PROCESS_ACCESS_RIGHTS dwDesiredAccess, int bInheritHandle, uint dwProcessId);
-            return OpenProcess(dwDesiredAccess, bInheritHandle ? 1 : 0, dwProcessId);
-        }
-        catch (TypeLoadException)
-        {
-            [DllImport(Win32DllName.Kernel32, ExactSpelling = true, SetLastError = true)]
-            [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
-            static extern nint OpenProcess(PROCESS_ACCESS_RIGHTS dwDesiredAccess, int bInheritHandle, uint dwProcessId);
-            return OpenProcess(dwDesiredAccess, bInheritHandle ? 1 : 0, dwProcessId);
-        }
-    }
-
-    /// <summary>
     /// OpenProcessToken 函数打开与进程关联的访问令牌。
     /// </summary>
     /// <param name="ProcessHandle">打开访问令牌的进程句柄。 进程必须具有 PROCESS_QUERY_LIMITED_INFORMATION 访问权限。 有关详细信息，请参阅进程安全性和访问权限。</param>
     /// <param name="DesiredAccess">指定访问掩码，该掩码指定访问令牌的请求访问类型。 </param>
     /// <param name="TokenHandle">指向句柄的指针，该句柄标识函数返回时新打开的访问令牌。</param>
     /// <returns>如果该函数成功，则返回值为非零值。 如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
-    internal static bool OpenProcessToken(nint ProcessHandle, TOKEN_ACCESS_MASK DesiredAccess, out nint TokenHandle)
+    internal static bool OpenProcessToken(nint ProcessHandle, uint DesiredAccess, out nint TokenHandle)
     {
         try
         {
             [DllImport(Win32DllName.KernelBase, ExactSpelling = true, SetLastError = true)]
             [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
-            static extern int OpenProcessToken(nint ProcessHandle, TOKEN_ACCESS_MASK DesiredAccess, out nint TokenHandle);
+            static extern int OpenProcessToken(nint ProcessHandle, uint DesiredAccess, out nint TokenHandle);
             return OpenProcessToken(ProcessHandle, DesiredAccess, out TokenHandle) != 0;
         }
         catch (TypeLoadException)
         {
             [DllImport(Win32DllName.Advapi32, ExactSpelling = true, SetLastError = true)]
             [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
-            static extern int OpenProcessToken(nint ProcessHandle, TOKEN_ACCESS_MASK DesiredAccess, out nint TokenHandle);
+            static extern int OpenProcessToken(nint ProcessHandle, uint DesiredAccess, out nint TokenHandle);
             return OpenProcessToken(ProcessHandle, DesiredAccess, out TokenHandle) != 0;
         }
     }
+
+    /// <summary>
+    /// 合并 STANDARD_RIGHTS_READ 和 TOKEN_QUERY。
+    /// </summary>
+    internal const uint TOKEN_READ = 0x00020008;
 }
