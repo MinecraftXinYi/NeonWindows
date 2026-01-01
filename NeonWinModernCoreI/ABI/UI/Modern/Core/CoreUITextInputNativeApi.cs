@@ -5,7 +5,7 @@ namespace NeonWindows.ABI.UI.Modern.Core;
 public unsafe static class CoreUITextInputNativeApi
 {
     /// <summary>
-    /// 为指定的 ITextInputConsumer 对象创建 ITextInputProducer 对象。自 Windows 10 RTM 起可用。
+    /// 为指定的 ITextInputConsumer 对象创建 ITextInputProducer 对象。
     /// </summary>
     /// <param name="pTextInputConsumer">TextInputConsumer 对象的指针。</param>
     /// <param name="pTextInputProducer">TextInputProducer 对象的指针。</param>
@@ -17,8 +17,7 @@ public unsafe static class CoreUITextInputNativeApi
     }
 
     /// <summary>
-    /// Undocumented API Windows.UI.Core.TextInput.dll!#1500
-    /// 用于为指定的 ITextInputConsumer (Undocumented WinRT COM Interface) 对象创建 ITextInputProducer (Undocumented WinRT COM Interface) 对象。自 Windows 10 RTM 起可用。
+    /// 为指定的 ITextInputConsumer 对象创建 ITextInputProducer 对象。
     /// </summary>
     /// <param name="pTextInputConsumer">TextInputConsumer 对象的指针。</param>
     /// <param name="ppTextInputProducer">用于接收 TextInputProducer 对象的指针。</param>

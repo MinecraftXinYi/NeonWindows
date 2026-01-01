@@ -6,7 +6,7 @@ namespace NeonWindows.ABI.UI.Modern.Core;
 public unsafe static class CoreWindowNativeApi
 {
     /// <summary>
-    /// 在 Win32 线程中创建 CoreWindow 对象。自 Windows 10 RTM 起可用。
+    /// 在调用方线程中创建 CoreWindow 对象。
     /// </summary>
     /// <param name="WindowType">CoreWindow 窗口类型。</param>
     /// <param name="WindowTitle">窗口标题。</param>
@@ -27,8 +27,7 @@ public unsafe static class CoreWindowNativeApi
     }
 
     /// <summary>
-    /// Undocumented API Windows.UI.dll!#1500
-    /// 用于在 Win32 线程中创建 CoreWindow 对象。自 Windows 10 RTM 起可用。
+    /// 在调用方线程中创建 CoreWindow 对象。
     /// </summary>
     /// <param name="WindowType">CoreWindow 窗口类型。</param>
     /// <param name="pWindowTitle">窗口标题。</param>
@@ -43,16 +42,5 @@ public unsafe static class CoreWindowNativeApi
     /// <returns>**HRESULT**</returns>
     [DllImport(WinRTDllName.WindowsUI, EntryPoint = "#1500")]
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
-    public static extern int PrivateCreateCoreWindow(
-        WINDOW_TYPE WindowType,
-        char* pWindowTitle,
-        int X,
-        int Y,
-        uint uWidth,
-        uint uHeight,
-        uint dwAttributes,
-        nint hOwnerWindow,
-        Guid riid,
-        nint* ppv
-    );
+    public static extern int PrivateCreateCoreWindow(WINDOW_TYPE WindowType, char* pWindowTitle, int X, int Y, uint uWidth, uint uHeight, uint dwAttributes, nint hOwnerWindow, Guid riid, nint* ppv);
 }
