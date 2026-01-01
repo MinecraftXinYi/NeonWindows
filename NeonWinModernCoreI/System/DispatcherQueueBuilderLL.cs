@@ -1,5 +1,4 @@
-﻿using NeonWindows.ABI;
-using NeonWindows.ABI.System;
+﻿using NeonWindows.ABI.System;
 using System;
 using System.Runtime.InteropServices;
 
@@ -26,7 +25,7 @@ public static class DispatcherQueueBuilderLL
                 dwSize = (uint)Marshal.SizeOf<DispatcherQueueOptions>()
             };
             int hr = DispatcherQueueApi.CreateDispatcherQueueController(options, out nint pDispatcherQueueController);
-            if (hr != CommonHR.S_OK) Marshal.ThrowExceptionForHR(hr);
+            if (hr != 0x00000000) Marshal.ThrowExceptionForHR(hr);
             return pDispatcherQueueController;
         }
         catch (TypeLoadException)
@@ -52,7 +51,7 @@ public static class DispatcherQueueBuilderLL
                 dwSize = (uint)Marshal.SizeOf<DispatcherQueueOptions>()
             };
             int hr = DispatcherQueueApi.CreateDispatcherQueueController(options, out nint pDispatcherQueueController);
-            if (hr != CommonHR.S_OK) Marshal.ThrowExceptionForHR(hr);
+            if (hr != 0x00000000) Marshal.ThrowExceptionForHR(hr);
             return pDispatcherQueueController;
         }
         catch (TypeLoadException)

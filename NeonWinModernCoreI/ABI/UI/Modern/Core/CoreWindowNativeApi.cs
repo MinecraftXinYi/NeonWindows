@@ -19,7 +19,7 @@ public unsafe static class CoreWindowNativeApi
     /// <param name="riid">对象的接口 ID。必须设置为 ICoreWindow 的 UUID，CoreWindow 的默认接口。</param>
     /// <param name="pCoreWindow">CoreWindow 对象的指针。</param>
     /// <returns>**HRESULT**</returns>
-    public static int PrivateCreateCoreWindow(CoreWindowType WindowType, string WindowTitle, int X, int Y, uint uWidth, uint uHeight, uint dwAttributes, nint hOwnerWindow, Guid riid, out nint pCoreWindow)
+    public static int PrivateCreateCoreWindow(WINDOW_TYPE WindowType, string WindowTitle, int X, int Y, uint uWidth, uint uHeight, uint dwAttributes, nint hOwnerWindow, Guid riid, out nint pCoreWindow)
     {
         fixed (nint* ppv = &pCoreWindow)
         fixed (char* pWindowTitle = WindowTitle)
@@ -44,7 +44,7 @@ public unsafe static class CoreWindowNativeApi
     [DllImport(WinRTDllName.WindowsUI, EntryPoint = "#1500")]
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
     public static extern int PrivateCreateCoreWindow(
-        CoreWindowType WindowType,
+        WINDOW_TYPE WindowType,
         char* pWindowTitle,
         int X,
         int Y,

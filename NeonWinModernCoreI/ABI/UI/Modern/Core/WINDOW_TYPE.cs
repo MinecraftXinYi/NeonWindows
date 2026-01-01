@@ -1,6 +1,6 @@
 ﻿namespace NeonWindows.ABI.UI.Modern.Core;
 
-public enum CoreWindowType
+public enum WINDOW_TYPE
 {
     /// <summary>
     /// 该值在非沉浸式进程中不可用
@@ -12,9 +12,6 @@ public enum CoreWindowType
     /// </summary>
     IMMERSIVE_DOCK,
 
-    /// <summary>
-    /// 该值可用
-    /// </summary>
     IMMERSIVE_HOSTED,
 
     /// <summary>
@@ -32,8 +29,5 @@ public enum CoreWindowType
     /// </summary>
     IMMERSIVE_DOCK_ACTIVE,
 
-    /// <summary>
-    /// 该值可用
-    /// </summary>
     NOT_IMMERSIVE
 }
