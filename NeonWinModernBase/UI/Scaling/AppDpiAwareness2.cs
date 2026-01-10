@@ -30,31 +30,30 @@ public static class AppDpiAwareness2
     /// 设置当前线程的 DPI 感知模式。
     /// </summary>
     /// <param name="mode">要设置的 DPI 感知模式。</param>
+    /// <returns>指示操作是否成功。</returns>
     /// <exception cref="ArgumentException"></exception>
-    /// <exception cref="PlatformNotSupportedException"></exception>
-    public static void SetCurrentThreadDpiAwarenessMode(DpiAwarenessMode mode)
+    public static bool SetCurrentThreadDpiAwarenessMode(DpiAwarenessMode mode)
     {
         try
         {
             DPI_AWARENESS_CONTEXT dpiContext = DpiModeEnumConvert.ToCommonDpiAwarenessContext(mode);
             if (dpiContext.IsNull) throw new ArgumentException();
-            if (ThreadDpiContextApi.SetThreadDpiAwarenessContext(dpiContext).IsNull) throw new PlatformNotSupportedException();
+            return !ThreadDpiContextApi.SetThreadDpiAwarenessContext(dpiContext).IsNull;
         }
         catch (TypeLoadException)
         {
-            throw new PlatformNotSupportedException();
+            return false;
         }
     }
 
     /// <summary>
-    /// 设置当前进程的 DPI 感知模式，并提供更多功能。
+    /// 设置当前进程的默认 DPI 感知模式，并提供更多功能。
     /// </summary>
     /// <param name="mode">要设置的 DPI 感知模式。</param>
     /// <param name="enforced">如果此项为 <see cref="true"/>，则将忽略通过此前的 API 调用或在应用程序清单设置的进程的默认 DPI 感知模式。</param>
     /// <param name="applyToThread">指示是否将该 DPI 感知模式设置到当前线程。</param>
     /// <returns>指示操作是否成功。</returns>
     /// <exception cref="ArgumentException"></exception>
-    /// <exception cref="PlatformNotSupportedException"></exception>
     public static bool SetCurrentProcessDpiAwarenessModeEx(DpiAwarenessMode mode, bool enforced = false, bool applyToThread = true)
     {
         try
@@ -67,7 +66,7 @@ public static class AppDpiAwareness2
         }
         catch (TypeLoadException)
         {
-            throw new PlatformNotSupportedException();
+            return false;
         }
     }
 
@@ -80,8 +79,10 @@ public static class AppDpiAwareness2
         {
             try
             {
+                _ = ProcessDpiContextApi.NtUserGetProcessDpiAwarenessContext(default);
+                _ = ThreadDpiContextApi.GetThreadDpiAwarenessContext();
                 _ = ThreadDpiContextApi.SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT.Null);
-                return !ThreadDpiContextApi.GetThreadDpiAwarenessContext().IsNull;
+                return true;
             }
             catch (TypeLoadException)
             {
