@@ -5,7 +5,7 @@
 		<LangVersion>10.0</LangVersion>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<Nullable>enable</Nullable>
-		<ProductVersion>0.10.2.0</ProductVersion>
+		<ProductVersion>0.10.3.0</ProductVersion>
 		<FileVersion>$(ProductVersion)</FileVersion>
 		<CheckNotRecommendedTargetFramework>false</CheckNotRecommendedTargetFramework>
 	</PropertyGroup>

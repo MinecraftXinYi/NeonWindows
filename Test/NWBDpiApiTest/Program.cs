@@ -1,4 +1,5 @@
 ﻿using NeonWindows.UI.Scaling;
+using NWBDpiApiTest;
 using System.Runtime.InteropServices;
 
 // See https://aka.ms/new-console-template for more information
