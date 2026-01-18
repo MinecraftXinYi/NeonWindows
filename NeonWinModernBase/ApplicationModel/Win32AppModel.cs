@@ -7,7 +7,7 @@ namespace NeonWindows.ApplicationModel;
 /// <summary>
 /// 用于检索与 Windows 应用模型相关联的信息。
 /// </summary>
-public static class WinAppModel
+public static class Win32AppModel
 {
     /// <summary>
     /// 指示当前进程是否属于 APPX 应用。
