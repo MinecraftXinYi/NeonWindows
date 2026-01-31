@@ -2,20 +2,20 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace NeonWindows.UI.Modern;
+namespace NeonWindows.UI.Composition;
 
 /// <summary>
 /// 提供针对 Win32 应用的 Windows.UI.Composition 背景画笔渲染支持。
 /// </summary>
-public unsafe static class BackdropCompositionPatch
+public unsafe static class BackdropComposition
 {
     /// <summary>
-    /// 检索指定非 UWP 窗口是否已开启主机背景笔刷支持。
+    /// 检索指定非 UWP 窗口是否已开启主机背景画笔渲染支持。
     /// </summary>
     /// <param name="hWnd">要检索的窗口。</param>
-    /// <param name="enabled">指示是否已开启主机背景笔刷支持。</param>
+    /// <param name="enabled">指示是否已开启主机背景画笔渲染支持。</param>
     /// <returns>指示操作是否成功。</returns>
-    public static bool GetHostBackdropBrushEnabled(nint hWnd, out bool enabled)
+    public static bool GetHostBackdropBrushState(nint hWnd, out bool enabled)
     {
         WindowCompositionAttribData dwAttribute;
         dwAttribute.Attrib = WindowCompositionAttrib.WCA_ACCENT_POLICY;
@@ -36,9 +36,9 @@ public unsafe static class BackdropCompositionPatch
     }
 
     /// <summary>
-    /// 为指定非 UWP 窗口开启主机背景笔刷支持。
+    /// 为指定非 UWP 窗口开启主机背景画笔渲染支持。
     /// </summary>
-    /// <param name="hWnd">要开启主机背景笔刷支持的窗口。</param>
+    /// <param name="hWnd">要开启主机背景画笔渲染支持的窗口。</param>
     /// <returns>指示操作是否成功。</returns>
     public static bool EnableHostBackdropBrush(nint hWnd)
     {

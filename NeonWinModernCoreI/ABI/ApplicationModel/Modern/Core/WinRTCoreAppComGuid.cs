@@ -1,4 +1,4 @@
-﻿namespace NeonWindows.ABI.ApplicationModel.Core;
+﻿namespace NeonWindows.ABI.ApplicationModel.Modern.Core;
 
 public static class WinRTCoreAppComGuid
 {

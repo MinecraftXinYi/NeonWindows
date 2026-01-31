@@ -14,7 +14,7 @@ public static class DispatcherQueueBuilderLL
     /// </summary>
     /// <returns>创建的 DispatcherQueueController 对象的指针。</returns>
     /// <exception cref="PlatformNotSupportedException"></exception>
-    public static nint CreateDispatcherQueueForCurrentThread()
+    public static nint CreateDispatcherQueueOnCurrentThread()
     {
         try
         {
@@ -35,19 +35,18 @@ public static class DispatcherQueueBuilderLL
     }
 
     /// <summary>
-    /// 在专用线程上创建 DispatcherQueue。
+    /// 在 STA 单元类型的专用线程上创建 DispatcherQueue。
     /// </summary>
-    /// <param name="apartmentType">DispatcherQueueController COM 单元类型。</param>
     /// <returns>创建的 DispatcherQueueController 对象的指针。</returns>
     /// <exception cref="PlatformNotSupportedException"></exception>
-    public static nint CreateDispatcherQueueOnDedicatedThread(DISPATCHERQUEUE_THREAD_APARTMENTTYPE apartmentType)
+    public static nint CreateDispatcherQueueOnDedicatedSTAThread()
     {
         try
         {
             DispatcherQueueOptions options = new()
             {
                 threadType = DISPATCHERQUEUE_THREAD_TYPE.DQTYPE_THREAD_DEDICATED,
-                apartmentType = apartmentType,
+                apartmentType = DISPATCHERQUEUE_THREAD_APARTMENTTYPE.DQTAT_COM_STA,
                 dwSize = (uint)Marshal.SizeOf<DispatcherQueueOptions>()
             };
             int hr = DispatcherQueueApi.CreateDispatcherQueueController(options, out nint pDispatcherQueueController);
