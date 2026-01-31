@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace NeonWindows.ABI.UI.Modern;
+namespace NeonWindows.ABI.UI.Modern.Core;
 
 public unsafe static class CoreUIControlInputApi
 {
