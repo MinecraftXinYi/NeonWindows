@@ -1,4 +1,4 @@
-﻿namespace NeonWindows.ABI.UI.Modern.Xaml;
+﻿namespace NeonWindows.ABI.UI.Modern.Xaml.Hosting;
 
 public static class WinRTXamlHostComGuid
 {

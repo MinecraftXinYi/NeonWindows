@@ -8,10 +8,13 @@
 		<UseUwp>true</UseUwp>
 		<UseUwpTools>false</UseUwpTools>
 		<IsAotCompatible>true</IsAotCompatible>
-		<ProductVersion>0.0.0.1</ProductVersion>
+		<ProductVersion>0.0.5.0</ProductVersion>
 		<FileVersion>$(ProductVersion)</FileVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\NeonWinModernCoreI\NeonWinModernCoreI.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="ABI\UI\Composition\" />
 	</ItemGroup>
 </Project>
