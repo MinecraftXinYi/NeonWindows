@@ -9,5 +9,4 @@
 		<FileVersion>$(ProductVersion)</FileVersion>
 		<CheckNotRecommendedTargetFramework>false</CheckNotRecommendedTargetFramework>
 	</PropertyGroup>
-
 </Project>

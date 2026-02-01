@@ -4,12 +4,12 @@
 		<RootNamespace>NeonWindows</RootNamespace>
 		<LangVersion>10.0</LangVersion>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<ProductVersion>0.9.0.0</ProductVersion>
+		<Nullable>enable</Nullable>
+		<ProductVersion>0.9.0.1</ProductVersion>
 		<FileVersion>$(ProductVersion)</FileVersion>
 		<CheckNotRecommendedTargetFramework>false</CheckNotRecommendedTargetFramework>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\NeonWinModernBase\NeonWinModernBase.csproj" />
 	</ItemGroup>
-
 </Project>
