@@ -4,7 +4,7 @@ using System;
 namespace NeonWindows.UI.Scaling;
 
 /// <summary>
-/// 提供线程与窗口级别的应用程序 DPI 感知管理功能。
+/// 提供线程级别的应用程序 DPI 感知管理功能。
 /// </summary>
 public static class AppDpiAwareness2
 {

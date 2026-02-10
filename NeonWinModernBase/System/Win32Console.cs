@@ -8,10 +8,10 @@ namespace NeonWindows.System;
 public static class Win32Console
 {
     /// <summary>
-    /// 为当前进程分配控制台。
+    /// 将当前进程附加到控制台。
     /// </summary>
     /// <returns>指示操作是否成功。</returns>
-    public static bool Initialize()
+    public static bool AttachToConsole()
     {
         if (!ConsoleApi.AttachConsole(ConsoleApi.ATTACH_PARENT_PROCESS))
             return ConsoleApi.AllocConsole();
@@ -19,17 +19,17 @@ public static class Win32Console
     }
 
     /// <summary>
-    /// 为当前进程分配控制台。
+    /// 将当前进程附加到指定进程的控制台。
     /// </summary>
     /// <param name="pid">要使用的控制台的进程标识符。</param>
     /// <returns>指示操作是否成功。</returns>
-    public static bool Initialize(uint pid)
+    public static bool AttachToProcessConsole(uint pid)
         => ConsoleApi.AttachConsole(pid);
 
     /// <summary>
     /// 从控制台分离当前进程。
     /// </summary>
     /// <returns>指示操作是否成功。</returns>
-    public static bool Unload()
+    public static bool DetachFromConsole()
         => ConsoleApi.FreeConsole();
 }
