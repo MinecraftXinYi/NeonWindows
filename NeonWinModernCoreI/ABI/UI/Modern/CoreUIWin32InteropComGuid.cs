@@ -1,4 +1,4 @@
-﻿namespace NeonWindows.ABI.UI;
+﻿namespace NeonWindows.ABI.UI.Modern;
 
 public static class CoreUIWin32InteropComGuid
 {

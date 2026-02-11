@@ -10,7 +10,7 @@ namespace NeonWindows.UI.Composition;
 public unsafe static class BackdropComposition
 {
     /// <summary>
-    /// 检索指定非 UWP 窗口是否已开启主机背景画笔渲染支持。
+    /// 检索指定窗口的主机背景画笔渲染的开启状态。
     /// </summary>
     /// <param name="hWnd">要检索的窗口。</param>
     /// <param name="enabled">指示是否已开启主机背景画笔渲染支持。</param>
@@ -36,7 +36,7 @@ public unsafe static class BackdropComposition
     }
 
     /// <summary>
-    /// 为指定非 UWP 窗口开启主机背景画笔渲染支持。
+    /// 为指定窗口开启主机背景画笔渲染支持。
     /// </summary>
     /// <param name="hWnd">要开启主机背景画笔渲染支持的窗口。</param>
     /// <returns>指示操作是否成功。</returns>

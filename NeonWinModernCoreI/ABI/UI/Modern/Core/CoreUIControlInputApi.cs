@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace NeonWindows.ABI.UI.Modern.Core;
 
-public unsafe static class CoreUIControlInputApi
+public static class CoreUIControlInputApi
 {
     /// <summary>
     /// 在调用者的 UI 线程中创建 CoreComponentInputSource 对象。
@@ -13,7 +13,7 @@ public unsafe static class CoreUIControlInputApi
     /// <returns>如果此函数成功，它将返回 S_OK。 否则，它将返回 HRESULT 错误代码。</returns>
     [DllImport(WinRTDllName.WindowsUI, ExactSpelling = true)]
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
-    public static extern int CreateControlInput(Guid riid, nint* ppv);
+    public static extern int CreateControlInput(Guid riid, out nint ppv);
 
     /// <summary>
     /// 在工作线程或 UI 线程中创建 CoreComponentInputSource 对象。
@@ -24,5 +24,5 @@ public unsafe static class CoreUIControlInputApi
     /// <returns>如果此函数成功，它将返回 S_OK。 否则，它将返回 HRESULT 错误代码。</returns>
     [DllImport(WinRTDllName.WindowsUI, ExactSpelling = true)]
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
-    public static extern int CreateControlInputEx(nint pCoreWindow, Guid riid, nint* ppv);
+    public static extern int CreateControlInputEx(nint pCoreWindow, Guid riid, out nint ppv);
 }
