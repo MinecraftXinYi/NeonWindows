@@ -2,7 +2,7 @@
 
 namespace NeonWindows.ABI.UI.Modern.Core;
 
-public static class CoreUITextInputCtlApi
+public static class CoreUITextInputApi
 {
     /// <summary>
     /// 为指定的 ITextInputConsumer 对象创建 ITextInputProducer 对象。

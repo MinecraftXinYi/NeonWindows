@@ -8,7 +8,7 @@
 		<UseUwp>true</UseUwp>
 		<UseUwpTools>false</UseUwpTools>
 		<IsAotCompatible>true</IsAotCompatible>
-		<ProductVersion>0.0.5.0</ProductVersion>
+		<ProductVersion>0.0.8.0</ProductVersion>
 		<FileVersion>$(ProductVersion)</FileVersion>
 	</PropertyGroup>
 	<ItemGroup>
@@ -16,5 +16,6 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="ABI\UI\Composition\" />
+	  <Folder Include="UI\Modern\Xaml\" />
 	</ItemGroup>
 </Project>

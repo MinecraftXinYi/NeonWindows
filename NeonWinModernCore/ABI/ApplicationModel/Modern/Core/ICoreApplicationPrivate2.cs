@@ -6,9 +6,21 @@ namespace NeonWindows.ABI.ApplicationModel.Modern.Core;
 [Guid(WinRTCoreAppComGuid.IID_ICoreApplicationPrivate2)]
 public partial interface ICoreApplicationPrivate2
 {
-    internal void GetIids(out ulong iidCount, out nint iids);
+    [PreserveSig]
+    internal int GetIids(out ulong iidCount, out nint iids);
 
-    internal void GetRuntimeClassName(out nint className);
+    [PreserveSig]
+    internal int GetRuntimeClassName(out nint className);
 
-    internal void GetTrustLevel(out TrustLevel trustLevel);
+    [PreserveSig]
+    internal int GetTrustLevel(out TrustLevel trustLevel);
+
+    [PreserveSig]
+    int InitializeForAttach();
+
+    [PreserveSig]
+    int WaitForActivate(out nint pCoreWindow);
+
+    [PreserveSig]
+    int CreateNonImmersiveView(out nint pCoreApplicationView);
 }
