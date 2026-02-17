@@ -6,13 +6,13 @@ namespace NeonWindows.UI.Modern.Core;
 
 public static class CoreDispatcherBuilder
 {
-    public static CoreDispatcher GetOrCreateCoreDispatcherForCurrentThread()
+    public static CoreDispatcher GetOrCreateDispatcherForCurrentThread()
     {
         using IObjectReference refInternalCoreDispatcherStatic = ActivationFactory.Get(typeof(CoreDispatcher).FullName);
         {
             IInternalCoreDispatcherStatic internalCoreDispatcherStatic = refInternalCoreDispatcherStatic.AsInterface<IInternalCoreDispatcherStatic>();
-            ExceptionHelpers.ThrowExceptionForHR(internalCoreDispatcherStatic.GetOrCreateForCurrentThread(out nint pDispatcher));
-            return CoreDispatcher.FromAbi(pDispatcher);
+            ExceptionHelpers.ThrowExceptionForHR(internalCoreDispatcherStatic.GetOrCreateForCurrentThread(out nint pCoreDispatcher));
+            return CoreDispatcher.FromAbi(pCoreDispatcher);
         }
     }
 }

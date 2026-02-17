@@ -17,8 +17,8 @@ public partial interface IInternalCoreDispatcherStatic
     internal int GetTrustLevel(out TrustLevel trustLevel);
 
     [PreserveSig]
-    int GetForCurrentThread(out nint pDispatcher);
+    int GetForCurrentThread(out nint pCoreDispatcher);
 
     [PreserveSig]
-    int GetOrCreateForCurrentThread(out nint pDispatcher);
+    int GetOrCreateForCurrentThread(out nint pCoreDispatcher);
 }

@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace NeonWindows.ABI.UI;
+namespace NeonWindows.UI;
 
 /// <summary>
 /// 提供 Windows UI 线程模型相关功能。
