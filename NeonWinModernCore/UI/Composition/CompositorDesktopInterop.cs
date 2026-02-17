@@ -1,14 +1,15 @@
 ﻿using NeonWindows.ABI.UI.Composition;
 using Windows.UI.Composition;
+using Windows.UI.Composition.Desktop;
 using WinRT;
 
 namespace NeonWindows.UI.Composition;
 
 public static class CompositorDesktopInterop
 {
-    public static CompositionTarget CreateDesktopWindowTarget(Compositor compositor, nint hwndTarget, bool isTopmost)
+    public static DesktopWindowTarget CreateDesktopWindowTarget(this Compositor compositor, nint hwndTarget, bool isTopmost)
     {
-        compositor.As<ICompositorDesktopInterop>().CreateDesktopWindowTarget(hwndTarget, isTopmost, out nint test);
-        return CompositionTarget.FromAbi(test);
+        compositor.As<ICompositorDesktopInterop>().CreateDesktopWindowTarget(hwndTarget, isTopmost, out nint pDesktopWindowTarget);
+        return DesktopWindowTarget.FromAbi(pDesktopWindowTarget);
     }
 }
