@@ -10,7 +10,7 @@ public static class CoreUITextInputApi
     /// <param name="pTextInputConsumer">TextInputConsumer 对象的指针。</param>
     /// <param name="pTextInputProducer">TextInputProducer 对象的指针。</param>
     /// <returns>**HRESULT**</returns>
-    [DllImport(WinRTDllName.WindowsUICoreTextInput, EntryPoint = "#1500")]
+    [DllImport(WinRTDllName.WindowsUICoreTextInput, EntryPoint = "#1500", ExactSpelling = true)]
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
     public static extern int PrivateCreateTextInputProducer(nint pTextInputConsumer, out nint pTextInputProducer);
 }

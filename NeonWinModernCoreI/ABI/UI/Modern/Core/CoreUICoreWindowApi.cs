@@ -19,7 +19,7 @@ public static class CoreUICoreWindowApi
     /// <param name="riid">对象的接口 ID。必须设置为 ICoreWindow 的 UUID，CoreWindow 的默认接口。</param>
     /// <param name="ppv">用于接收 CoreWindow 对象的指针。</param>
     /// <returns>**HRESULT**</returns>
-    [DllImport(WinRTDllName.WindowsUI, EntryPoint = "#1500")]
+    [DllImport(WinRTDllName.WindowsUI, EntryPoint = "#1500", ExactSpelling = true)]
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
     public static extern int PrivateCreateCoreWindow(
         WINDOW_TYPE WindowType,
