@@ -7,27 +7,37 @@ namespace NeonWindows.System;
 
 public static class DispatcherQueueBuilder
 {
-    public static DispatcherQueueController CreateDispatcherQueueForCurrentThread()
+    public static DispatcherQueue CreateDispatcherQueueForCurrentThread(out DispatcherQueueController controller)
     {
         DispatcherQueueOptions options = new()
         {
             threadType = DISPATCHERQUEUE_THREAD_TYPE.DQTYPE_THREAD_CURRENT,
             apartmentType = DISPATCHERQUEUE_THREAD_APARTMENTTYPE.DQTAT_COM_NONE
         };
-        options.dwSize = (uint)Marshal.SizeOf(options);
-        ExceptionHelpers.ThrowExceptionForHR(DispatcherQueueApi.CreateDispatcherQueueController(options, out nint pDispatcherQueueController));
-        return DispatcherQueueController.FromAbi(pDispatcherQueueController);
+        return CreateDispatcherQueueInternal(options, out controller);
     }
 
-    public static DispatcherQueueController CreateDispatcherQueueOnDedicatedSTAThread()
+    public static DispatcherQueue CreateDispatcherQueueForCurrentThread2()
+    {
+        DispatcherQueueApi2.CreateDispatcherQueueForCurrentThread(out nint pDispatcherQueue);
+        return DispatcherQueue.FromAbi(pDispatcherQueue);
+    }
+
+    public static DispatcherQueue CreateDispatcherQueueOnDedicatedSTAThread(out DispatcherQueueController controller)
     {
         DispatcherQueueOptions options = new()
         {
             threadType = DISPATCHERQUEUE_THREAD_TYPE.DQTYPE_THREAD_DEDICATED,
             apartmentType = DISPATCHERQUEUE_THREAD_APARTMENTTYPE.DQTAT_COM_STA
         };
+        return CreateDispatcherQueueInternal(options, out controller);
+    }
+
+    private static DispatcherQueue CreateDispatcherQueueInternal(DispatcherQueueOptions options, out DispatcherQueueController controller)
+    {
         options.dwSize = (uint)Marshal.SizeOf(options);
         ExceptionHelpers.ThrowExceptionForHR(DispatcherQueueApi.CreateDispatcherQueueController(options, out nint pDispatcherQueueController));
-        return DispatcherQueueController.FromAbi(pDispatcherQueueController);
+        controller = DispatcherQueueController.FromAbi(pDispatcherQueueController);
+        return controller.DispatcherQueue;
     }
 }
