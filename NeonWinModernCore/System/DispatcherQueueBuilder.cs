@@ -17,12 +17,6 @@ public static class DispatcherQueueBuilder
         return CreateDispatcherQueueInternal(options, out controller);
     }
 
-    public static DispatcherQueue CreateDispatcherQueueForCurrentThread2()
-    {
-        DispatcherQueueApi2.CreateDispatcherQueueForCurrentThread(out nint pDispatcherQueue);
-        return DispatcherQueue.FromAbi(pDispatcherQueue);
-    }
-
     public static DispatcherQueue CreateDispatcherQueueOnDedicatedSTAThread(out DispatcherQueueController controller)
     {
         DispatcherQueueOptions options = new()
@@ -31,6 +25,12 @@ public static class DispatcherQueueBuilder
             apartmentType = DISPATCHERQUEUE_THREAD_APARTMENTTYPE.DQTAT_COM_STA
         };
         return CreateDispatcherQueueInternal(options, out controller);
+    }
+
+    public static DispatcherQueue CreateDispatcherQueueForCurrentThread2()
+    {
+        DispatcherQueueApi2.CreateDispatcherQueueForCurrentThread(out nint pDispatcherQueue);
+        return DispatcherQueue.FromAbi(pDispatcherQueue);
     }
 
     private static DispatcherQueue CreateDispatcherQueueInternal(DispatcherQueueOptions options, out DispatcherQueueController controller)

@@ -3,7 +3,7 @@
 namespace NeonWindows.ABI.UI.Modern.Core;
 
 [Flags]
-public enum COREINPUT_POINTER_TYPE
+public enum COREINPUT_POINTER_TYPE : uint
 {
     CIPT_NONE,
     CIPT_TOUCH,

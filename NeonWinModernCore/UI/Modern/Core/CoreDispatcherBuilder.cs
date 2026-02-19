@@ -11,8 +11,8 @@ public static class CoreDispatcherBuilder
         using IObjectReference refInternalCoreDispatcherStatic = ActivationFactory.Get(typeof(CoreDispatcher).FullName);
         {
             IInternalCoreDispatcherStatic internalCoreDispatcherStatic = refInternalCoreDispatcherStatic.AsInterface<IInternalCoreDispatcherStatic>();
-            ExceptionHelpers.ThrowExceptionForHR(internalCoreDispatcherStatic.GetOrCreateForCurrentThread(out nint pCoreDispatcher));
-            return CoreDispatcher.FromAbi(pCoreDispatcher);
+            ExceptionHelpers.ThrowExceptionForHR(internalCoreDispatcherStatic.GetOrCreateForCurrentThread(out nint pDispatcher));
+            return CoreDispatcher.FromAbi(pDispatcher);
         }
     }
 }
