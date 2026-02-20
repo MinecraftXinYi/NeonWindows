@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 using WinRT;
 
 namespace NeonWindows.ABI.UI.Modern.Core;
 
+[GeneratedComInterface]
 [Guid(WinRTCoreUIComGuid.IID_ITextInputConsumer)]
 public partial interface ITextInputConsumer
 {

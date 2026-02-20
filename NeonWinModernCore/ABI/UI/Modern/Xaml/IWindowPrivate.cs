@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 using WinRT;
 
 namespace NeonWindows.ABI.UI.Modern.Xaml;
 
+[GeneratedComInterface]
 [Guid(WinRTXamlPrivateComGuid.IWindowPrivate)]
 public partial interface IWindowPrivate
 {

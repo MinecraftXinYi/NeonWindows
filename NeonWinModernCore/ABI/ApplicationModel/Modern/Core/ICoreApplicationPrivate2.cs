@@ -1,8 +1,10 @@
 ﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 using WinRT;
 
 namespace NeonWindows.ABI.ApplicationModel.Modern.Core;
 
+[GeneratedComInterface]
 [Guid(WinRTCoreAppComGuid.IID_ICoreApplicationPrivate2)]
 public partial interface ICoreApplicationPrivate2
 {

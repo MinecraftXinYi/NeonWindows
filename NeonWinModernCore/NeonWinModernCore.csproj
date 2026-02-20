@@ -8,7 +8,9 @@
 		<UseUwp>true</UseUwp>
 		<UseUwpTools>false</UseUwpTools>
 		<IsAotCompatible>true</IsAotCompatible>
-		<ProductVersion>0.10.0.0</ProductVersion>
+	</PropertyGroup>
+	<PropertyGroup>
+		<ProductVersion>0.12.0.0</ProductVersion>
 		<FileVersion>$(ProductVersion)</FileVersion>
 	</PropertyGroup>
 	<ItemGroup>

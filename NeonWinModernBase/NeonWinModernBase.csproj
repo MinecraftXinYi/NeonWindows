@@ -6,7 +6,9 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<Nullable>enable</Nullable>
 		<CheckNotRecommendedTargetFramework>false</CheckNotRecommendedTargetFramework>
-		<ProductVersion>0.12.2.0</ProductVersion>
+	</PropertyGroup>
+	<PropertyGroup>
+		<ProductVersion>0.12.3.0</ProductVersion>
 		<FileVersion>$(ProductVersion)</FileVersion>
 	</PropertyGroup>
 </Project>

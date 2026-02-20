@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 using Windows.UI.Core;
 
 namespace NeonWindows.ABI.UI.Modern.Core;
@@ -6,6 +7,7 @@ namespace NeonWindows.ABI.UI.Modern.Core;
 /// <summary>
 /// 使应用能够获取窗口 (与此接口关联的 <see cref="CoreWindow"/>) 的窗口句柄。
 /// </summary>
+[GeneratedComInterface]
 [Guid(WinRTCoreUIComGuid.IID_ICoreWindowInterop)]
 public partial interface ICoreWindowInterop
 {

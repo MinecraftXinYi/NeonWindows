@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 using Windows.UI.Xaml.Hosting;
 
 namespace NeonWindows.ABI.UI.Modern.Xaml.Hosting;
@@ -6,6 +7,7 @@ namespace NeonWindows.ABI.UI.Modern.Xaml.Hosting;
 /// <summary>
 /// 提供可用于将承载 WinRT XAML 控件的 <see cref="DesktopWindowXamlSource"/> 对象附加到桌面应用中的父 UI 元素的成员。
 /// </summary>
+[GeneratedComInterface]
 [Guid(WinRTXamlHostComGuid.IID_IDesktopWindowXamlSourceNative)]
 public partial interface IDesktopWindowXamlSourceNative
 {

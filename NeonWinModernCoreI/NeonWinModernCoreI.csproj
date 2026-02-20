@@ -5,7 +5,9 @@
 		<LangVersion>10.0</LangVersion>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<Nullable>enable</Nullable>
-		<ProductVersion>0.14.0.0</ProductVersion>
+	</PropertyGroup>
+	<PropertyGroup>
+		<ProductVersion>0.14.1.0</ProductVersion>
 		<FileVersion>$(ProductVersion)</FileVersion>
 	</PropertyGroup>
 	<ItemGroup>
