@@ -3,6 +3,6 @@
 public static class WinRTXamlHostComName
 {
     public static readonly string
-        XamlPresenter = "Windows.UI.Xaml.Hosting.XamlPresenter",
-        XamlRuntime = "Windows.UI.Xaml.Hosting.XamlRuntime";
+        WUXHXamlPresenter = "Windows.UI.Xaml.Hosting.XamlPresenter",
+        WUXHXamlRuntime = "Windows.UI.Xaml.Hosting.XamlRuntime";
 }
