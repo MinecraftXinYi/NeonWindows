@@ -7,7 +7,7 @@ namespace NeonWindows.ApplicationModel.Modern.Core;
 /// <summary>
 /// 提供 <see cref="CoreApplication"/> 与传统 Win32 应用模型的互操作功能。
 /// </summary>
-public static class CoreApplicationWin32
+public static class CoreApplication2
 {
     /// <summary>
     /// 在当前线程上创建非沉浸式 <see cref="CoreApplicationView"/> 。
@@ -15,8 +15,11 @@ public static class CoreApplicationWin32
     /// <returns>创建的 <see cref="CoreApplicationView"/> 。</returns>
     public static CoreApplicationView CreateNotImmersiveView()
     {
-        ICoreApplicationPrivate2 coreApplicationPrivate2 = CoreApplication.As<ICoreApplicationPrivate2>();
+        ICoreApplicationPrivate2 coreApplicationPrivate2 = GetInterfaceCoreApplicationPrivate2();
         ExceptionHelpers.ThrowExceptionForHR(coreApplicationPrivate2.CreateNonImmersiveView(out nint pCoreApplicationView));
         return CoreApplicationView.FromAbi(pCoreApplicationView);
     }
+
+    private static ICoreApplicationPrivate2 GetInterfaceCoreApplicationPrivate2()
+        =>  CoreApplication.As<ICoreApplicationPrivate2>();
 }

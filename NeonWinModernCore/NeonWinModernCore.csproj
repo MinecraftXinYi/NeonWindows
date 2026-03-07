@@ -10,7 +10,7 @@
 		<IsAotCompatible>true</IsAotCompatible>
 	</PropertyGroup>
 	<PropertyGroup>
-		<ProductVersion>0.12.0.0</ProductVersion>
+		<ProductVersion>0.12.2.0</ProductVersion>
 		<FileVersion>$(ProductVersion)</FileVersion>
 	</PropertyGroup>
 	<ItemGroup>

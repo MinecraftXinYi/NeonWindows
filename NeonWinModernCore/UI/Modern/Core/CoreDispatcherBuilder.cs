@@ -15,11 +15,11 @@ public static class CoreDispatcherBuilder
     /// <returns>与当前线程相关联的 <see cref="CoreDispatcher"/> 。</returns>
     public static CoreDispatcher GetOrCreateDispatcherForCurrentThread()
     {
-        using IObjectReference refInternalCoreDispatcherStatic = ActivationFactory.Get(typeof(CoreDispatcher).FullName);
-        {
-            IInternalCoreDispatcherStatic internalCoreDispatcherStatic = refInternalCoreDispatcherStatic.AsInterface<IInternalCoreDispatcherStatic>();
-            ExceptionHelpers.ThrowExceptionForHR(internalCoreDispatcherStatic.GetOrCreateForCurrentThread(out nint pDispatcher));
-            return CoreDispatcher.FromAbi(pDispatcher);
-        }
+        IInternalCoreDispatcherStatic internalCoreDispatcherStatic = GetInterfaceInternalCoreDispatcherStatic();
+        ExceptionHelpers.ThrowExceptionForHR(internalCoreDispatcherStatic.GetOrCreateForCurrentThread(out nint pDispatcher));
+        return CoreDispatcher.FromAbi(pDispatcher);
     }
+
+    private static IInternalCoreDispatcherStatic GetInterfaceInternalCoreDispatcherStatic()
+        => ActivationFactory.Get(typeof(CoreDispatcher).FullName).AsInterface<IInternalCoreDispatcherStatic>();
 }
