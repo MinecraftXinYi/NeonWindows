@@ -1,14 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="..\NeonWinModernBase\NeonWinModern.props" />
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
-		<RootNamespace>NeonWindows</RootNamespace>
 		<LangVersion>10.0</LangVersion>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<Nullable>enable</Nullable>
-	</PropertyGroup>
-	<PropertyGroup>
-		<ProductVersion>0.14.4.0</ProductVersion>
-		<FileVersion>$(ProductVersion)</FileVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\NeonWinModernBase\NeonWinModernBase.csproj" />

@@ -2,7 +2,7 @@
 
 namespace NeonWindows.ABI.ApplicationModel;
 
-public static class WinUserImmersiveProcessApi
+public static class WinUserImrsivProcApi
 {
     /// <summary>
     /// 确定进程是否属于 Windows 应用商店应用。

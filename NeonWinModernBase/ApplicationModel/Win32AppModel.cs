@@ -45,7 +45,7 @@ public static class Win32AppModel
             {
                 try
                 {
-                    return WinUserImmersiveProcessApi.IsImmersiveProcess(ProcessThreadsApi.GetCurrentProcess());
+                    return WinUserImrsivProcApi.IsImmersiveProcess(ProcessThreadsApi.GetCurrentProcess());
                 }
                 catch (TypeLoadException)
                 {

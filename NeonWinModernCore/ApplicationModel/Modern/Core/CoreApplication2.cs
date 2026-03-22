@@ -15,11 +15,8 @@ public static class CoreApplication2
     /// <returns>创建的 <see cref="CoreApplicationView"/> 。</returns>
     public static CoreApplicationView CreateNotImmersiveView()
     {
-        ICoreApplicationPrivate2 coreApplicationPrivate2 = GetInterfaceCoreApplicationPrivate2();
+        ICoreApplicationPrivate2 coreApplicationPrivate2 = CoreApplication.As<ICoreApplicationPrivate2>();
         ExceptionHelpers.ThrowExceptionForHR(coreApplicationPrivate2.CreateNonImmersiveView(out nint pCoreApplicationView));
         return CoreApplicationView.FromAbi(pCoreApplicationView);
     }
-
-    private static ICoreApplicationPrivate2 GetInterfaceCoreApplicationPrivate2()
-        =>  CoreApplication.As<ICoreApplicationPrivate2>();
 }

@@ -1,0 +1,7 @@
+<Project>
+	<PropertyGroup>
+		<RootNamespace>NeonWindows</RootNamespace>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+</Project>

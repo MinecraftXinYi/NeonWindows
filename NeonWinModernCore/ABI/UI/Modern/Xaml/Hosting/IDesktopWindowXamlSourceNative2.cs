@@ -28,5 +28,6 @@ public unsafe partial interface IDesktopWindowXamlSourceNative2
     /// </summary>
     /// <param name="message">要处理的 Windows 消息。</param>
     /// <returns>如果消息已处理，则为 True；否则为 false。</returns>
-    [return: MarshalAs(UnmanagedType.Bool)] bool PreTranslateMessage(void* message);
+    [return: MarshalAs(UnmanagedType.Bool)]
+    bool PreTranslateMessage(void* message);
 }

@@ -16,11 +16,11 @@ public static class CoreApplication2
     /// <returns>创建的 <see cref="CoreApplicationView"/> 。</returns>
     public static CoreApplicationView CreateNotImmersiveView()
     {
-        ICoreApplicationPrivate2 coreApplicationPrivate2 = GetInterfaceCoreApplicationPrivate2();
+        ICoreApplicationPrivate2 coreApplicationPrivate2 = (ICoreApplicationPrivate2)ActivationFactoryForCoreApplication;
         Marshal.ThrowExceptionForHR(coreApplicationPrivate2.CreateNonImmersiveView(out nint pCoreApplicationView));
         return (CoreApplicationView)Marshal.GetObjectForIUnknown(pCoreApplicationView);
     }
 
-    private static ICoreApplicationPrivate2 GetInterfaceCoreApplicationPrivate2()
-        => (ICoreApplicationPrivate2)WindowsRuntimeMarshal.GetActivationFactory(typeof(CoreApplication));
+    private static IActivationFactory ActivationFactoryForCoreApplication
+        => WindowsRuntimeMarshal.GetActivationFactory(typeof(CoreApplication));
 }
