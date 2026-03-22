@@ -1,11 +1,11 @@
 ﻿using System.Threading;
 
-namespace NeonWindows.UI;
+namespace NeonWindows.ApplicationModel;
 
 /// <summary>
-/// 提供 Windows UI 线程模型相关功能。
+/// 提供 Windows STA 线程模型相关功能。
 /// </summary>
-public static class UIThreadingModel
+public static class STAThreadingModel
 {
     /// <summary>
     /// 检索当前线程是否为 STA 模型线程。

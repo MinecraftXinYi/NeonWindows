@@ -12,7 +12,7 @@
 	</PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\NeonWinCompModel\NeonWinCompModel.csproj" />
+    <ProjectReference Include="..\..\NeonWinComModel\NeonWinComModel.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,9 +2,9 @@
 
 namespace NeonWindows.ABI;
 
-internal static class NtProcThreadInfoApi
+internal unsafe static class RtlProcEnvApi
 {
     [DllImport("ntdll.dll")]
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
-    internal static extern nint RtlGetCurrentPeb();
+    internal static extern PEB* RtlGetCurrentPeb();
 }
