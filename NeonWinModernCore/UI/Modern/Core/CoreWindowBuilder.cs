@@ -30,7 +30,10 @@ public static class CoreWindowBuilder
     public static CoreWindow CreateNotImmersiveCoreWindow(string title, RectInt32 rect, nint hOwnerWindow)
         => CreateCoreWindowInternal(WINDOW_TYPE.NOT_IMMERSIVE, title, rect, hOwnerWindow);
 
-    private static CoreWindow CreateCoreWindowInternal(WINDOW_TYPE type, string title, RectInt32 rect, nint hOwnerWindow)
+    public static CoreWindow CreateCustomCoreWindow(int type, string title, RectInt32 rect, nint hOwnerWindow)
+        => CreateCoreWindowInternal((WINDOW_TYPE)type, title, rect, hOwnerWindow);
+
+    internal static CoreWindow CreateCoreWindowInternal(WINDOW_TYPE type, string title, RectInt32 rect, nint hOwnerWindow)
     {
         ExceptionHelpers.ThrowExceptionForHR(CoreUICoreWindowApi.PrivateCreateCoreWindow(type, title, rect.X, rect.Y, (uint)rect.Width, (uint)rect.Height,
             0, hOwnerWindow, typeof(ICoreWindow).GUID, out nint pCoreWindow));

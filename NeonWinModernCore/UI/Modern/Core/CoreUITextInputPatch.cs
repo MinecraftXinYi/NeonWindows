@@ -16,9 +16,11 @@ public static class CoreUITextInputPatch
     /// <param name="coreWindow">需要修补的 <see cref="CoreWindow"/> 。</param>
     /// <returns>用于修补的内部 COM 接口指针。</returns>
     public static nint FixTextInputBehavioursForCoreWindow(CoreWindow coreWindow)
+        => InitializeTextInputProducerForConsumer(coreWindow.As<ITextInputConsumer>());
+
+    internal static nint InitializeTextInputProducerForConsumer(ITextInputConsumer textInputConsumer)
     {
-        ITextInputConsumer textInputConsumer = coreWindow.As<ITextInputConsumer>();
-        ComWrappers.TryGetComInstance(textInputConsumer, out nint pTextInputConsumer);
+        nint pTextInputConsumer = textInputConsumer.GetAbi();
         int hr = CoreUITextInputApi.PrivateCreateTextInputProducer(pTextInputConsumer, out nint pTextInputProducer);
         Marshal.Release(pTextInputConsumer);
         ExceptionHelpers.ThrowExceptionForHR(hr);
