@@ -8,7 +8,7 @@ namespace NeonWindows.UI.Modern.Core;
 /// <summary>
 /// 提供创建 <see cref="CoreWindow"/> 的功能。
 /// </summary>
-public static class CoreWindowBuilder
+public static class CoreWindowFactory
 {
     /// <summary>
     /// 为当前线程创建 ImmersiveHosted 类型的 <see cref="CoreWindow"/> 。

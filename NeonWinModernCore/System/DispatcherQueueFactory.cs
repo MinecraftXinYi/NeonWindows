@@ -8,7 +8,7 @@ namespace NeonWindows.System;
 /// <summary>
 /// 提供创建并初始化 <see cref="DispatcherQueue"/> 实例的功能。
 /// </summary>
-public static class DispatcherQueueBuilder
+public static class DispatcherQueueFactory
 {
     /// <summary>
     /// 在当前线程上创建并初始化 <see cref="DispatcherQueue"/> 实例。

@@ -18,8 +18,8 @@ public static class Win32AppModel
         {
             try
             {
-                uint length = 0;
-                return AppModelApi.GetCurrentPackageFullName(ref length, null) != AppModelApi.APPMODEL_ERROR_NO_PACKAGE;
+                uint length = uint.MinValue;
+                return AppModelApi.GetCurrentPackageFamilyName(ref length, null) != AppModelApi.APPMODEL_ERROR_NO_PACKAGE;
             }
             catch (TypeLoadException)
             {

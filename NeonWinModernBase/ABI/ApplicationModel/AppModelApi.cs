@@ -7,26 +7,26 @@ namespace NeonWindows.ABI.ApplicationModel;
 public static class AppModelApi
 {
     /// <summary>
-    /// 获取调用进程的包全名。
+    /// 获取调用进程的包系列名称。
     /// </summary>
-    /// <param name="packageFullNameLength">输入时， packageFullName 缓冲区的大小（以字符为单位）。 输出时，返回包全名的大小（以字符为单位），包括 null 终止符。</param>
-    /// <param name="packageFullName">包全名。</param>
-    /// <returns>如果函数成功，则返回 ERROR_SUCCESS。 否则，函数将返回错误代码。</returns>
-    public static long GetCurrentPackageFullName(ref uint packageFullNameLength, StringBuilder? packageFullName)
+    /// <param name="packageFamilyNameLength">输入时， packageFamilyName 缓冲区的大小（以字符为单位），包括 null 终止符。 输出时，返回的包系列名称的大小（以字符为单位），包括 null 终止符。</param>
+    /// <param name="packageFamilyName">包系列名称。</param>
+    /// <returns>如果该函数成功，则返回 ERROR_SUCCESS。 否则，该函数将返回错误代码。</returns>
+    public static long GetCurrentPackageFamilyName(ref uint packageFamilyNameLength, StringBuilder? packageFamilyName)
     {
         try
         {
             [DllImport(Win32DllName.KernelBase, ExactSpelling = true)]
             [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
-            static extern long GetCurrentPackageFullName(ref uint packageFullNameLength, StringBuilder? packageFullName);
-            return GetCurrentPackageFullName(ref packageFullNameLength, packageFullName);
+            static extern long GetCurrentPackageFamilyName(ref uint packageFamilyNameLength, StringBuilder? packageFamilyName);
+            return GetCurrentPackageFamilyName(ref packageFamilyNameLength, packageFamilyName);
         }
         catch (TypeLoadException)
         {
             [DllImport(Win32DllName.Kernel32, ExactSpelling = true)]
             [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
-            static extern long GetCurrentPackageFullName(ref uint packageFullNameLength, StringBuilder? packageFullName);
-            return GetCurrentPackageFullName(ref packageFullNameLength, packageFullName);
+            static extern long GetCurrentPackageFamilyName(ref uint packageFamilyNameLength, StringBuilder? packageFamilyName);
+            return GetCurrentPackageFamilyName(ref packageFamilyNameLength, packageFamilyName);
         }
     }
 
