@@ -24,14 +24,14 @@ public static class CoreInputBuilder
         return MarshalInterface<ICoreInputSourceBase>.FromAbi(ppv);
     }
 
-    private static nint CreateCoreInputInternal(COREINPUT_TYPE type, CoreInputDeviceTypes inputDeviceTypes)
+    internal static nint CreateCoreInputInternal(COREINPUT_TYPE type, CoreInputDeviceTypes inputDeviceTypes)
     {
         COREINPUT_POINTER_TYPE pointerTypes = (COREINPUT_POINTER_TYPE)inputDeviceTypes;
         ExceptionHelpers.ThrowExceptionForHR(CoreUICoreInputApi.PrivateCreateCoreInput(type, pointerTypes, COREINPUT_FLAGS.CIF_NONE, typeof(ICoreInputSourceBase).GUID, out nint ppv));
         return ppv;
     }
 
-    private static nint CreateCoreInputInternal2(CoreWindow coreWindow, COREINPUT_TYPE type, CoreInputDeviceTypes inputDeviceTypes)
+    internal static nint CreateCoreInputInternal2(CoreWindow coreWindow, COREINPUT_TYPE type, CoreInputDeviceTypes inputDeviceTypes)
     {
         COREINPUT_POINTER_TYPE pointerTypes = (COREINPUT_POINTER_TYPE)inputDeviceTypes;
         nint pCoreWindow = MarshalInspectable<CoreWindow>.FromManaged(coreWindow);

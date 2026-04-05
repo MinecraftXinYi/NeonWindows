@@ -7,19 +7,20 @@ namespace NeonWindows.ApplicationModel;
 /// <summary>
 /// 用于检索与 Windows 应用模型相关联的信息。
 /// </summary>
-public static class Win32AppModel
+public unsafe static class Win32AppModel
 {
     /// <summary>
-    /// 指示当前进程是否属于 APPX 应用。
+    /// 指示当前应用是否正以 AppX 形式运行。
     /// </summary>
-    public static bool IsAPPX
+    public static bool IsRunningAsAppX
     {
         get
         {
             try
             {
-                uint length = uint.MinValue;
-                return AppModelApi.GetCurrentPackageFamilyName(ref length, null) != AppModelApi.APPMODEL_ERROR_NO_PACKAGE;
+                uint length = sbyte.MaxValue + 1;
+                char* buffer = stackalloc char[(int)length];
+                return AppModelApi.GetCurrentPackageFamilyName(ref length, (nint)buffer) != AppModelApi.APPMODEL_ERROR_NO_PACKAGE;
             }
             catch (TypeLoadException)
             {
@@ -29,13 +30,13 @@ public static class Win32AppModel
     }
 
     /// <summary>
-    /// 指示当前进程是否属于 UWP 应用。
+    /// 指示当前应用是否作为 UWP App 运行。
     /// </summary>
-    public static bool IsUWP
+    public static bool IsRunningAsUwp
     {
         get
         {
-            if (!IsAPPX) return false;
+            if (!IsRunningAsAppX) return false;
             try
             {
                 AppModelApi.AppPolicyGetWindowingModel(ProcessThreadsApi.GetCurrentProcessToken(), out AppPolicyWindowingModel windowingModel);

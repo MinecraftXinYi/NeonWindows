@@ -24,7 +24,7 @@ public unsafe static class BackdropComposition
         dwAttribute.cbData = (uint)Marshal.SizeOf(policy);
         try
         {
-            bool retval = WindowCompositionNativeApi2.NtUserGetWindowCompositionAttribute(hWnd, &dwAttribute);
+            bool retval = WindowCompositionNativeApi.NtUserGetWindowCompositionAttribute(hWnd, &dwAttribute);
             enabled = policy.AccentState == AccentState.ENABLE_HOSTBACKDROP;
             return retval;
         }
@@ -50,7 +50,7 @@ public unsafe static class BackdropComposition
         dwAttribute.cbData = (uint)Marshal.SizeOf(policy);
         try
         {
-            return WindowCompositionNativeApi2.NtUserSetWindowCompositionAttribute(hWnd, &dwAttribute);
+            return WindowCompositionNativeApi.NtUserSetWindowCompositionAttribute(hWnd, &dwAttribute);
         }
         catch (TypeLoadException)
         {

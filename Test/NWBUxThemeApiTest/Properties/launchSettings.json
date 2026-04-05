@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "NWBUxThemeApiTest (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "NWBUxThemeApiTest (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

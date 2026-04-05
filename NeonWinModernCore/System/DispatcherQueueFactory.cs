@@ -50,7 +50,7 @@ public static class DispatcherQueueFactory
         return DispatcherQueue.FromAbi(pDispatcherQueue);
     }
 
-    private static DispatcherQueue CreateDispatcherQueueInternal(DispatcherQueueOptions options, out DispatcherQueueController controller)
+    internal static DispatcherQueue CreateDispatcherQueueInternal(DispatcherQueueOptions options, out DispatcherQueueController controller)
     {
         options.dwSize = (uint)Marshal.SizeOf(options);
         ExceptionHelpers.ThrowExceptionForHR(DispatcherQueueApi.CreateDispatcherQueueController(options, out nint pDispatcherQueueController));

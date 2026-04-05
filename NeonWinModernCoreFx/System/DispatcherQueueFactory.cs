@@ -49,7 +49,7 @@ public static class DispatcherQueueFactory
         return (DispatcherQueue)Marshal.GetObjectForIUnknown(pDispatcherQueue);
     }
 
-    private static DispatcherQueue CreateDispatcherQueueInternal(DispatcherQueueOptions options, out DispatcherQueueController controller)
+    internal static DispatcherQueue CreateDispatcherQueueInternal(DispatcherQueueOptions options, out DispatcherQueueController controller)
     {
         options.dwSize = (uint)Marshal.SizeOf(options);
         Marshal.ThrowExceptionForHR(DispatcherQueueApi.CreateDispatcherQueueController(options, out nint pDispatcherQueueController));
