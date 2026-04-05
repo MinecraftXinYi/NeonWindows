@@ -2,10 +2,7 @@
 
 public unsafe static class AppCompatDataMarshal
 {
-    public static APPCOMPAT_EXE_DATA* GetAppCompatExeData(void* pPEB)
-        => GetAppCompatExeDataRaw((PEB*)pPEB);
-
-    internal static APPCOMPAT_EXE_DATA* GetAppCompatExeDataRaw(PEB* peb)
+    public static APPCOMPAT_EXE_DATA* GetAppCompatExeData(void* peb)
     {
         int padding = sizeof(void*) - sizeof(uint);
         PEB peb0;

@@ -2,7 +2,7 @@ using Windows.Win32.System.Threading;
 
 namespace NeonWindows.ABI;
 
-internal unsafe partial struct PEB
+internal unsafe struct PEB
 {
     internal _Reserved1_e__FixedBuffer Reserved1;
 

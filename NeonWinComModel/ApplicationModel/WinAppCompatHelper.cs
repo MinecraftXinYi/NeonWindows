@@ -9,7 +9,7 @@ public unsafe static class WinAppCompatHelper
     {
         try
         {
-            APPCOMPAT_EXE_DATA* exeData = AppCompatDataMarshal.GetAppCompatExeDataRaw(RtlProcEnvApi.RtlGetCurrentPeb());
+            APPCOMPAT_EXE_DATA* exeData = AppCompatDataMarshal.GetAppCompatExeData(RtlProcEnvApi.RtlGetCurrentPeb());
             if (exeData is null) return false;
             SWITCH_CONTEXT* scData = &exeData->SwitchContext;
             SWITCH_CONTEXT_DATA* data = &scData->Data;
