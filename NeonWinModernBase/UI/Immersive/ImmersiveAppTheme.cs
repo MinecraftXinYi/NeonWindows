@@ -11,7 +11,7 @@ namespace NeonWindows.UI.Immersive;
 public unsafe static class ImmersiveAppTheme
 {
     /// <summary>
-    /// 设置是否启用窗口上下文菜单深色模式。
+    /// 指示或设置是否启用窗口上下文菜单深色模式。
     /// </summary>
     public static bool UseDarkModeForWindowContextMenu
     {
@@ -21,7 +21,6 @@ public unsafe static class ImmersiveAppTheme
             {
                 PreferredAppMode mode = UXThemeAppModeApi.SetPreferredAppMode(PreferredAppMode.Default);
                 UXThemeAppModeApi.SetPreferredAppMode(mode);
-                UXThemeAppModeApi.FlushMenuThemes();
                 return mode == PreferredAppMode.AllowDark || mode == PreferredAppMode.ForceDark;
             }
             catch (TypeLoadException)

@@ -21,6 +21,6 @@ public static class CoreDispatcherFactory
         return (CoreDispatcher)Marshal.GetObjectForIUnknown(pDispatcher);
     }
 
-    private static IActivationFactory ActivationFactoryForCoreDispatcher
+    internal static IActivationFactory ActivationFactoryForCoreDispatcher
         => WindowsRuntimeMarshal.GetActivationFactory(typeof(CoreDispatcher));
 }

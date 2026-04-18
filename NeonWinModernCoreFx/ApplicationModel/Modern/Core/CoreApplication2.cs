@@ -21,6 +21,6 @@ public static class CoreApplication2
         return (CoreApplicationView)Marshal.GetObjectForIUnknown(pCoreApplicationView);
     }
 
-    private static IActivationFactory ActivationFactoryForCoreApplication
+    public static IActivationFactory ActivationFactoryForCoreApplication
         => WindowsRuntimeMarshal.GetActivationFactory(typeof(CoreApplication));
 }

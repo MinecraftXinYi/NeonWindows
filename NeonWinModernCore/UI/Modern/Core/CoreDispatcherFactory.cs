@@ -20,6 +20,6 @@ public static class CoreDispatcherFactory
         return CoreDispatcher.FromAbi(pDispatcher);
     }
 
-    private static IObjectReference ActivationFactoryForCoreDispatcher
+    internal static IObjectReference ActivationFactoryForCoreDispatcher
         => ActivationFactory.Get(typeof(CoreDispatcher).FullName);
 }

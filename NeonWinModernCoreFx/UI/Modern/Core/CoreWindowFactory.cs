@@ -30,6 +30,14 @@ public static class CoreWindowFactory
     public static CoreWindow CreateNotImmersiveCoreWindow(string title, RectInt32 rect, nint hOwnerWindow)
         => CreateCoreWindowInternal(WINDOW_TYPE.NOT_IMMERSIVE, title, rect, hOwnerWindow);
 
+    /// <summary>
+    /// 为当前线程创建指定类型的 <see cref="CoreWindow"/> 。
+    /// </summary>
+    /// <param name="type">窗口类型。</param>
+    /// <param name="title">窗口标题。</param>
+    /// <param name="rect">窗口的初始位置和大小。</param>
+    /// <param name="hOwnerWindow">该窗口的所有者窗口句柄。</param>
+    /// <returns>创建的 <see cref="CoreWindow"/> 。</returns>
     public static CoreWindow CreateCustomCoreWindow(int type, string title, RectInt32 rect, nint hOwnerWindow)
         => CreateCoreWindowInternal((WINDOW_TYPE)type, title, rect, hOwnerWindow);
 

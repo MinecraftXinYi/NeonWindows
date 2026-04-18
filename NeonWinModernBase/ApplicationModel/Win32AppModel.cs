@@ -20,7 +20,7 @@ public unsafe static class Win32AppModel
             {
                 uint length = sbyte.MaxValue + 1;
                 char* buffer = stackalloc char[(int)length];
-                return AppModelApi.GetCurrentPackageFamilyName(ref length, (nint)buffer) != AppModelApi.APPMODEL_ERROR_NO_PACKAGE;
+                return AppModelApi.GetCurrentPackageFamilyName(&length, buffer) != AppModelApi.APPMODEL_ERROR_NO_PACKAGE;
             }
             catch (TypeLoadException)
             {
@@ -39,7 +39,7 @@ public unsafe static class Win32AppModel
             if (!IsRunningAsAppX) return false;
             try
             {
-                AppModelApi.AppPolicyGetWindowingModel(ProcessThreadsApi.GetCurrentProcessToken(), out AppPolicyWindowingModel windowingModel);
+                AppModelApi2.AppPolicyGetWindowingModel(ProcessThreadsApi.GetCurrentProcessToken(), out AppPolicyWindowingModel windowingModel);
                 return windowingModel == AppPolicyWindowingModel.Universal;
             }
             catch (TypeLoadException)
