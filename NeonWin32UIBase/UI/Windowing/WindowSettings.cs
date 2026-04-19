@@ -1,5 +1,4 @@
-﻿using NativeWindow.Windowing;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace NeonWindows.UI.Windowing;
 
@@ -17,11 +16,18 @@ public struct WindowSettings
     };
 
     public string Title { get; set; }
+
     public Size Size { get; set; }
+
     public Point Position { get; set; }
+
     public WindowState State { get; set; }
+
     public WindowBorder Border { get; set; }
+
     public CursorMode CursorMode { get; set; }
+
     public double? UpdateFrequency { get; set; }
-    public WindowResourcePtr Icon { get; set; }
+
+    public Icon Icon { get; set; }
 }

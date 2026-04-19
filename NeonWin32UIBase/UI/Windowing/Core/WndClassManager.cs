@@ -24,10 +24,10 @@ public unsafe static class WndClassManager
                 cbClsExtra = 0,
                 cbWndExtra = 0,
                 hInstance = PInvoke.GetModuleHandle((char*)null),
-                hIcon = (HICON)styleInfo.Icon,
-                hIconSm = (HICON)styleInfo.SmallIcon,
-                hCursor = (HCURSOR)styleInfo.Cursor,
-                hbrBackground = (HBRUSH)styleInfo.BackgroundBrush,
+                hIcon = styleInfo.Icon.handle,
+                hIconSm = styleInfo.SmallIcon.handle,
+                hCursor = styleInfo.Cursor.handle,
+                hbrBackground = styleInfo.BackgroundBrush.handle,
                 lpszMenuName = lpszMenuName,
             };
 
