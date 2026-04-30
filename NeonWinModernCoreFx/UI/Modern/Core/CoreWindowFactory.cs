@@ -27,7 +27,7 @@ public static class CoreWindowFactory
     /// <param name="rect">窗口的初始位置和大小。</param>
     /// <param name="hOwnerWindow">该窗口的所有者窗口句柄。</param>
     /// <returns>创建的 <see cref="CoreWindow"/> 。</returns>
-    public static CoreWindow CreateNotImmersiveCoreWindow(string title, RectInt32 rect, nint hOwnerWindow)
+    public static CoreWindow CreateNonImmersiveCoreWindow(string title, RectInt32 rect, nint hOwnerWindow)
         => CreateCoreWindowInternal(WINDOW_TYPE.NOT_IMMERSIVE, title, rect, hOwnerWindow);
 
     /// <summary>

@@ -13,7 +13,7 @@ public static class CoreApplication2
     /// 在当前线程上创建非沉浸式 <see cref="CoreApplicationView"/> 。
     /// </summary>
     /// <returns>创建的 <see cref="CoreApplicationView"/> 。</returns>
-    public static CoreApplicationView CreateNotImmersiveView()
+    public static CoreApplicationView CreateNonImmersiveView()
     {
         ICoreApplicationPrivate2 coreApplicationPrivate2 = CoreApplication.As<ICoreApplicationPrivate2>();
         ExceptionHelpers.ThrowExceptionForHR(coreApplicationPrivate2.CreateNonImmersiveView(out nint pCoreApplicationView));
