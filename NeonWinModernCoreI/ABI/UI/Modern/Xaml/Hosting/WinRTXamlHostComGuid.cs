@@ -15,5 +15,6 @@ public static class WinRTXamlHostComGuid
         IID_IXamlPresenterStatics3 = "A49DEA01-9E75-49F0-BEEE-EF1592FBC82B";
 
     public const string
-        IID_IXamlRuntimeStatics = "C805B0C0-6210-4E4F-B76A-E894E8B1A4AD";
+        IID_IXamlRuntimeStatics = "C805B0C0-6210-4E4F-B76A-E894E8B1A4AD",
+        IID_IXamlRuntimeSite = "1C35E215-859E-41A3-922B-303B8699A29D";
 }
