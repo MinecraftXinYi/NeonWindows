@@ -1,5 +1,4 @@
-﻿using NeonWindows.ABI;
-using System;
+﻿using System;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.DataTransfer.DragDrop.Core;
 using Windows.Win32.System.WinRT;
@@ -10,10 +9,12 @@ public unsafe static class DragDropManagerInterop
 {
     public static CoreDragDropManager GetForWindow(nint appWindow)
     {
-        Guid iid = RoInterfaceIDs.IID_ICoreDragDropManager;
+        Guid iid = IID_ICoreDragDropManager;
         dragDropManagerInterop.GetForWindow(new(appWindow), &iid, out object dragDropManager);
         return (CoreDragDropManager)dragDropManager;
     }
+
+    internal static readonly Guid IID_ICoreDragDropManager = new(2102842180u, 33892, 20399, 170, 73, 55, 234, 110, 45, 123, 209);
 
     private static IDragDropManagerInterop dragDropManagerInterop = (IDragDropManagerInterop)WindowsRuntimeMarshal.GetActivationFactory(typeof(CoreDragDropManager));
 }
