@@ -10,13 +10,19 @@ public static class UnmanagedActivationFactory
     public static IActivationFactory Get(string typeName)
     {
         Guid iid_IActivationFactory = typeof(IActivationFactory).GUID;
-        Marshal.ThrowExceptionForHR(RoApi.RoGetActivationFactory(typeName, ref iid_IActivationFactory, out nint factoryRef));
+        nint hStrTypeName = WindowsRuntimeMarshal.StringToHString(typeName);
+        int hr = RoApi.RoGetActivationFactory(hStrTypeName, ref iid_IActivationFactory, out nint factoryRef);
+        WindowsRuntimeMarshal.FreeHString(hStrTypeName);
+        Marshal.ThrowExceptionForHR(hr);
         return (IActivationFactory)Marshal.GetObjectForIUnknown(factoryRef);
     }
 
     public static nint Get(string typeName, Guid iid)
     {
-        Marshal.ThrowExceptionForHR(RoApi.RoGetActivationFactory(typeName, ref iid, out nint objRef));
+        nint hStrTypeName = WindowsRuntimeMarshal.StringToHString(typeName);
+        int hr = RoApi.RoGetActivationFactory(hStrTypeName, ref iid, out nint objRef);
+        WindowsRuntimeMarshal.FreeHString(hStrTypeName);
+        Marshal.ThrowExceptionForHR(hr);
         return objRef;
     }
 }
