@@ -13,3 +13,5 @@ ISystemMediaTransportControlsInterop
 IUIViewSettingsInterop
 IUserConsentVerifierInterop
 IWebAuthenticationCoreManagerInterop
+
+HMONITOR
