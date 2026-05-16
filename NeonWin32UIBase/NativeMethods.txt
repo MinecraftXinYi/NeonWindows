@@ -4,17 +4,16 @@ TranslateMessage
 DispatchMessage
 GetMessage
 SetClassLongPtr
-RegisterClassEx
 RegisterClassExW
 DefWindowProc
 LoadCursor
 LoadImage
 PostQuitMessage
-CreateWindowW
 CreateWindowExW
 DestroyWindow
 UnregisterClassW
 ShowWindow
+ShowWindowAsync
 UpdateWindow
 GetSystemMetrics
 AdjustWindowRectEx
@@ -32,7 +31,6 @@ GetScrollPos
 SetWindowLong
 GetMonitorInfo
 MonitorFromWindow
-CreateIcon
 ShowCursor
 ClipCursor
 SetCursorPos
@@ -86,6 +84,3 @@ HWND_TOP
 HWND_BOTTOM
 HWND_TOPMOST
 HWND_NOTOPMOST
-
-QueryPerformanceFrequency
-QueryPerformanceCounter

@@ -27,7 +27,6 @@ public unsafe class Window : Win32WindowBase, IDisposable
     private bool _disposed;
     private bool _ClosedWin;
     private bool _focus;
-    private Point _wheel = Point.Empty;
     private MONITORINFO _MONITORINFO1;
     private WindowState _state;
     private WindowBorder _Border;
@@ -71,82 +70,6 @@ public unsafe class Window : Win32WindowBase, IDisposable
 
     #region Props
 
-    #region Unused
-    //public KeyboardState KeyboardState => this._keyboardState;
-    //public MouseState MouseState => this._mouseState;
-
-    //public bool Focused
-    //{
-    //    get => _focus; 
-    //    set
-    //    {
-    //        _focus = value;
-    //        PInvoke.SetWindowPos((HWND)Handle, HWND.HWND_TOP, 0, 0, 0, 0,
-    //                SWP_NOSIZE | SWP_NOMOVE | SWP_SHOWWINDOW | SWP_DRAWFRAME);
-    //    }
-    //}
-
-    //public Point MousePosition
-    //{
-    //    get => this._mouseState.Position;
-    //    set
-    //    {
-    //        this._mouseState.Position = value;
-    //        PInvoke.SetCursorPos(value.X, value.Y);
-    //    }
-    //}
-
-    //public Point PreviousMousePosition => _mouseState.PreviousPosition;
-
-    //public Point MouseDelta => _mouseState.Delta;
-    #endregion
-
-    public Point MouseWheel
-    {
-        get
-        {
-            Point currentWheel = _wheel;
-
-            _wheel = new Point(0, 0);
-
-            int wheelV = 0;
-            switch (currentWheel.X)
-            {
-                case 360:
-                    wheelV = 1;
-                    break;
-                case -360:
-                    wheelV = -1;
-                    break;
-            }
-
-            int wheelH = 0;
-            switch (currentWheel.Y)
-            {
-                case 360:
-                    wheelH = 1;
-                    break;
-                case -360:
-                    wheelH = -1;
-                    break;
-            }
-
-            return new Point(wheelV, wheelH);
-        }
-        set
-        {
-            _wheel = value;
-        }
-    }
-
-    public float AspectRatio
-    {
-        get
-        {
-            Size size = ClientSize;
-            return size.Width / (float)size.Height;
-        }
-    }
 
     public CursorMode CursorMode
     {
@@ -163,15 +86,6 @@ public unsafe class Window : Win32WindowBase, IDisposable
                 this.AdjustCursorWin();
             }
 
-        }
-    }
-
-    public Point Center
-    {
-        get
-        {
-            PInvoke.GetWindowRect((HWND)Handle, out var rect);
-            return new Point(rect.X + rect.Width / 2, rect.Y + rect.Height / 2);
         }
     }
 
@@ -209,62 +123,6 @@ public unsafe class Window : Win32WindowBase, IDisposable
 
         }
     }
-
-    #region Unused
-    ///// <summary>
-    ///// Defines the update rate, for <c>variable</c> mode pass a <c>null</c> value or one that is less than 1.
-    ///// </summary>
-    //public double? UpdateFrequency
-    //{
-    //    get => this._timerState.UpdateFrequency == 0.0 ? null : this._timerState.UpdateFrequency;
-    //    set
-    //    {
-    //        if (value != null)
-    //        {
-    //            this._timerState.UpdateFrequency = (double)value;
-    //        }
-    //        else
-    //        {
-    //            this._timerState.UpdateFrequency = 0.0;
-    //        }
-    //    }
-    //}
-
-    ///// <summary>
-    ///// Get elapsed time since the previous Update call.
-    ///// </summary>
-    //public ulong ElapsedTicks => _timerState.ElapsedTicks;
-
-    ///// <summary>
-    ///// Get elapsed time since the previous Update call.
-    ///// </summary>
-    //public double ElapsedSeconds => _timerState.ElapsedSeconds;
-
-    ///// <summary>
-    ///// Get total time since the start of the program.
-    ///// </summary>
-    //public ulong TotalTicks => _timerState.TotalTicks;
-
-    ///// <summary>
-    ///// Get total time since the start of the program.
-    ///// </summary>
-    //public double TotalSeconds => _timerState.TotalSeconds;
-
-    ///// <summary>
-    ///// Get total number of updates since start of the program.
-    ///// </summary>
-    //public ulong FrameCount => _timerState.FrameCount;
-
-    ///// <summary>
-    ///// Get the current framerate.
-    ///// </summary>
-    //public uint FramesPerSecond => _timerState.FramesPerSecond;
-
-    ///// <summary>
-    ///// Gets a value indicating whether or not the time is in fixed mode.
-    ///// </summary>
-    //public bool UpdateIsVariable => _timerState.IsFixedTimeStep;
-    #endregion
 
     #endregion
 
@@ -467,7 +325,6 @@ public unsafe class Window : Win32WindowBase, IDisposable
                 }
                 break;
 
-
             case PInvoke.WM_SETFOCUS:
                 {
                     _focus = true;
@@ -481,8 +338,21 @@ public unsafe class Window : Win32WindowBase, IDisposable
                     this.OnFocus(new FocusEventArgs(false));
                 }
                 break;
-            #endregion
 
+            #endregion
+            default:
+                {
+                    InputEventProc(message, wParam, lParam);
+                }
+                break;
+        }
+        return PInvoke.DefWindowProc((HWND)hWnd, message, wParam, lParam);
+    }
+
+    private void InputEventProc(uint message, nuint wParam, nint lParam)
+    {
+        switch (message)
+        {
             #region Keyboard
             case PInvoke.WM_KEYDOWN:
                 {
@@ -522,6 +392,7 @@ public unsafe class Window : Win32WindowBase, IDisposable
 
                 }
                 break;
+
             case PInvoke.WM_SYSKEYUP:
                 {
                     var scanCode = (int)wParam;
@@ -549,19 +420,19 @@ public unsafe class Window : Win32WindowBase, IDisposable
 
             case PInvoke.WM_MOUSEWHEEL:
                 {
-                    if (KeyInputInfo.GET_KEYSTATE_WPARAM(wParam) == KeyInputInfo.MK_SHIFT)
-                    {
-                        _wheel.X = KeyInputInfo.GET_WHEEL_DELTA_WPARAM(wParam);
-                    }
-                    else
-                    {
-                        _wheel.Y = KeyInputInfo.GET_WHEEL_DELTA_WPARAM(wParam);
-                    }
+                    //if (KeyInputInfo.GET_KEYSTATE_WPARAM(wParam) == KeyInputInfo.MK_SHIFT)
+                    //{
+                    //    _wheel.X = KeyInputInfo.GET_WHEEL_DELTA_WPARAM(wParam);
+                    //}
+                    //else
+                    //{
+                    //    _wheel.Y = KeyInputInfo.GET_WHEEL_DELTA_WPARAM(wParam);
+                    //}
 
-                    var wheel = MouseWheel;
+                    //var wheel = MouseWheel;
 
-                    //this._mouseState.Wheel = wheel;
-                    this.OnMouseWheel(new MouseWheelEventArgs(wheel));
+                    ////this._mouseState.Wheel = wheel;
+                    //this.OnMouseWheel(new MouseWheelEventArgs(wheel));
                 }
                 break;
 
@@ -575,6 +446,7 @@ public unsafe class Window : Win32WindowBase, IDisposable
                     this.OnMouseButtonDown(args);
                 }
                 break;
+
             case PInvoke.WM_LBUTTONUP:
                 {
                     var scanCode = (int)MouseButton.Button1;
@@ -585,6 +457,7 @@ public unsafe class Window : Win32WindowBase, IDisposable
                     this.OnMouseButtonUp(args);
                 }
                 break;
+
             case PInvoke.WM_RBUTTONDOWN:
                 {
                     var scanCode = (int)MouseButton.Button2;
@@ -595,6 +468,7 @@ public unsafe class Window : Win32WindowBase, IDisposable
                     this.OnMouseButtonDown(args);
                 }
                 break;
+
             case PInvoke.WM_RBUTTONUP:
                 {
                     var scanCode = (int)MouseButton.Button2;
@@ -605,6 +479,7 @@ public unsafe class Window : Win32WindowBase, IDisposable
                     this.OnMouseButtonUp(args);
                 }
                 break;
+
             case PInvoke.WM_MBUTTONDOWN:
                 {
                     var scanCode = (int)MouseButton.Button3;
@@ -615,6 +490,7 @@ public unsafe class Window : Win32WindowBase, IDisposable
                     this.OnMouseButtonDown(args);
                 }
                 break;
+
             case PInvoke.WM_MBUTTONUP:
                 {
                     var scanCode = (int)MouseButton.Button3;
@@ -681,7 +557,6 @@ public unsafe class Window : Win32WindowBase, IDisposable
                 break;
             #endregion
         }
-        return PInvoke.DefWindowProc((HWND)hWnd, message, wParam, lParam);
     }
     #endregion
 
