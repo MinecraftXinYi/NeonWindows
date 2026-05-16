@@ -2,7 +2,7 @@
 using NeonWindows.ApplicationModel;
 using Windows.UI.Xaml.Hosting;
 
-Console.WriteLine(WinAppCompatHelper.TrySetOsMaxVersionTestedForCurrentProcess(0xffffffffffffffff));
+Console.WriteLine(WinAppCompatHelper.TrySetOSMaxVersionTestedForCurrentProcess(0xffffffffffffffff));
 Console.WriteLine("Hello, World!");
 Console.ReadKey();
 WindowsXamlManager xamlManager = WindowsXamlManager.InitializeForCurrentThread();

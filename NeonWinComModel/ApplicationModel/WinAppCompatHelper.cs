@@ -1,11 +1,17 @@
 ﻿using NeonWindows.ABI;
 using NeonWindows.ABI.ApplicationModel;
+using System;
 
 namespace NeonWindows.ApplicationModel;
 
 public unsafe static class WinAppCompatHelper
 {
-    public static bool TrySetOsMaxVersionTestedForCurrentProcess(ulong newValue = 0x000a00004a610000)
+    /// <summary>
+    /// 修改当前进程的 OSMaxVersionTested 属性以兼容一些系统功能 (比如: UWP XAML Islands) 。
+    /// </summary>
+    /// <param name="newValue">要写入的新数据。</param>
+    /// <returns>指示操作是否成功。</returns>
+    public static bool TrySetOSMaxVersionTestedForCurrentProcess(ulong newValue)
     {
         try
         {
@@ -13,12 +19,17 @@ public unsafe static class WinAppCompatHelper
             if (exeData is null) return false;
             SWITCH_CONTEXT* scData = &exeData->SwitchContext;
             SWITCH_CONTEXT_DATA* data = &scData->Data;
-            data->OsMaxVersionTested = newValue; // Windows 10 2004, build 19041
+            data->OsMaxVersionTested = newValue;
             return true;
         }
-        catch
+        catch (Exception)
         {
             return false;
         }
     }
+
+    /// <summary>
+    /// Windows 10, version 2004
+    /// </summary>
+    public const ulong RecommendedOSMaxVersionTested_1 = 0x000a00004a610000;
 }
