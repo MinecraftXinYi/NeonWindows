@@ -4,6 +4,9 @@ using System;
 
 namespace NeonWindows.ApplicationModel;
 
+/// <summary>
+/// 提供应用程序兼容性设置相关功能。
+/// </summary>
 public unsafe static class WinAppCompatHelper
 {
     /// <summary>
