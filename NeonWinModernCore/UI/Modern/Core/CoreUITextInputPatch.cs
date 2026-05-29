@@ -20,7 +20,7 @@ public static class CoreUITextInputPatch
 
     internal static nint InitializeTextInputProducerForConsumer(ITextInputConsumer textInputConsumer)
     {
-        nint pTextInputConsumer = textInputConsumer.GetAbi();
+        nint pTextInputConsumer = textInputConsumer.ToUnmanaged();
         int hr = CoreUITextInputApi.PrivateCreateTextInputProducer(pTextInputConsumer, out nint pTextInputProducer);
         Marshal.Release(pTextInputConsumer);
         ExceptionHelpers.ThrowExceptionForHR(hr);

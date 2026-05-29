@@ -1,4 +1,5 @@
 ﻿using NeonWindows.ABI.UI.Modern.Core;
+using NeonWindows.WinRT;
 using System.Runtime.InteropServices;
 using Windows.UI.Core;
 
@@ -34,7 +35,7 @@ public static class CoreInputBuilder
     internal static nint CreateCoreInputInternal2(CoreWindow coreWindow, COREINPUT_TYPE type, CoreInputDeviceTypes inputDeviceTypes)
     {
         COREINPUT_POINTER_TYPE pointerTypes = (COREINPUT_POINTER_TYPE)inputDeviceTypes;
-        nint pCoreWindow = Marshal.GetIUnknownForObject(coreWindow);
+        nint pCoreWindow = MarshalInspectable<CoreWindow>.FromManaged(coreWindow);
         int hr = CoreUICoreInputApi.PrivateCreateCoreInputEx(type, pointerTypes, pCoreWindow, COREINPUT_FLAGS.CIF_NONE, typeof(ICoreInputSourceBase).GUID, out nint ppv);
         Marshal.Release(pCoreWindow);
         Marshal.ThrowExceptionForHR(hr);
