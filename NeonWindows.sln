@@ -39,6 +39,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWBUwpWinFormsTest", "Test\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsGeneration", "Generation\WinFormsGeneration\WinFormsGeneration.csproj", "{D412B2C1-29C7-4948-ACCF-11B8CF738EF1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeonWinModernApp", "NeonWinModernApp\NeonWinModernApp.csproj", "{5DA0ADA5-3787-4B1E-8BE0-B4D9CE584684}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeonWinModernAppFx", "NeonWinModernAppFx\NeonWinModernAppFx.csproj", "{33E1F431-6FE3-4C57-913B-156E2423F0F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -183,6 +187,22 @@ Global
 		{D412B2C1-29C7-4948-ACCF-11B8CF738EF1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D412B2C1-29C7-4948-ACCF-11B8CF738EF1}.Release|x86.ActiveCfg = Release|Any CPU
 		{D412B2C1-29C7-4948-ACCF-11B8CF738EF1}.Release|x86.Build.0 = Release|Any CPU
+		{5DA0ADA5-3787-4B1E-8BE0-B4D9CE584684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DA0ADA5-3787-4B1E-8BE0-B4D9CE584684}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DA0ADA5-3787-4B1E-8BE0-B4D9CE584684}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5DA0ADA5-3787-4B1E-8BE0-B4D9CE584684}.Debug|x86.Build.0 = Debug|Any CPU
+		{5DA0ADA5-3787-4B1E-8BE0-B4D9CE584684}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DA0ADA5-3787-4B1E-8BE0-B4D9CE584684}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DA0ADA5-3787-4B1E-8BE0-B4D9CE584684}.Release|x86.ActiveCfg = Release|Any CPU
+		{5DA0ADA5-3787-4B1E-8BE0-B4D9CE584684}.Release|x86.Build.0 = Release|Any CPU
+		{33E1F431-6FE3-4C57-913B-156E2423F0F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33E1F431-6FE3-4C57-913B-156E2423F0F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33E1F431-6FE3-4C57-913B-156E2423F0F1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{33E1F431-6FE3-4C57-913B-156E2423F0F1}.Debug|x86.Build.0 = Debug|Any CPU
+		{33E1F431-6FE3-4C57-913B-156E2423F0F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33E1F431-6FE3-4C57-913B-156E2423F0F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33E1F431-6FE3-4C57-913B-156E2423F0F1}.Release|x86.ActiveCfg = Release|Any CPU
+		{33E1F431-6FE3-4C57-913B-156E2423F0F1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

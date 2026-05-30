@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="..\NeonWinModernBase\NeonWinModern.props" />
+	<PropertyGroup>
+		<TargetFramework>net462</TargetFramework>
+		<LangVersion>10.0</LangVersion>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\NeonWinModernCoreFx\NeonWinModernCoreFx.csproj" />
+		<Reference Include="System.Windows.Forms" />
+	</ItemGroup>
+</Project>

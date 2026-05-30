@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="..\NeonWinModernBase\NeonWinModern.props" />
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
+		<TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+		<UseUwp>true</UseUwp>
+		<UseUwpTools>false</UseUwpTools>
+		<IsAotCompatible>true</IsAotCompatible>
+		<DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
+	</PropertyGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" />
+		<ProjectReference Include="..\NeonWinModernCore\NeonWinModernCore.csproj" />
+	</ItemGroup>
+</Project>
