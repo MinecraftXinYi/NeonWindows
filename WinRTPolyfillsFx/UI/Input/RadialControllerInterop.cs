@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.UI.Input;
+using Windows.Win32;
 using Windows.Win32.UI.Input.Radial;
 
 namespace NeonWindows.UI.Input;
 
-public unsafe static class RadialControllerInterop
+public static class RadialControllerInterop
 {
     public static RadialController CreateForWindow(nint hwnd)
     {
-        Guid iid = IID_IRadialController;
-        radialControllerInterop.CreateForWindow(new(hwnd), &iid, out object radialController);
+        radialControllerInterop.CreateForWindow(new(hwnd), IID_IRadialController, out object radialController);
         return (RadialController)radialController;
     }
 

@@ -1,0 +1,9 @@
+{
+  "$schema": "https://aka.ms/CsWin32.schema.json",
+  "allowMarshaling": false,
+  "friendlyOverloads": {
+    "enabled": false
+  },
+  "useSafeHandles": false,
+  "wideCharOnly": true
+}

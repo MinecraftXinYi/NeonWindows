@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.UI.Input.Core;
+using Windows.Win32;
 using Windows.Win32.UI.Input.Radial;
 
 namespace NeonWindows.UI.Input.Core;
 
-public unsafe static class RadialControllerIndependentInputSourceInterop
+public static class RadialControllerIndependentInputSourceInterop
 {
     public static RadialControllerIndependentInputSource CreateForWindow(nint hwnd)
     {
-        Guid iid = IID_IRadialControllerIndependentInputSource;
-        radialControllerIndependentInputSourceInterop.CreateForWindow(new(hwnd), &iid, out object radialControllerIndependentInputSource);
+        radialControllerIndependentInputSourceInterop.CreateForWindow(new(hwnd), IID_IRadialControllerIndependentInputSource, out object radialControllerIndependentInputSource);
         return (RadialControllerIndependentInputSource)radialControllerIndependentInputSource;
     }
 

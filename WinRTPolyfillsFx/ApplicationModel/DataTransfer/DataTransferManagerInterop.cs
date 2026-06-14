@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Win32;
 using Windows.Win32.UI.Shell;
 
 namespace NeonWindows.ApplicationModel.DataTransfer;
 
-public unsafe static class DataTransferManagerInterop
+public static class DataTransferManagerInterop
 {
     public static DataTransferManager GetForWindow(nint appWindow)
-    {
-        Guid iid = IID_IDataTransferManager;
-        return (DataTransferManager)dataTransferManagerInterop.GetForWindow(new(appWindow), &iid);
-    }
+        => (DataTransferManager)dataTransferManagerInterop.GetForWindow(new(appWindow), IID_IDataTransferManager);
 
     public static void ShowShareUIForWindow(nint appWindow)
         => dataTransferManagerInterop.ShowShareUIForWindow(new(appWindow));
