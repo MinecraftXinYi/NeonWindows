@@ -43,7 +43,7 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.260317003" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\NeonWinModernBase\NeonWinModernBase.csproj" />
+    <ProjectReference Include="..\..\..\NeonWinModernBase\NeonWinModernBase.csproj" />
   </ItemGroup>
 
   <!--

@@ -163,7 +163,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\NeonWinModernBase\NeonWinModernBase.csproj">
+    <ProjectReference Include="..\..\..\NeonWinModernBase\NeonWinModernBase.csproj">
       <Project>{27cd073e-5d01-498f-9a50-f08f7c18a82e}</Project>
       <Name>NeonWinModernBase</Name>
     </ProjectReference>

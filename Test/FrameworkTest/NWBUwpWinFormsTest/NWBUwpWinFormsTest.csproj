@@ -15,7 +15,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\NeonWinComModel\NeonWinComModel.csproj" />
+	  <ProjectReference Include="..\..\..\NeonWinComModel\NeonWinComModel.csproj" />
 	</ItemGroup>
 
 </Project>

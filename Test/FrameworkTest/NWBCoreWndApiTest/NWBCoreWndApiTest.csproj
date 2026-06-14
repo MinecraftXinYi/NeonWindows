@@ -11,8 +11,8 @@
 		<InvariantGlobalization>true</InvariantGlobalization>
 	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\NeonWinComModel\NeonWinComModel.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\NeonWinModernCoreI\NeonWinModernCoreI.csproj" />
+	</ItemGroup>
 
 </Project>
