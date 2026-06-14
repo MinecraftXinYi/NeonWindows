@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "NWBDeskXamlWndTest": {
+      "commandName": "MsixPackage"
+    },
+    "NWBDeskXamlWndTest (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

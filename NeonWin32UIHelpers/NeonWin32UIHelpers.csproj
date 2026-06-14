@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="..\NeonWinModernBase\NeonWindows.props" />
+	<PropertyGroup>
+		<TargetFramework>netstandard1.1</TargetFramework>
+		<LangVersion>10.0</LangVersion>
+		<CheckNotRecommendedTargetFramework>false</CheckNotRecommendedTargetFramework>
+	</PropertyGroup>
+	<PropertyGroup>
+		<VersionPrefix>0.0.12</VersionPrefix>
+	</PropertyGroup>
+</Project>
