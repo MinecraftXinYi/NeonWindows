@@ -9,9 +9,12 @@
 		<DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
 	</PropertyGroup>
 	<ItemGroup>
-		<FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" />
-		<ProjectReference Include="..\NeonWin32UIHelpers\NeonWin32UIHelpers.csproj" />
+		<ProjectReference Include="..\NeonWin32UICore\NeonWin32UICore.csproj" />
 		<ProjectReference Include="..\NeonWinComModel\NeonWinComModel.csproj" />
 		<ProjectReference Include="..\NeonWinModernCore\NeonWinModernCore.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="UI\Modern\Desktop\" />
+	  <Folder Include="UI\Modern\Xaml\Desktop\" />
 	</ItemGroup>
 </Project>

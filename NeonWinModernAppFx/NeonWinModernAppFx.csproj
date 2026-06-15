@@ -5,14 +5,12 @@
 		<LangVersion>10.0</LangVersion>
 	</PropertyGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\NeonWin32UIHelpers\NeonWin32UIHelpers.csproj" />
+		<ProjectReference Include="..\NeonWin32UICoreFx\NeonWin32UICoreFx.csproj" />
 		<ProjectReference Include="..\NeonWinComModel\NeonWinComModel.csproj" />
 		<ProjectReference Include="..\NeonWinModernCoreFx\NeonWinModernCoreFx.csproj" />
-		<Reference Include="System.Windows.Forms" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Compile Update="UI\Modern\Xaml\Desktop\DesktopXamlWindow.cs">
-	    <SubType>Form</SubType>
-	  </Compile>
+	  <Folder Include="UI\Modern\Desktop\" />
+	  <Folder Include="UI\Modern\Xaml\Desktop\" />
 	</ItemGroup>
 </Project>
