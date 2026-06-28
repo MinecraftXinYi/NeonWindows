@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="..\NeonWinModernBase\NeonWindows.props" />
+	<Import Project="..\NeonWinModernBase\OldTFAdaptive.props" />
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
-		<LangVersion>10.0</LangVersion>
 	</PropertyGroup>
 	<PropertyGroup>
-		<VersionPrefix>0.3.0</VersionPrefix>
+		<VersionPrefix>0.3.1</VersionPrefix>
 	</PropertyGroup>
 	<ItemGroup>
 	  <AdditionalFiles Remove="NativeMethods.json" />

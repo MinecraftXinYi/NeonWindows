@@ -1,5 +1,7 @@
 ﻿using NeonWindows.UI.Windowing.Core;
 using System.Windows.Forms;
+using Windows.Win32;
+using Windows.Win32.Foundation;
 using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace NeonWindows.UI.Windowing;
@@ -10,13 +12,13 @@ public class Win32Window : IWin32Window
 
     public Win32Window()
     {
-        CreateNativeWindow();
+        CreateNativeWindow(GetDefaultCreateParams());
         InitializeCallbacks();
     }
 
-    public Win32Window(nint hWnd)
+    public Win32Window(CreateParams createParams)
     {
-        GetNativeWindow(hWnd);
+        CreateNativeWindow(createParams);
         InitializeCallbacks();
     }
 
@@ -31,29 +33,27 @@ public class Win32Window : IWin32Window
 
     public nint Handle => native.Handle;
 
-    private void CreateNativeWindow()
+    private void CreateNativeWindow(CreateParams createParams)
     {
         OnCreate();
-        native.CreateHandle(GetCreateParams());
-        OnCreated();
-    }
-
-    private void GetNativeWindow(nint hWnd)
-    {
-        OnGet();
-        native.AssignHandle(hWnd);
-        OnGot();
+        native.CreateHandle(createParams);
+        SetWindowStyle(Handle);
+        OnCreated(Handle);
     }
 
     protected virtual void OnCreate() { }
 
-    protected virtual void OnCreated() { }
+    protected virtual void SetWindowStyle(nint hWnd)
+    {
+        HWND hwnd = new(hWnd);
+        PInvoke.SetWindowLong(hwnd, WINDOW_LONG_PTR_INDEX.GWL_STYLE, (int)(WINDOW_STYLE.WS_OVERLAPPEDWINDOW | WINDOW_STYLE.WS_SIZEBOX));
+        PInvoke.SetWindowLong(hwnd, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int)(WINDOW_EX_STYLE.WS_EX_APPWINDOW | WINDOW_EX_STYLE.WS_EX_OVERLAPPEDWINDOW));
+        this.SetWindowRect(new(), (uint)(SET_WINDOW_POS_FLAGS.SWP_FRAMECHANGED | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE | SET_WINDOW_POS_FLAGS.SWP_NOMOVE | SET_WINDOW_POS_FLAGS.SWP_NOSIZE));
+    }
 
-    protected virtual void OnGet() { }
+    protected virtual void OnCreated(nint hWnd) { }
 
-    protected virtual void OnGot() { }
-
-    protected virtual CreateParams GetCreateParams()
+    protected virtual CreateParams GetDefaultCreateParams()
     {
         return new()
         {
@@ -73,6 +73,7 @@ public class Win32Window : IWin32Window
 
     private void WndProcEntry(object? sender, WndProcEventArgs e)
     {
+        if (sender == null || sender != native) return;
         OnWndProc.Invoke(this, e);
         if (!e.Handled)
         {

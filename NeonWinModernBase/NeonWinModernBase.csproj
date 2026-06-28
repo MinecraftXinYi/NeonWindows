@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="NeonWinModern.props" />
+	<Import Project="OldTFAdaptive.props" />
 	<PropertyGroup>
 		<TargetFramework>netstandard1.1</TargetFramework>
-		<LangVersion>10.0</LangVersion>
-		<CheckNotRecommendedTargetFramework>false</CheckNotRecommendedTargetFramework>
 	</PropertyGroup>
 </Project>

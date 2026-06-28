@@ -13,4 +13,5 @@ SetWindowPos
 SetWindowText
 ShowWindowAsync
 
+WINDOW_EX_STYLE
 WINDOW_STYLE
