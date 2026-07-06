@@ -1,0 +1,57 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/FrameworkInterop/">
+    <Project Path="FrameworkInterop/NeonWinModernForms/NeonWinModernForms.csproj" />
+    <Project Path="FrameworkInterop/NeonWinModernFormsFx/NeonWinModernFormsFx.csproj" />
+  </Folder>
+  <Folder Name="/Generation/">
+    <Project Path="Generation/CsWin32Generation/CsWin32Generation.csproj">
+      <Platform Solution="Release|x86" Project="x86" />
+    </Project>
+    <Project Path="Generation/WinFormsGeneration/WinFormsGeneration.csproj" />
+  </Folder>
+  <Folder Name="/Test/" />
+  <Folder Name="/Test/ApiTest/">
+    <Project Path="Test/ApiTest/NWBAppCompactHackCheck/NWBAppCompactHackCheck.csproj" />
+    <Project Path="Test/ApiTest/NWBDpiApiTest/NWBDpiApiTest.csproj">
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="Test/ApiTest/NWBDpiApiTestUwp/NWBDpiApiTestUwp.csproj" Id="698cf349-b5dd-405c-b28a-5d16c87a0d82">
+      <Platform Solution="*|Any CPU" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+      <Deploy />
+    </Project>
+    <Project Path="Test/ApiTest/WindowingTest/WindowingTest.csproj" />
+  </Folder>
+  <Folder Name="/Test/FrameworkTest/">
+    <Project Path="Test/FrameworkTest/NWBCoreWndApiTest/NWBCoreWndApiTest.csproj" />
+    <Project Path="Test/FrameworkTest/NWBDispatcherQueueApiTest/NWBDispatcherQueueApiTest.csproj" />
+    <Project Path="Test/FrameworkTest/NWBNtUserDpiContextApiTest/NWBNtUserDpiContextApiTest.csproj" />
+    <Project Path="Test/FrameworkTest/NWBUwpWinFormsTest/NWBUwpWinFormsTest.csproj" />
+    <Project Path="Test/FrameworkTest/NWBUxThemeApiTest/NWBUxThemeApiTest.csproj">
+      <Platform Solution="*|Any CPU" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+  </Folder>
+  <Folder Name="/Test/LabTest/">
+    <Project Path="Test/LabTest/NWBDeskXamlWndTest/NWBDeskXamlWndTest.csproj">
+      <Platform Solution="*|Any CPU" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="Test/LabTest/WinFormsDpiAwareTest0/WinFormsDpiAwareTest0.csproj" />
+  </Folder>
+  <Project Path="NeonWin32UICore/NeonWin32UICore.csproj" />
+  <Project Path="NeonWinComModel/NeonWinComModel.csproj" />
+  <Project Path="NeonWinModernApp/NeonWinModernApp.csproj" />
+  <Project Path="NeonWinModernAppFx/NeonWinModernAppFx.csproj" />
+  <Project Path="NeonWinModernBase/NeonWinModernBase.csproj">
+    <Platform Solution="Release|x86" Project="x86" />
+  </Project>
+  <Project Path="NeonWinModernCore/NeonWinModernCore.csproj" />
+  <Project Path="NeonWinModernCoreFx/NeonWinModernCoreFx.csproj" />
+  <Project Path="NeonWinModernCoreI/NeonWinModernCoreI.csproj" />
+  <Project Path="WinRTPolyfillsFx/WinRTPolyfillsFx.csproj" />
+</Solution>

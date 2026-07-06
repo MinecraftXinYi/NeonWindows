@@ -5,7 +5,7 @@
 		<LangVersion>10.0</LangVersion>
 	</PropertyGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\NeonWin32UICoreFx\NeonWin32UICoreFx.csproj" />
+		<ProjectReference Include="..\NeonWin32UICore\NeonWin32UICore.csproj" />
 		<ProjectReference Include="..\NeonWinComModel\NeonWinComModel.csproj" />
 		<ProjectReference Include="..\NeonWinModernCoreFx\NeonWinModernCoreFx.csproj" />
 	</ItemGroup>
