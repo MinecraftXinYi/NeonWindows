@@ -9,11 +9,11 @@
 		<Nullable>enable</Nullable>
 		<PublishAot>true</PublishAot>
 		<InvariantGlobalization>true</InvariantGlobalization>
-		<Platforms>AnyCPU;x86;x64;arm64</Platforms>
+		<Platforms>AnyCPU;x64</Platforms>
 	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\NeonWinComModel\NeonWinComModel.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\NeonWinModernCoreI\NeonWinModernCoreI.csproj" />
+	</ItemGroup>
 
 </Project>

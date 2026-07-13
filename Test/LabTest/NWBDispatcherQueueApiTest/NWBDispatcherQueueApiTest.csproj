@@ -2,16 +2,17 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
     <PublishAot>true</PublishAot>
     <InvariantGlobalization>true</InvariantGlobalization>
-    <Platforms>AnyCPU;x86;x64;arm64</Platforms>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\NeonWinModernBase\NeonWinModernBase.csproj" />
+    <ProjectReference Include="..\..\..\NeonWinModernCoreI\NeonWinModernCoreI.csproj" />
   </ItemGroup>
 
 </Project>

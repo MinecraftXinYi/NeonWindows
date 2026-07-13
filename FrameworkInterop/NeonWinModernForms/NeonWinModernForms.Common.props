@@ -1,9 +1,0 @@
-<Project>
-	<Import Project="..\..\NeonWinModernBase\NeonWindows.props" />
-	<ItemGroup>
-		<ProjectReference Include="..\..\NeonWinModernBase\NeonWinModernBase.csproj" />
-	</ItemGroup>
-	<PropertyGroup>
-		<Version>0.0.6</Version>
-	</PropertyGroup>
-</Project>

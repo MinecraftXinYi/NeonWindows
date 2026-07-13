@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<linker>
+	<assembly fullname="System.Windows.Forms.Primitives">
+		<type fullname="Windows.Win32.UI.HiDpi.DPI_AWARENESS_CONTEXT" preserve="all" />
+	</assembly>
+</linker>

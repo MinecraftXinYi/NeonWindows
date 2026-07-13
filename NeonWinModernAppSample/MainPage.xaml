@@ -1,0 +1,30 @@
+﻿<Page
+    x:Class="NeonWinModernAppSample.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NeonWinModernAppSample"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <NavigationView x:Name="NavView" SelectionChanged="NavView_SelectionChanged">
+        <NavigationView.MenuItems>
+            <NavigationViewItem>
+                <NavigationViewItem.Content>Home</NavigationViewItem.Content>
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xE80F;" />
+                </NavigationViewItem.Icon>
+                <NavigationViewItem.Tag>Home</NavigationViewItem.Tag>
+            </NavigationViewItem>
+            <NavigationViewItem>
+                <NavigationViewItem.Content>Windowing</NavigationViewItem.Content>
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xF7ED;" />
+                </NavigationViewItem.Icon>
+                <NavigationViewItem.Tag>Windowing</NavigationViewItem.Tag>
+            </NavigationViewItem>
+        </NavigationView.MenuItems>
+        <Frame x:Name="rootFrame" />
+    </NavigationView>
+</Page>

@@ -1,16 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="..\NeonWinModernBase\NeonWinModern.props" />
+	<Import Project="..\NeonWinModernBase\OldTFAdaptive.props" />
 	<PropertyGroup>
 		<TargetFramework>net462</TargetFramework>
-		<LangVersion>10.0</LangVersion>
 	</PropertyGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\NeonWin32UICore\NeonWin32UICore.csproj" />
 		<ProjectReference Include="..\NeonWinComModel\NeonWinComModel.csproj" />
 		<ProjectReference Include="..\NeonWinModernCoreFx\NeonWinModernCoreFx.csproj" />
+		<ProjectReference Include="..\NeonWinModernFormsFx\NeonWinModernFormsFx.csproj" />
+		<Reference Include="System.Windows.Forms" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="UI\Modern\Desktop\" />
-	  <Folder Include="UI\Modern\Xaml\Desktop\" />
+	  <Compile Update="UI\Modern\Desktop\CoreAppViewWindow.cs">
+	    <SubType>Form</SubType>
+	  </Compile>
+	  <Compile Update="UI\Modern\Desktop\Core\CoreUIHostWindow.cs">
+	    <SubType>Form</SubType>
+	  </Compile>
+	  <Compile Update="UI\Modern\Xaml\Desktop\DesktopXamlWindow.cs">
+	    <SubType>Form</SubType>
+	  </Compile>
 	</ItemGroup>
 </Project>

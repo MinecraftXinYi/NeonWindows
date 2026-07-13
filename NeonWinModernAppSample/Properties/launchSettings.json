@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "NeonWinModernAppSample": {
+      "commandName": "MsixPackage"
+    },
+    "NeonWinModernAppSample (Win32)": {
+      "commandName": "Project"
+    }
+  }
+}

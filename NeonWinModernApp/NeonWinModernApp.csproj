@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="..\NeonWinModernBase\NeonWinModern.props" />
 	<PropertyGroup>
 		<TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
@@ -9,12 +9,8 @@
 		<DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
 	</PropertyGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\NeonWin32UICore\NeonWin32UICore.csproj" />
 		<ProjectReference Include="..\NeonWinComModel\NeonWinComModel.csproj" />
 		<ProjectReference Include="..\NeonWinModernCore\NeonWinModernCore.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="UI\Modern\Desktop\" />
-	  <Folder Include="UI\Modern\Xaml\Desktop\" />
+		<ProjectReference Include="..\NeonWinModernForms\NeonWinModernForms.csproj" />
 	</ItemGroup>
 </Project>
