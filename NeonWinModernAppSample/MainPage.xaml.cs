@@ -29,7 +29,14 @@ namespace NeonWinModernAppSample
                 if (args.IsSettingsSelected)
                 {
                     ContentDialog1 contentDialog = new();
-                    _ = contentDialog.ShowAsync();
+                    try
+                    {
+                        _ = contentDialog.ShowAsync();
+                    } catch (Exception)
+                    {
+                        contentDialog.XamlRoot = XamlRoot;
+                        _ = contentDialog.ShowAsync();
+                    }
                 }
             }
         }

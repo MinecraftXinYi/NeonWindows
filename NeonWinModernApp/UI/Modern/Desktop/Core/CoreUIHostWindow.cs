@@ -38,6 +38,7 @@ public class CoreUIHostWindow : Form
 
     protected override void OnActivated(EventArgs e)
     {
+        SetCoreWindowVisible();
         SetCoreWindowActivation();
         base.OnActivated(e);
     }
@@ -60,6 +61,11 @@ public class CoreUIHostWindow : Form
         base.OnClientSizeChanged(e);
     }
 
+    protected override void OnPaintBackground(PaintEventArgs e)
+    {
+        return;
+    }
+
     protected bool HasCoreWindow(out IWin32Window win32Window)
     {
         if (CoreWindow != null)
@@ -77,10 +83,10 @@ public class CoreUIHostWindow : Form
         BackdropComposition.EnableHostBackdropBrush(Handle);
     }
 
-    protected void SetCoreWindowParent(bool init = false)
+    protected void SetCoreWindowParent(bool initialize = false)
     {
         if (!HasCoreWindow(out IWin32Window win32Window)) return;
-        if (init) win32Window.SetAsClientOnlyChildWindow();
+        if (initialize) win32Window.SetAsClientOnlyChildWindow();
         if (win32Window.GetParent().Handle != Handle) win32Window.SetParent(this);
     }
 
@@ -92,5 +98,10 @@ public class CoreUIHostWindow : Form
     protected void SetCoreWindowActivation(bool activate = true)
     {
         if (HasCoreWindow(out IWin32Window win32Window)) win32Window.SendMessage(SysMsg.WM_ACTIVATE, activate ? SysMsg.WA_CLICKACTIVE : SysMsg.WA_INACTIVE, default);
+    }
+
+    protected void SetCoreWindowVisible(bool activate = false)
+    {
+        if (HasCoreWindow(out IWin32Window win32Window)) win32Window.ShowAsync(activate);
     }
 }

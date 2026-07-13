@@ -18,8 +18,181 @@
             <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
         <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Grid.Row="0">Home</TextBlock>
-        <StackPanel Grid.Row="1">
-            <CalendarView />
-        </StackPanel>
+        <ScrollViewer Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Spacing="20" Grid.Row="0" Grid.Column="0">
+                    <TextBlock Style="{StaticResource BaseTextBlockStyle}" Text="Buttons" />
+                    <StackPanel Spacing="15">
+                        <Button Content="Enabled button" />
+                        <Button Content="Disabled button" IsEnabled="False" />
+                        <ToggleButton Content="Toggle button" IsChecked="True" />
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Spacing="15" Grid.Row="0" Grid.Column="1">
+                    <TextBlock Style="{StaticResource BaseTextBlockStyle}" Text="Checkbox" />
+                    <StackPanel Spacing="8">
+                        <CheckBox Content="Unchecked" />
+                        <CheckBox Content="Checked" IsChecked="True" />
+                        <CheckBox
+                                Content="Third state"
+                                IsChecked="{x:Null}"
+                                IsThreeState="True" />
+                        <CheckBox
+                                Content="Disabled"
+                                IsChecked="True"
+                                IsEnabled="False" />
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Spacing="14" Grid.Row="1" Grid.Column="0">
+                    <TextBlock Style="{StaticResource BaseTextBlockStyle}" Text="Radio button" />
+                    <StackPanel Spacing="8">
+                        <RadioButton Content="Unchecked" />
+                        <RadioButton Content="Checked" IsChecked="True" />
+                        <RadioButton
+                                Content="Disabled"
+                                GroupName="Disabled"
+                                IsChecked="True"
+                                IsEnabled="False" />
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Spacing="11" Grid.Row="1" Grid.Column="1">
+                    <TextBlock Style="{StaticResource BaseTextBlockStyle}" Text="Date picker" />
+                    <StackPanel Spacing="18">
+                        <DatePicker HorizontalAlignment="Stretch" Header="Label title" />
+                        <DatePicker
+                                HorizontalAlignment="Stretch"
+                                Header="Disabled"
+                                IsEnabled="False" />
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Spacing="11" Grid.Row="2" Grid.Column="0">
+                    <TextBlock Style="{StaticResource BaseTextBlockStyle}" Text="Time picker" />
+                    <StackPanel Spacing="31">
+                        <TimePicker HorizontalAlignment="Stretch" Header="Label title" />
+                        <CalendarView />
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Grid.Column="1">
+                    <TextBlock
+                            Margin="0,0,0,11"
+                            Style="{StaticResource BaseTextBlockStyle}"
+                            Text="Combo box" />
+                    <ComboBox
+                            HorizontalAlignment="Stretch"
+                            Header="Label title"
+                            PlaceholderText="Placeholder text">
+                        <ComboBoxItem>List item</ComboBoxItem>
+                        <ComboBoxItem>List item</ComboBoxItem>
+                        <ComboBoxItem>List item</ComboBoxItem>
+                        <ComboBoxItem>List item</ComboBoxItem>
+                    </ComboBox>
+                    <StackPanel Margin="0,17,0,0" Spacing="31">
+                        <ComboBox
+                                HorizontalAlignment="Stretch"
+                                Header="Disabled"
+                                IsEnabled="False"
+                                PlaceholderText="Placeholder text" />
+                        <Grid>
+                            <ListBox Margin="0,6" SelectedIndex="0">
+                                <ListBoxItem Content="Microsoft" />
+                                <ListBoxItem Content="Windows" />
+                                <ListBoxItem Content="Office" />
+                            </ListBox>
+                            <Border
+                                    BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}"
+                                    BorderThickness="1"
+                                    IsHitTestVisible="False" />
+                        </Grid>
+                        <Grid Width="148" HorizontalAlignment="Left">
+                            <ListBox Margin="0,6" SelectedIndex="0">
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="ListBoxItem">
+                                        <Setter Property="Padding" Value="12,5,12,8" />
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                                <ListBoxItem Content="Microsoft" />
+                                <ListBoxItem Content="Windows" />
+                                <ListBoxItem Content="Office" />
+                            </ListBox>
+                            <Border
+                                    BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}"
+                                    BorderThickness="1"
+                                    IsHitTestVisible="False" />
+                        </Grid>
+                        <Button Content="Button with flyout">
+                            <Button.Flyout>
+                                <Flyout Placement="BottomEdgeAlignedLeft">
+                                    <StackPanel>
+                                        <TextBlock
+                                                Margin="0,0,0,12"
+                                                Style="{StaticResource BaseTextBlockStyle}"
+                                                Text="All items will be removed. Do you want to continue?" />
+                                        <Button Content="Yes, empty my cart" />
+                                    </StackPanel>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Spacing="11" Grid.Row="3" Grid.Column="0">
+                    <TextBlock Style="{StaticResource BaseTextBlockStyle}" Text="Textbox" />
+                    <StackPanel Spacing="17">
+                        <TextBox Header="Label title" PlaceholderText="Placeholder text" />
+                        <TextBox
+                                Header="Disabled"
+                                IsEnabled="False"
+                                PlaceholderText="Placeholder text" />
+                        <PasswordBox Header="Password" PlaceholderText="Placeholder text" />
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Spacing="14" Grid.Row="3" Grid.Column="1">
+                    <TextBlock Style="{StaticResource BaseTextBlockStyle}" Text="Toggle switch" />
+                    <Grid RowSpacing="12">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ToggleSwitch Grid.Row="0" Grid.Column="0" />
+                        <ToggleSwitch
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                IsOn="True" />
+                        <ToggleSwitch
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                IsEnabled="False"
+                                OffContent="Disabled Off" />
+                        <ToggleSwitch
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                IsEnabled="False"
+                                IsOn="True"
+                                OnContent="Disabled On" />
+                    </Grid>
+                </StackPanel>
+                <StackPanel Spacing="14" Grid.Row="4" Grid.Column="0">
+                    <TextBlock Style="{StaticResource BaseTextBlockStyle}" Text="Slider" />
+                    <Slider
+                            Header="Label title"
+                            Maximum="100"
+                            Value="50" />
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>

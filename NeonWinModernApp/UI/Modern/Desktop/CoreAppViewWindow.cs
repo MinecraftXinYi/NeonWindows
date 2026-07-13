@@ -5,7 +5,6 @@ using NeonWindows.UI.Modern.Desktop.Core;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 
@@ -68,10 +67,5 @@ public class CoreAppViewWindow : CoreUIHostWindow
         SetCoreWindowRect();
         CoreApplicationView = CoreApplication2.CreateNonImmersiveView();
         _current = this;
-    }
-
-    protected override void OnPaintBackground(PaintEventArgs e)
-    {
-        return;
     }
 }

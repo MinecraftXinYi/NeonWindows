@@ -60,7 +60,6 @@ public unsafe class DesktopXamlWindow : CoreUIHostWindow
         CoreApplicationView = CoreApplication2.CreateNonImmersiveView();
         SetXamlSourceParent(true);
         SetXamlSourceRect();
-        SetXamlSourceVisible();
         _current = this;
     }
 
@@ -88,11 +87,6 @@ public unsafe class DesktopXamlWindow : CoreUIHostWindow
         return base.PreProcessMessage(ref msg);
     }
 
-    protected override void OnPaintBackground(PaintEventArgs e)
-    {
-        return;
-    }
-
     protected bool IsXamlSourcePresent(out IWin32Window win32Window)
     {
         if (windowXamlSource != null)
@@ -104,11 +98,11 @@ public unsafe class DesktopXamlWindow : CoreUIHostWindow
         return false;
     }
 
-    protected void SetXamlSourceParent(bool init = false)
+    protected void SetXamlSourceParent(bool initialize = false)
     {
         if (!IsXamlSourcePresent(out IWin32Window win32Window)) return;
-        if (init) windowXamlSource.AttachToWindow(Handle);
-        else win32Window.SetParent(this);
+        if (initialize) windowXamlSource.AttachToWindow(Handle);
+        else if (win32Window.GetParent().Handle != Handle) win32Window.SetParent(this);
     }
 
     protected void SetXamlSourceRect()
@@ -116,7 +110,7 @@ public unsafe class DesktopXamlWindow : CoreUIHostWindow
         if (IsXamlSourcePresent(out IWin32Window win32Window)) win32Window.SetRectangle(new(default, ClientSize));
     }
 
-    protected void SetXamlSourceVisible(bool activate = true)
+    protected void SetXamlSourceVisible(bool activate = false)
     {
         if (IsXamlSourcePresent(out IWin32Window win32Window)) win32Window.ShowAsync(activate);
     }
