@@ -28,8 +28,8 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Spacing="20" Grid.Row="0" Grid.Column="0">
                     <TextBlock Style="{StaticResource BaseTextBlockStyle}" Text="Buttons" />
