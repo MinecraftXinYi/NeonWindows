@@ -7,6 +7,10 @@
 		<UseUwpTools>false</UseUwpTools>
 		<IsAotCompatible>true</IsAotCompatible>
 		<DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
+		<PackageId>NeonWindows.ModernApp</PackageId>
+	</PropertyGroup>
+	<PropertyGroup>
+		<AssemblyTitle>NeonWindows Modern App Library for Modern .NET</AssemblyTitle>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\NeonWinComModel\NeonWinComModel.csproj" />

@@ -3,5 +3,11 @@
 		<RootNamespace>NeonWindows</RootNamespace>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<Nullable>enable</Nullable>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
+	<PropertyGroup>
+		<Product>NeonWindows Library</Product>
+		<Authors>MinecraftXinYi</Authors>
+		<Company>MinecraftXinYi Person</Company>
 	</PropertyGroup>
 </Project>

@@ -3,6 +3,10 @@
 	<Import Project="..\NeonWinModernBase\OldTFAdaptive.props" />
 	<PropertyGroup>
 		<TargetFramework>net462</TargetFramework>
+		<PackageId>NeonWindows.ModernApp.Fx</PackageId>
+	</PropertyGroup>
+	<PropertyGroup>
+		<AssemblyTitle>NeonWindows Modern App Library for Old .NET Platforms</AssemblyTitle>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\NeonWinComModel\NeonWinComModel.csproj" />

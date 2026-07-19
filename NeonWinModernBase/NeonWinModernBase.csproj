@@ -3,5 +3,9 @@
 	<Import Project="OldTFAdaptive.props" />
 	<PropertyGroup>
 		<TargetFramework>netstandard1.1</TargetFramework>
+		<PackageId>NeonWindows.ModernApp.Base</PackageId>
+	</PropertyGroup>
+	<PropertyGroup>
+		<AssemblyTitle>Base Library for NeonWindows Modern App</AssemblyTitle>
 	</PropertyGroup>
 </Project>

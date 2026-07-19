@@ -7,6 +7,10 @@
 		<UseUwpTools>false</UseUwpTools>
 		<IsAotCompatible>true</IsAotCompatible>
 		<DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
+		<PackageId>NeonWindows.ModernApp.Core</PackageId>
+	</PropertyGroup>
+	<PropertyGroup>
+		<AssemblyTitle>NeonWindows Modern App Core Library for Modern .NET</AssemblyTitle>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\NeonWinModernCoreI\NeonWinModernCoreI.csproj" />

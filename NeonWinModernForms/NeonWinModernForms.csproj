@@ -2,6 +2,10 @@
 	<Import Project="..\NeonWinModernBase\NeonWinModern.props" />
 	<PropertyGroup>
 		<TargetFramework>net8.0-windows</TargetFramework>
+		<PackageId>NeonWindows.ModernApp.WinForms</PackageId>
+	</PropertyGroup>
+	<PropertyGroup>
+		<AssemblyTitle>NeonWindows Modern App Interop Library for WinForms (Modern .NET)</AssemblyTitle>
 	</PropertyGroup>
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" />

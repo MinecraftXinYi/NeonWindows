@@ -1,4 +1,7 @@
 <Project>
 	<Import Project="NeonWindows.props" />
+	<PropertyGroup>
+		<Product>NeonWindows Modern App Library</Product>
+	</PropertyGroup>
 	<Import Project="NeonWinModernVersion.props"/>
 </Project>

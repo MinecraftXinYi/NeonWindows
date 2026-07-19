@@ -3,6 +3,10 @@
 	<Import Project="..\NeonWinModernBase\OldTFAdaptive.props" />
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
+		<PackageId>NeonWindows.ModernApp.Core.Interop</PackageId>
+	</PropertyGroup>
+	<PropertyGroup>
+		<AssemblyTitle>NeonWindows Modern App Core Library for Interop</AssemblyTitle>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\NeonWinModernBase\NeonWinModernBase.csproj" />
