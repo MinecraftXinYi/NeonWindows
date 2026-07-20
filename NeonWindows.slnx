@@ -8,6 +8,15 @@
   <Folder Name="/Generation/">
     <Project Path="Generation/CsWin32Generation/CsWin32Generation.csproj" />
   </Folder>
+  <Folder Name="/Samples/">
+    <Project Path="Samples/NeonWinModernAppSample/NeonWinModernAppSample.csproj" Id="7f7fbfe6-f63f-418a-9cdd-07ad50500cdd">
+      <Platform Solution="*|Any CPU" Project="x64" />
+      <Platform Solution="*|ARM64" Project="arm64" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+      <Deploy />
+    </Project>
+  </Folder>
   <Folder Name="/Test/" />
   <Folder Name="/Test/ApiTest/">
     <Project Path="Test/ApiTest/NWBAppCompatHackCheck/NWBAppCompatHackCheck.csproj">
@@ -62,13 +71,6 @@
   <Project Path="NeonWinComModel/NeonWinComModel.csproj" />
   <Project Path="NeonWinModernApp/NeonWinModernApp.csproj" />
   <Project Path="NeonWinModernAppFx/NeonWinModernAppFx.csproj" />
-  <Project Path="NeonWinModernAppSample/NeonWinModernAppSample.csproj" Id="7f7fbfe6-f63f-418a-9cdd-07ad50500cdd">
-    <Platform Solution="*|Any CPU" Project="x64" />
-    <Platform Solution="*|ARM64" Project="arm64" />
-    <Platform Solution="*|x64" Project="x64" />
-    <Platform Solution="*|x86" Project="x86" />
-    <Deploy />
-  </Project>
   <Project Path="NeonWinModernBase/NeonWinModernBase.csproj" />
   <Project Path="NeonWinModernCore/NeonWinModernCore.csproj" />
   <Project Path="NeonWinModernCoreFx/NeonWinModernCoreFx.csproj" />

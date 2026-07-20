@@ -15,7 +15,7 @@
 		<DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
 	</PropertyGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\NeonWinComModel\NeonWinComModel.csproj" />
-	  <ProjectReference Include="..\NeonWinModernApp\NeonWinModernApp.csproj" />
+	  <ProjectReference Include="..\..\NeonWinComModel\NeonWinComModel.csproj" />
+	  <ProjectReference Include="..\..\NeonWinModernApp\NeonWinModernApp.csproj" />
 	</ItemGroup>
 </Project>
