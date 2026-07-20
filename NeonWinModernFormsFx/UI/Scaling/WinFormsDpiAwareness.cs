@@ -14,9 +14,9 @@ public static class WinFormsDpiAwareness
 
     internal static FieldInfo GetFieldInfo_DpiContext_NativeWindow(out Type fieldType, out FieldInfo[] fieldTypeStatics)
     {
-        FieldInfo fieldInfo = typeof(NativeWindow).GetField(ReflectionHelpers.PropertyBackingFieldName("DpiAwarenessContext"), BindingFlags.Instance | BindingFlags.NonPublic)!;
+        FieldInfo fieldInfo = typeof(NativeWindow).GetField("windowDpiAwarenessContext", BindingFlags.Instance | BindingFlags.NonPublic);
         fieldType = fieldInfo.FieldType;
-        fieldTypeStatics = fieldType.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
+        fieldTypeStatics = fieldType.GetFields(BindingFlags.Static | BindingFlags.Public);
         return fieldInfo;
     }
 }
