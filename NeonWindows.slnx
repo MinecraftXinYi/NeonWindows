@@ -16,6 +16,7 @@
       <Platform Solution="*|x86" Project="x86" />
       <Deploy />
     </Project>
+    <Project Path="Samples/NeonWinModernAppSampleFx/NeonWinModernAppSampleFx.csproj" Id="b5bdf2a1-442a-4a67-bd10-919be5d88187" />
   </Folder>
   <Folder Name="/Test/" />
   <Folder Name="/Test/ApiTest/">
