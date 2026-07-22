@@ -34,10 +34,10 @@ public static class AppDpiAwareness2
     /// <exception cref="ArgumentException"></exception>
     public static bool SetCurrentThreadDpiAwarenessMode(DpiAwarenessMode mode)
     {
+        DPI_AWARENESS_CONTEXT dpiContext = DpiModeEnumConvert.ToCommonDpiAwarenessContext(mode);
+        if (dpiContext.IsNull) throw new ArgumentException();
         try
         {
-            DPI_AWARENESS_CONTEXT dpiContext = DpiModeEnumConvert.ToCommonDpiAwarenessContext(mode);
-            if (dpiContext.IsNull) throw new ArgumentException();
             return !ThreadDpiContextApi.SetThreadDpiAwarenessContext(dpiContext).IsNull;
         }
         catch (TypeLoadException)
@@ -56,18 +56,25 @@ public static class AppDpiAwareness2
     /// <exception cref="ArgumentException"></exception>
     public static bool SetCurrentProcessDpiAwarenessModeEx(DpiAwarenessMode mode, bool enforced = false, bool applyToThread = true)
     {
+        DPI_AWARENESS_CONTEXT mixedContext = DpiModeEnumConvert.ToMixedDpiAwarenessContext(mode);
+        if (mixedContext.IsNull) throw new ArgumentException();
         try
         {
-            DPI_AWARENESS_CONTEXT mixedContext = DpiModeEnumConvert.ToMixedDpiAwarenessContext(mode);
-            if (mixedContext.IsNull) throw new ArgumentException();
-            if (!ProcessDpiContextApi.NtUserSetProcessDpiAwarenessContext(mixedContext, enforced)) return false;
-            if (applyToThread) ThreadDpiContextApi.SetThreadDpiAwarenessContext(mixedContext);
-            return true;
+            if (!ProcessDpiContextApi.NtUserSetProcessDpiAwarenessContext((ulong)mixedContext.Value, Convert.ToByte(enforced))) return false;
         }
         catch (TypeLoadException)
         {
-            return false;
+            return AppDpiAwareness.SetCurrentProcessDpiAwarenessMode(mode);
         }
+        if (applyToThread)
+        {
+            try
+            {
+                ThreadDpiContextApi.SetThreadDpiAwarenessContext(mixedContext);
+            }
+            catch (TypeLoadException) { }
+        }
+        return true;
     }
 
     /// <summary>
@@ -79,10 +86,7 @@ public static class AppDpiAwareness2
         {
             try
             {
-                _ = ProcessDpiContextApi.NtUserGetProcessDpiAwarenessContext(default);
-                _ = ThreadDpiContextApi.GetThreadDpiAwarenessContext();
-                _ = ThreadDpiContextApi.SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT.Null);
-                return true;
+                return !ThreadDpiContextApi.GetThreadDpiAwarenessContext().IsNull;
             }
             catch (TypeLoadException)
             {

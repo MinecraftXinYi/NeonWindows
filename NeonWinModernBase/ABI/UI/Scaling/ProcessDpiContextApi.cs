@@ -26,11 +26,11 @@ public static class ProcessDpiContextApi
     /// <summary>
     /// 将当前进程设置为指定的每英寸点数 (dpi) 感知上下文。 DPI 感知上下文来自 <see cref="DPI_AWARENESS_CONTEXT"/> 值 (MIXED)。
     /// </summary>
-    /// <param name="mixedValue">要设置的 <see cref="DPI_AWARENESS_CONTEXT"/> 句柄 (MIXED)。</param>
-    /// <param name="enforced">如果此项为 TRUE，则将忽略通过此前的 API 调用或在应用程序清单设置的进程的默认 DPI 感知模式。</param>
+    /// <param name="awareness">要设置的 <see cref="DPI_AWARENESS_CONTEXT"/> 句柄 (MIXED)。</param>
+    /// <param name="unknown">如果此项为 TRUE，则将忽略通过此前的 API 调用或在应用程序清单设置的进程的默认 DPI 感知模式。</param>
     /// <returns>如果操作成功，此函数返回 TRUE，否则返回 FALSE。</returns>
     [DllImport(Win32DllName.Win32U, ExactSpelling = true)]
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static extern bool NtUserSetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT mixedValue, [MarshalAs(UnmanagedType.Bool)] bool enforced);
+    public static extern bool NtUserSetProcessDpiAwarenessContext(ulong awareness, ulong unknown);
 }
