@@ -9,4 +9,7 @@ internal static class WinRTDllName
         WindowsUI = "Windows.UI.dll",
         WindowsUICoreTextInput = "Windows.UI.Core.TextInput.dll",
         WindowsUIXaml = "Windows.UI.Xaml.dll";
+
+    internal const string
+        Combase = "combase.dll";
 }

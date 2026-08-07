@@ -6,7 +6,7 @@ using WinRT;
 namespace NeonWindows.ABI.UI.Modern.Xaml;
 
 [GeneratedComInterface]
-[Guid(WinRTXamlPrivateComGuid.IWindowPrivate)]
+[Guid(WinRTXamlPrivateComGuid.IID_IWindowPrivate)]
 public partial interface IWindowPrivate
 {
     [PreserveSig]

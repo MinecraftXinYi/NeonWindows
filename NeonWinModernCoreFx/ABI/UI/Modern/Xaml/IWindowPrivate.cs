@@ -5,7 +5,7 @@ namespace NeonWindows.ABI.UI.Modern.Xaml;
 
 [ComImport]
 [InterfaceType(ComInterfaceType.InterfaceIsIInspectable)]
-[Guid(WinRTXamlPrivateComGuid.IWindowPrivate)]
+[Guid(WinRTXamlPrivateComGuid.IID_IWindowPrivate)]
 public interface IWindowPrivate
 {
     [PreserveSig]
