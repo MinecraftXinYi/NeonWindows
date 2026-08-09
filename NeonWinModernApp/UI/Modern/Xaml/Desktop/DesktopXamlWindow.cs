@@ -102,7 +102,7 @@ public unsafe class DesktopXamlWindow : CoreUIHostWindow
     {
         if (!IsXamlSourcePresent(out IWin32Window win32Window)) return;
         if (initialize) windowXamlSource.AttachToWindow(Handle);
-        else if (win32Window.GetParent().Handle != Handle) win32Window.SetParent(this);
+        else if (win32Window.IsParent(this)) win32Window.SetParent(this);
     }
 
     protected void SetXamlSourceRect()
