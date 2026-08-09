@@ -3,6 +3,7 @@ using NeonWindows.UI.Modern.Desktop;
 using NeonWindows.UI.Modern.Xaml.Desktop;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -39,6 +40,8 @@ namespace NeonWinModernAppSample
         /// <inheritdoc/>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            Debug.WriteLine("OnLunched method invoked.");
+
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active.
             if (Window.Current.Content is not Frame rootFrame)

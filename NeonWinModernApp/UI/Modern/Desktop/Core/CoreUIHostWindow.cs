@@ -87,7 +87,7 @@ public class CoreUIHostWindow : Form
     {
         if (!HasCoreWindow(out IWin32Window win32Window)) return;
         if (initialize) win32Window.SetAsClientOnlyChildWindow();
-        if (win32Window.IsParent(this)) win32Window.SetParent(this);
+        if (!win32Window.IsParent(this)) win32Window.SetParent(this);
     }
 
     protected void SetCoreWindowRect()
