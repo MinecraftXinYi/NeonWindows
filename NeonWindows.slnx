@@ -7,6 +7,7 @@
   </Configurations>
   <Folder Name="/Generation/">
     <Project Path="Generation/CsWin32Generation/CsWin32Generation.csproj" />
+    <Project Path="Generation/CsWinRTGeneration/CsWinRTGeneration.csproj" Id="329dab9b-23cf-4098-b878-25252ce9d049" />
   </Folder>
   <Folder Name="/Samples/">
     <Project Path="Samples/NeonWinModernAppSample/NeonWinModernAppSample.csproj" Id="7f7fbfe6-f63f-418a-9cdd-07ad50500cdd">
