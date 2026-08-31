@@ -54,7 +54,8 @@ public unsafe class DesktopXamlWindow : CoreUIHostWindow
         if (_current != null) throw new NotSupportedException();
         windowXamlSource = new();
         CoreWindow = CoreWindow.GetForCurrentThread();
-        SetCoreUIFramework();
+        InitializeCoreUIFramework();
+        InitializeWin32CoreWindow();
         SetCoreWindowParent(true);
         SetCoreWindowRect();
         CoreApplicationView = CoreApplication2.CreateNonImmersiveView();

@@ -66,42 +66,43 @@ public class CoreUIHostWindow : Form
         return;
     }
 
-    protected bool HasCoreWindow(out IWin32Window win32Window)
+    protected void InitializeCoreUIFramework()
     {
-        if (CoreWindow != null)
-        {
-            win32Window = new Win32Window(CoreWindow.GetWindowHandle());
-            return true;
-        }
-        win32Window = null!;
-        return false;
-    }
-
-    protected void SetCoreUIFramework()
-    {
-        if (HasCoreWindow(out _)) CoreUITextInputPatch.FixTextInputBehavioursForCoreWindow(CoreWindow);
+        if (CoreWindow is not null) CoreUITextInputPatch.FixTextInputBehavioursForCoreWindow(CoreWindow);
         BackdropComposition.EnableHostBackdropBrush(Handle);
     }
 
+    protected bool InitializeWin32CoreWindow()
+    {
+        if (CoreWindow is not null)
+        {
+            Win32CoreWindow = new Win32Window(CoreWindow.GetWindowHandle());
+            return true;
+        }
+        return false;
+    }
+
+    protected IWin32Window? Win32CoreWindow { get; private set; }
+
     protected void SetCoreWindowParent(bool initialize = false)
     {
-        if (!HasCoreWindow(out IWin32Window win32Window)) return;
-        if (initialize) win32Window.SetAsClientOnlyChildWindow();
-        if (!win32Window.IsParent(this)) win32Window.SetParent(this);
+        if (Win32CoreWindow is null) return;
+        if (initialize) Win32CoreWindow.SetAsClientOnlyChildWindow();
+        if (!Win32CoreWindow.IsParent(this)) Win32CoreWindow.SetParent(this);
     }
 
     protected void SetCoreWindowRect()
     {
-        if (HasCoreWindow(out IWin32Window win32Window)) win32Window.SetRectangle(new(default, ClientSize));
+        Win32CoreWindow?.SetRectangle(new(default, ClientSize));
     }
 
     protected void SetCoreWindowActivation(bool activate = true)
     {
-        if (HasCoreWindow(out IWin32Window win32Window)) win32Window.SendMessage(SysMsg.WM_ACTIVATE, activate ? SysMsg.WA_CLICKACTIVE : SysMsg.WA_INACTIVE, default);
+        Win32CoreWindow?.SendMessage(SysMsg.WM_ACTIVATE, activate ? SysMsg.WA_CLICKACTIVE : SysMsg.WA_INACTIVE, default);
     }
 
     protected void SetCoreWindowVisible(bool activate = false)
     {
-        if (HasCoreWindow(out IWin32Window win32Window)) win32Window.ShowAsync(activate);
+        Win32CoreWindow?.ShowAsync(activate);
     }
 }

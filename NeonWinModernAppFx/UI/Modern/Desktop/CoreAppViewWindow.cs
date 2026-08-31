@@ -62,7 +62,8 @@ public class CoreAppViewWindow : CoreUIHostWindow
     {
         if (_current != null) throw new NotSupportedException();
         CoreWindow = CoreWindowFactory.CreateImmersiveHostedCoreWindow(string.Empty, new(), Handle);
-        SetCoreUIFramework();
+        InitializeCoreUIFramework();
+        InitializeWin32CoreWindow();
         SetCoreWindowParent(true);
         SetCoreWindowRect();
         CoreApplicationView = CoreApplication2.CreateNonImmersiveView();
