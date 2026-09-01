@@ -30,4 +30,7 @@ public static class Win32WindowExtensions
 
     public static bool UpdateLong(this IWin32Window window)
         => PInvoke.SetWindowPos(new(window.Handle), default, 0, 0, 0, 0, SET_WINDOW_POS_FLAGS.SWP_FRAMECHANGED | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE | SET_WINDOW_POS_FLAGS.SWP_NOMOVE | SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOZORDER);
+
+    public static bool HideAsync(this IWin32Window window)
+        => PInvoke.ShowWindowAsync(new(window.Handle), SHOW_WINDOW_CMD.SW_HIDE);
 }

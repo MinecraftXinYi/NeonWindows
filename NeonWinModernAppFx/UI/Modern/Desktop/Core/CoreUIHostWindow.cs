@@ -32,7 +32,7 @@ public class CoreUIHostWindow : Form
     protected override void CreateHandle()
     {
         ModernDpiAwareness.SetThreadPerMonitorDpiAware(out _);
-        WinFormsDpiAwareness.SetDpiAwarenessForNativeWindow(WinFormsNativeWindowInterop.GetNativeWindowForControl(this), DpiAwarenessMode.PerMonitorV2);
+        ControlDpiAwarenessHelper.AdjustControlDpiAwarenessForCurrentThread(this);
         base.CreateHandle();
     }
 
@@ -101,8 +101,8 @@ public class CoreUIHostWindow : Form
         Win32CoreWindow?.SendMessage(SysMsg.WM_ACTIVATE, activate ? SysMsg.WA_CLICKACTIVE : SysMsg.WA_INACTIVE, default);
     }
 
-    protected void SetCoreWindowVisible(bool activate = false)
+    protected void SetCoreWindowVisible()
     {
-        Win32CoreWindow?.ShowAsync(activate);
+        Win32CoreWindow?.ShowAsync(false);
     }
 }

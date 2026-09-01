@@ -15,10 +15,12 @@ public static class Program
         WinAppCompatHelper.TrySetOSMaxVersionTestedForCurrentProcess(WinAppCompatHelper.RecommendedOSMaxVersionTested_1);
         ModernDpiAwareness.SetThreadPerMonitorDpiAware(out _);
         App app = new();
-        CoreAppViewWindow window = new(new FrameworkView());
+        FrameworkView frameworkView = new();
+        CoreAppViewWindow window = new(frameworkView);
         Window.Current.Content = new MainPage();
         window.Show();
-        window.Dispatcher.ProcessEvents(CoreProcessEventsOption.ProcessUntilQuit);
+        //window.Dispatcher.ProcessEvents(CoreProcessEventsOption.ProcessUntilQuit);
+        frameworkView.Run();
         app.Close();
     }
 }

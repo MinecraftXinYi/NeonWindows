@@ -29,10 +29,12 @@ static void RunWin32()
     new App(false);
     Thread thread = STAThreadingModel.CreateSTAThread(() =>
     {
-        CoreAppViewWindow window = new(new FrameworkView());
+        FrameworkView frameworkView = new();
+        CoreAppViewWindow window = new(frameworkView);
         Window.Current.Content = new MainPage();
         window.Show();
-        window.Dispatcher.ProcessEvents(CoreProcessEventsOption.ProcessUntilQuit);
+        //window.Dispatcher.ProcessEvents(CoreProcessEventsOption.ProcessUntilQuit);
+        frameworkView.Run();
     });
     thread.Start();
     thread.Join();
