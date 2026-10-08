@@ -57,11 +57,12 @@ public unsafe class DesktopXamlWindow : CoreUIHostWindow
         InitializeCoreUIFramework();
         InitializeWin32CoreWindow();
         SetCoreWindowParent(true);
-        SetCoreWindowRect();
+        AsyncCoreWindowRect();
         CoreApplicationView = CoreApplication2.CreateNonImmersiveView();
         SetXamlSourceParent(true);
         InitializeXamlSourceWin32Window();
         SetXamlSourceRect();
+        AsyncCoreWindowTitle();
         _current = this;
     }
 

@@ -12,4 +12,8 @@ internal static class WinRTDllName
 
     internal const string
         Combase = "combase.dll";
+
+    internal const string
+        TWinApiAppCore = "twinapi.appcore.dll",
+        ThreadPoolWinRT = "threadpoolwinrt.dll";
 }

@@ -65,8 +65,9 @@ public class CoreAppViewWindow : CoreUIHostWindow
         InitializeCoreUIFramework();
         InitializeWin32CoreWindow();
         SetCoreWindowParent(true);
-        SetCoreWindowRect();
+        AsyncCoreWindowRect();
         CoreApplicationView = CoreApplication2.CreateNonImmersiveView();
+        AsyncCoreWindowTitle();
         _current = this;
     }
 }

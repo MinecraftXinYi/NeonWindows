@@ -57,8 +57,14 @@ public class CoreUIHostWindow : Form
 
     protected override void OnClientSizeChanged(EventArgs e)
     {
-        SetCoreWindowRect();
+        AsyncCoreWindowRect();
         base.OnClientSizeChanged(e);
+    }
+
+    protected override void OnTextChanged(EventArgs e)
+    {
+        AsyncCoreWindowTitle();
+        base.OnTextChanged(e);
     }
 
     protected override void OnPaintBackground(PaintEventArgs e)
@@ -91,18 +97,15 @@ public class CoreUIHostWindow : Form
         if (!Win32CoreWindow.IsParent(this)) Win32CoreWindow.SetParent(this);
     }
 
-    protected void SetCoreWindowRect()
-    {
-        Win32CoreWindow?.SetRectangle(new(default, ClientSize));
-    }
+    protected void AsyncCoreWindowRect()
+        => Win32CoreWindow?.SetRectangle(new(default, ClientSize));
 
     protected void SetCoreWindowActivation(bool activate = true)
-    {
-        Win32CoreWindow?.SendMessage(SysMsg.WM_ACTIVATE, activate ? SysMsg.WA_CLICKACTIVE : SysMsg.WA_INACTIVE, default);
-    }
+        => Win32CoreWindow?.SendMessage(SysMsg.WM_ACTIVATE, activate ? SysMsg.WA_CLICKACTIVE : SysMsg.WA_INACTIVE, default);
 
     protected void SetCoreWindowVisible()
-    {
-        Win32CoreWindow?.ShowAsync(false);
-    }
+        => Win32CoreWindow?.ShowAsync(false);
+
+    protected void AsyncCoreWindowTitle()
+        => Win32CoreWindow?.SetTitle(Text);
 }
