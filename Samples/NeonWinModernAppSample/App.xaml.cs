@@ -125,7 +125,8 @@ namespace NeonWinModernAppSample
                 WindowsXamlManager xamlManager = WindowsXamlManager.InitializeForCurrentThread();
                 DesktopXamlWindow window = new(new MainPage());
                 window.Show();
-                window.Dispatcher.ProcessEvents(CoreProcessEventsOption.ProcessUntilQuit);
+                //window.Dispatcher.ProcessEvents(CoreProcessEventsOption.ProcessUntilQuit);
+                System.Windows.Forms.Application.Run(window);
                 xamlManager.Dispose();
             });
             thread.Start();

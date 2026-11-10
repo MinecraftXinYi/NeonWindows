@@ -20,7 +20,10 @@ public static class Win32WindowExtensions
         => !PInvoke.SetParent(new(window.Handle), new(parent.Handle)).IsNull;
 
     public static bool SetRectangle(this IWin32Window window, Rectangle rectangle)
-        => PInvoke.SetWindowPos(new(window.Handle), default, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height, SET_WINDOW_POS_FLAGS.SWP_NOZORDER);
+        => PInvoke.SetWindowPos(new(window.Handle), default, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height, SET_WINDOW_POS_FLAGS.SWP_NOZORDER | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE);
+
+    public static bool SetZOrder(this IWin32Window window, IWin32Window windowInsertAfter, bool show = true, bool activate = true)
+        => PInvoke.SetWindowPos(new(window.Handle), new(windowInsertAfter.Handle), 0, 0, 0, 0, SET_WINDOW_POS_FLAGS.SWP_NOMOVE | SET_WINDOW_POS_FLAGS.SWP_NOSIZE | (show ? SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW : default) | (activate ? default : SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE));
 
     public static bool SetTitle(this IWin32Window window, string title)
         => PInvoke.SetWindowText(new(window.Handle), title);
@@ -28,9 +31,15 @@ public static class Win32WindowExtensions
     public static bool ShowAsync(this IWin32Window window, bool activate = true)
         => PInvoke.ShowWindowAsync(new(window.Handle), activate ? SHOW_WINDOW_CMD.SW_SHOW : SHOW_WINDOW_CMD.SW_SHOWNOACTIVATE);
 
+    public static bool Show(this IWin32Window window, bool activate = true)
+        => PInvoke.ShowWindow(new(window.Handle), activate ? SHOW_WINDOW_CMD.SW_SHOW : SHOW_WINDOW_CMD.SW_SHOWNOACTIVATE);
+
     public static bool UpdateLong(this IWin32Window window)
         => PInvoke.SetWindowPos(new(window.Handle), default, 0, 0, 0, 0, SET_WINDOW_POS_FLAGS.SWP_FRAMECHANGED | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE | SET_WINDOW_POS_FLAGS.SWP_NOMOVE | SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOZORDER);
 
     public static bool HideAsync(this IWin32Window window)
         => PInvoke.ShowWindowAsync(new(window.Handle), SHOW_WINDOW_CMD.SW_HIDE);
+
+    public static bool Hide(this IWin32Window window)
+        => PInvoke.ShowWindow(new(window.Handle), SHOW_WINDOW_CMD.SW_HIDE);
 }

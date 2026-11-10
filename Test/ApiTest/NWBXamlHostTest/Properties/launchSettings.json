@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "NWBXamlHostTest": {
+      "commandName": "MsixPackage"
+    },
+    "NWBXamlHostTest (Win32)": {
+      "commandName": "Project"
+    }
+  }
+}

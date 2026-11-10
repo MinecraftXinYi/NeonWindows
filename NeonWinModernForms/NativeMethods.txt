@@ -1,4 +1,5 @@
 ﻿GetClientRect
+GetFocus
 GetParent
 GetWindowLong
 GetWindowRect
@@ -14,6 +15,7 @@ SetParent
 SetWindowLong
 SetWindowPos
 SetWindowText
+ShowWindow
 ShowWindowAsync
 
 WINDOW_EX_STYLE

@@ -1,0 +1,4 @@
+﻿GetWindowLong
+SetWindowLong
+SetParent
+WINDOW_STYLE

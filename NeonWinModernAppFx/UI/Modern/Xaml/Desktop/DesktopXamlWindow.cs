@@ -1,5 +1,6 @@
 ﻿using NeonWindows.ApplicationModel;
 using NeonWindows.ApplicationModel.Modern.Core;
+using NeonWindows.UI.Messaging;
 using NeonWindows.UI.Modern.Desktop.Core;
 using NeonWindows.UI.Modern.Xaml.Hosting;
 using NeonWindows.UI.Windowing;
@@ -16,7 +17,17 @@ namespace NeonWindows.UI.Modern.Xaml.Desktop;
 
 public unsafe class DesktopXamlWindow : CoreUIHostWindow
 {
+    //protected readonly WindowsXamlHost windowsXamlHost;
+
+    //public UIElement Content
+    //{
+    //    get => windowsXamlHost.Content;
+    //    set => windowsXamlHost.Content = value;
+    //}
+
     protected readonly DesktopWindowXamlSource windowXamlSource;
+
+    protected readonly PreMessageListener preMessageListener;
 
     public UIElement Content
     {
@@ -53,6 +64,7 @@ public unsafe class DesktopXamlWindow : CoreUIHostWindow
     {
         if (_current != null) throw new NotSupportedException();
         windowXamlSource = new();
+        //windowsXamlHost = new();
         CoreWindow = CoreWindow.GetForCurrentThread();
         InitializeCoreUIFramework();
         InitializeWin32CoreWindow();
@@ -61,10 +73,19 @@ public unsafe class DesktopXamlWindow : CoreUIHostWindow
         CoreApplicationView = CoreApplication2.CreateNonImmersiveView();
         SetXamlSourceParent(true);
         InitializeXamlSourceWin32Window();
-        SetXamlSourceRect();
+        AsyncXamlSourceRect();
+        preMessageListener = new();
+        SetXamlSourceMessagePreProcessing(true);
+        //SetXamlHostControl(true);
         AsyncCoreWindowTitle();
         _current = this;
     }
+
+    //protected void SetXamlHostControl(bool initialize = false)
+    //{
+    //    if (initialize) Controls.Add(windowsXamlHost);
+    //    windowsXamlHost.Dock = DockStyle.Fill;
+    //}
 
     protected override void OnActivated(EventArgs e)
     {
@@ -81,13 +102,7 @@ public unsafe class DesktopXamlWindow : CoreUIHostWindow
     protected override void OnClientSizeChanged(EventArgs e)
     {
         base.OnClientSizeChanged(e);
-        SetXamlSourceRect();
-    }
-
-    public override bool PreProcessMessage(ref Message msg)
-    {
-        XamlSourcePreTranslateMessage(msg);
-        return base.PreProcessMessage(ref msg);
+        AsyncXamlSourceRect();
     }
 
     protected bool InitializeXamlSourceWin32Window()
@@ -112,18 +127,27 @@ public unsafe class DesktopXamlWindow : CoreUIHostWindow
         }
     }
 
-    protected void SetXamlSourceRect()
+    protected void SetXamlSourceMessagePreProcessing(bool initialize = false)
     {
-        XamlSourceWin32Window?.SetRectangle(new(default, ClientSize));
+        if (initialize)
+        {
+            SuspendLayout();
+            preMessageListener.TabIndex = 0;
+            Controls.Add(preMessageListener);
+            ResumeLayout(false);
+        }
+        preMessageListener.OnPreProcessMessage += XamlSourcePreTranslateMessage;
     }
+
+    protected void AsyncXamlSourceRect()
+        => XamlSourceWin32Window?.SetRectangle(new(default, ClientSize));
 
     protected void SetXamlSourceVisible()
-    {
-        XamlSourceWin32Window?.ShowAsync(false);
-    }
+        => XamlSourceWin32Window?.ShowAsync(false);
 
-    protected void XamlSourcePreTranslateMessage(Message message)
+    protected bool XamlSourcePreTranslateMessage(ref Message message)
     {
-        windowXamlSource?.PreTranslateMessage(&message);
+        Message msg = message;
+        return windowXamlSource?.PreTranslateMessage(&msg) ?? false;
     }
 }

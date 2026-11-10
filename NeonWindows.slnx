@@ -47,6 +47,13 @@
       <Deploy Solution="*|x64" />
       <Deploy Solution="*|x86" />
     </Project>
+    <Project Path="Test/ApiTest/NWBXamlHostTest/NWBXamlHostTest.csproj" Id="f6ffe086-1f36-4e16-8522-a77533a965bb">
+      <Platform Solution="*|Any CPU" Project="x64" />
+      <Platform Solution="*|ARM64" Project="arm64" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+      <Deploy />
+    </Project>
     <Project Path="Test/ApiTest/NWMFDpiApiTest/NWMFDpiApiTest.csproj">
       <Platform Solution="*|ARM64" Project="arm64" />
       <Platform Solution="*|x64" Project="x64" />
@@ -69,6 +76,7 @@
     <Project Path="Test/LabTest/WinFormsDpiAwareTest0/WinFormsDpiAwareTest0.csproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
+    <Project Path="Test/LabTest/WinFormsPreMsgTest/WinFormsPreMsgTest.csproj" Id="a4553f43-822b-42fe-a645-728881cf5740" />
   </Folder>
   <Project Path="NeonWinComModel/NeonWinComModel.csproj" />
   <Project Path="NeonWinModernApp/NeonWinModernApp.csproj" />

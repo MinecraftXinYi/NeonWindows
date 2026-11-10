@@ -101,7 +101,7 @@ public class CoreUIHostWindow : Form
         => Win32CoreWindow?.SetRectangle(new(default, ClientSize));
 
     protected void SetCoreWindowActivation(bool activate = true)
-        => Win32CoreWindow?.SendMessage(SysMsg.WM_ACTIVATE, activate ? SysMsg.WA_CLICKACTIVE : SysMsg.WA_INACTIVE, default);
+        => Win32CoreWindow?.SendMessage(Messages.WM_ACTIVATE, activate ? Messages.WA_CLICKACTIVE : Messages.WA_INACTIVE, default);
 
     protected void SetCoreWindowVisible()
         => Win32CoreWindow?.ShowAsync(false);
