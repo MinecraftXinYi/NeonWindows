@@ -10,7 +10,7 @@ public static class Win32WindowExtensions
     public static int GetLong(this IWin32Window window, int index)
         => PInvoke.GetWindowLong(new(window.Handle), (WINDOW_LONG_PTR_INDEX)index);
 
-    public static void SetLong(this IWin32Window window, int index, int newLong)
+    public static int SetLong(this IWin32Window window, int index, int newLong)
         => PInvoke.SetWindowLong(new(window.Handle), (WINDOW_LONG_PTR_INDEX)index, newLong);
 
     public static bool IsParent(this IWin32Window window, IWin32Window parent)

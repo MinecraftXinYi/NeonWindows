@@ -1,12 +1,10 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-using NeonWindows.UI.Modern.Core;
+﻿using NeonWindows.UI.Modern.Core;
+using NeonWindows.UI.Modern.Xaml.Hosting;
 using NeonWindows.UI.Windowing;
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,13 +12,10 @@ using Windows.UI.Core;
 
 namespace NeonWindows.UI.Modern.Xaml.Desktop;
 
-/// <summary>
-///     WindowsXamlHostBase hosts UWP XAML content inside Windows Forms
-/// </summary>
-public partial class WindowsXamlHostBase
+public unsafe partial class WindowsXamlHostBase
 {
     /// <summary>
-    /// Draw a placeholder Rectangle with 'Xaml Content' in Design mode
+    /// Draw a placeholder Rectangle with "Xaml Content" in Design mode
     /// </summary>
     /// <param name="e">PaintEventArgs</param>
     [Browsable(false)]
@@ -33,7 +28,6 @@ public partial class WindowsXamlHostBase
             PaintOnDesignMode(e, "XAML Content");
             return;
         }
-
         base.OnPaint(e);
     }
 
@@ -41,7 +35,6 @@ public partial class WindowsXamlHostBase
     {
         // Gray background Rectangle
         e.Graphics.FillRectangle(new SolidBrush(Color.DarkGray), ClientRectangle);
-
         // Text
         using Font font1 = new("Arial", 12, FontStyle.Bold, GraphicsUnit.Point);
         StringFormat stringFormat = new()
@@ -63,6 +56,18 @@ public partial class WindowsXamlHostBase
     {
         // Do not draw the background
         return;
+    }
+
+    /// <summary>
+    /// In order to handle keyboard accelerators and TAB input, we must give a chance to <seealso cref="DesktopWindowXamlSource"/>
+    /// to handle the <paramref name="msg"/> using <seealso cref="IDesktopWindowXamlSourceNative2.PreTranslateMessage(ref Message)"/>
+    /// </summary>
+    /// <param name="msg">The current incomming message in the queue</param>
+    /// <returns>True if <seealso cref="windowXamlSource"/> was able to handle the <paramref name="msg"/></returns>
+    public override bool PreProcessMessage(ref Message msg)
+    {
+        if (windowXamlSource?.PreTranslateMessage(Unsafe.AsPointer(ref msg)) ?? false) return true;
+        return base.PreProcessMessage(ref msg);
     }
 
 #if NET8_0_OR_GREATER
@@ -246,16 +251,9 @@ public partial class WindowsXamlHostBase
         APP = 0x8000,
     }
 
-    /// <summary>
-    /// Processes Windows messages for XamlContentHost control window (not XAML window)
-    /// </summary>
-    /// <param name="m">message to process</param>
     protected override void WndProc(ref Message m)
     {
-        if (DesignMode)
-        {
-            base.WndProc(ref m);
-        }
+        if (DesignMode) base.WndProc(ref m);
 
         switch (m.Msg)
         {
@@ -267,7 +265,7 @@ public partial class WindowsXamlHostBase
                 SetDesktopWindowXamlSourceWindowPos();
 
                 IntPtr CoreWindowHandle =
-                    CoreWindow.GetForCurrentThread()/*.GetInterop()*/.GetWindowHandle();
+                    CoreWindow.GetForCurrentThread().GetWindowHandle();
                 Message CurrentMessage = m;
 
                 // Use Delay execution for improving the resizing for ContentDialogs.
@@ -301,9 +299,9 @@ public partial class WindowsXamlHostBase
                     return;
                 }
 
-                if (/*UnsafeNativeMethods.IntSetFocus(_xamlIslandWindowHandle)*/WindowFocus.SetFocus(new Win32Window(_xamlIslandWindowHandle)).Handle == /*System.IntPtr*/nint.Zero)
+                if (WindowFocus.SetFocus(XamlSourceWin32Window ?? new Win32Window()).Handle == default)
                 {
-                    throw new global::System.InvalidOperationException($"{nameof(WindowsXamlHostBase)}::{nameof(WndProc)}: Failed to SetFocus on UWP XAML window");
+                    throw new InvalidOperationException($"{nameof(WindowsXamlHostBase)}::{nameof(WndProc)}: Failed to SetFocus on UWP XAML window");
                 }
 
                 base.WndProc(ref m);
@@ -312,7 +310,7 @@ public partial class WindowsXamlHostBase
             case /*NativeDefines.*/WM_KILLFOCUS:
                 // If focus is being set on the UWP XAML island window then we should prevent LostFocus by
                 // handling this message.
-                if (_xamlIslandWindowHandle != IntPtr.Zero || _xamlIslandWindowHandle != m.WParam || _xamlSource.HasFocus)
+                if ((XamlSourceWin32Window is not null && (XamlSourceWin32Window.Handle != default || XamlSourceWin32Window.Handle != m.WParam)) || windowXamlSource.HasFocus)
                 {
                     base.WndProc(ref m);
                 }
@@ -320,7 +318,7 @@ public partial class WindowsXamlHostBase
                 break;
 
             case /*NativeDefines.*/WM_DPICHANGED_AFTERPARENT:
-                if (_xamlIslandWindowHandle != IntPtr.Zero)
+                if (XamlSourceWin32Window is not null && XamlSourceWin32Window.Handle != default)
                 {
                     UpdateDpiScalingFactor();
                     PerformLayout();

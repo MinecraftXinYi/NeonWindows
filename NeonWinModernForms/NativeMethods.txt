@@ -1,4 +1,5 @@
 ﻿GetClientRect
+GetDpiForWindow
 GetFocus
 GetParent
 GetWindowLong

@@ -23,7 +23,7 @@ internal partial class XamlHostForm : Form
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public UIElement Content
     {
-        get => windowsXamlHost./*Content*/Child;
-        set => windowsXamlHost./*Content*/Child = value;
+        get => windowsXamlHost.Content;
+        set => windowsXamlHost.Content = value;
     }
 }

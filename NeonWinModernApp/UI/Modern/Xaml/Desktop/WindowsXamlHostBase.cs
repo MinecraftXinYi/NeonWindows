@@ -1,58 +1,33 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
+﻿using NeonWindows.ABI.UI.Windowing;
 using NeonWindows.UI.Modern.Desktop.Core;
 using NeonWindows.UI.Modern.Xaml.Hosting;
+using NeonWindows.UI.Windowing;
 using System;
 using System.ComponentModel;
-using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using Windows.Foundation.Metadata;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Hosting;
 
 namespace NeonWindows.UI.Modern.Xaml.Desktop;
 
 /// <summary>
-///     WindowsXamlHostBase hosts UWP XAML content inside Windows Forms
+/// WindowsXamlHostBase hosts UWP XAML content inside Windows Forms
 /// </summary>
 public abstract partial class WindowsXamlHostBase : ContainerControl
 {
     /// <summary>
     /// DesktopWindowXamlSource instance
     /// </summary>
-    private readonly DesktopWindowXamlSource _xamlSource;
+    private readonly DesktopWindowXamlSource windowXamlSource = null!;
 
     /// <summary>
-    /// Private field that backs ChildInternal property.
-    /// </summary>
-    private UIElement _childInternal;
-
-    /// <summary>
-    ///    Last preferredSize returned by UWP XAML during WinForms layout pass
-    /// </summary>
-    private Size _lastXamlContentPreferredSize;
-
-    /// <summary>
-    ///    UWP XAML island window handle associated with this Control instance
-    /// </summary>
-    private IntPtr _xamlIslandWindowHandle = IntPtr.Zero;
-
-    /// <summary>
-    ///    The last dpi value retrieved from the system
-    /// </summary>
-    private double _lastDpi = 96.0f;
-
-    /// <summary>
-    ///     Fired when XAML content has been updated
+    /// Fired when XAML content has been updated
     /// </summary>
     [Browsable(true)]
     [Category("UWP XAML")]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     [Description("Fired when UWP XAML content has been updated")]
-    public event EventHandler ChildChanged;
+    public event EventHandler? ContentChanged;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="WindowsXamlHostBase"/> class.
@@ -76,21 +51,44 @@ public abstract partial class WindowsXamlHostBase : ContainerControl
         SizeChanged += OnWindowXamlHostSizeChanged;
 
         // Create DesktopWindowXamlSource, host for UWP XAML content
-        _xamlSource = new DesktopWindowXamlSource();
+        windowXamlSource = new();
 
         // Hook up method for DesktopWindowXamlSource Focus handling
-        _xamlSource.TakeFocusRequested += this.OnTakeFocusRequested;
+        windowXamlSource.TakeFocusRequested += OnTakeFocusRequested;
     }
 
-    protected WindowsXamlHostBase(string typeName)
-        : this()
+    /// <summary>
+    /// Gets or sets XAML content for XamlContentHost
+    /// </summary>
+    [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    protected UIElement ContentInternal
     {
-        if (LicenseManager.UsageMode == LicenseUsageMode.Runtime)
+        get => _contentInternal;
+        set
         {
-            //ChildInternal = UWPTypeFactory.CreateXamlContentByType(typeName);
-            //ChildInternal.SetWrapper(this);
+            if (!DesignMode)
+            {
+                if (value == ContentInternal) return;
+                FrameworkElement? newFrameworkElement = value as FrameworkElement, oldFrameworkElement = ContentInternal as FrameworkElement;
+                if (oldFrameworkElement is not null) oldFrameworkElement.SizeChanged -= OnContentSizeChanged;
+                _contentInternal = value;
+                windowXamlSource.Content = value;
+                if (newFrameworkElement is not null) newFrameworkElement.SizeChanged += OnContentSizeChanged;
+                PerformLayout();
+                ContentChanged?.Invoke(this, new EventArgs());
+            }
+            else
+            {
+                _contentInternal = value;
+            }
         }
     }
+
+    /// <summary>
+    /// Private field that backs ContentInternal property.
+    /// </summary>
+    private UIElement _contentInternal = null!;
 
     protected void InitializeControlStyles()
     {
@@ -100,92 +98,62 @@ public abstract partial class WindowsXamlHostBase : ContainerControl
         SetStyle(ControlStyles.AllPaintingInWmPaint, true);
     }
 
-    /// <summary>
-    /// Exposes ChildInternal without exposing its actual Type.
-    /// </summary>
-    /// <returns>the underlying UWP child object</returns>
-    public object GetUwpInternalObject()
+    protected override void CreateHandle()
     {
-        return ChildInternal;
+        ControlDpiAwarenessHelper.AdjustControlDpiAwarenessForCurrentThread(this);
+        base.CreateHandle();
     }
 
-    /// <summary>
-    ///    Gets or sets XAML content for XamlContentHost
-    /// </summary>
-    [Browsable(false)]
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    protected UIElement ChildInternal
+    protected override void OnHandleCreated(EventArgs e)
     {
-        get => _childInternal;
+        base.OnHandleCreated(e);
 
-        set
+        if (!DesignMode)
         {
-            if (!DesignMode)
+            // Attach window to DesktopWindowXamSource as a render target
+            windowXamlSource.AttachToWindow(Handle);
+            InitializeXamlSourceWin32Window();
+
+            // Set window style required by container control to support Focus and background refresh
+            if (XamlSourceWin32Window?.SetLong(WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int)(WINDOW_EX_STYLE.WS_EX_CONTROLPARENT | WINDOW_EX_STYLE.WS_EX_LAYERED)) == default)
             {
-                if (value == ChildInternal)
-                {
-                    return;
-                }
-
-                var newFrameworkElement = value as FrameworkElement;
-                var oldFrameworkElement = ChildInternal as FrameworkElement;
-
-                if (oldFrameworkElement != null)
-                {
-                    oldFrameworkElement.SizeChanged -= OnChildSizeChanged;
-                }
-
-                _childInternal = value;
-                SetContent(value);
-
-                if (newFrameworkElement != null)
-                {
-                    // If XAML content has changed, check XAML size and WindowsXamlHost.AutoSize
-                    // setting to determine if WindowsXamlHost needs to re-run layout.
-                    newFrameworkElement.SizeChanged += OnChildSizeChanged;
-                }
-
-                PerformLayout();
-
-                ChildChanged?.Invoke(this, new EventArgs());
+                throw new InvalidOperationException("WindowsXamlHostBase::OnHandleCreated: Failed to set WS_EX_CONTROLPARENT and WS_EX_LAYERED on control window.");
             }
-            else
+
+            if (ContentInternal is not null)
             {
-                _childInternal = value;
+                windowXamlSource.Content = ContentInternal;
+                //ChildInternal.SetWrapper(this);
             }
+
+            UpdateDpiScalingFactor();
         }
     }
 
     /// <summary>
-    /// Sets the root UWP XAML element on DesktopWindowXamlSource
+    /// 设置 DesktopWindowXamlSource 的内部 Win32 窗口对象。
     /// </summary>
-    /// <param name="newValue">A UWP XAML Framework element</param>
-    protected virtual void SetContent(UIElement newValue)
+    /// <returns>操作成功则返回 <see cref="true"/> 。</returns>
+    protected bool InitializeXamlSourceWin32Window()
     {
-        if (_xamlSource != null)
-        {
-            _xamlSource.Content = newValue;
-        }
+        if (windowXamlSource is null) return false;
+        XamlSourceWin32Window = new Win32Window(windowXamlSource.GetWindowHandle());
+        return true;
     }
 
     /// <summary>
-    /// Gets or sets a value indicating whether a render transform is added to the UWP control corresponding to the current dpi scaling factor
-    /// if scaling is not supported natively by the XAML island
+    ///  Win32 window associated with this UWP XAML island instance
     /// </summary>
-    /// <value>The dpi scaling mode.</value>
-    /// <remarks>A custom render transform added to the root UWP control will be overwritten.</remarks>
-    [ReadOnly(false)]
-    [Browsable(true)]
-    [DefaultValue(false)]
-    [Category("Layout")]
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-    [Deprecated("Custom scaling transform no longer required to handle Dpi", DeprecationType.Deprecate, 0)]
-    public bool DpiScalingRenderTransform
+    protected IWin32Window? XamlSourceWin32Window { get; private set; }
+
+    /// <summary>
+    /// Override that disposes the current instance when the parent handle has been destroyed
+    /// </summary>
+    /// <param name="e">Ignored</param>
+    protected override void OnHandleDestroyed(EventArgs e)
     {
-        get => false;
-        set
-        {
-        }
+        Dispose(true);
+        base.OnHandleDestroyed(e);
     }
 
     /// <summary>
@@ -197,81 +165,15 @@ public abstract partial class WindowsXamlHostBase : ContainerControl
         if (disposing)
         {
             SizeChanged -= OnWindowXamlHostSizeChanged;
-
-            var oldFrameworkElement = ChildInternal as FrameworkElement;
-            if (oldFrameworkElement != null)
+            FrameworkElement? oldFrameworkElement = ContentInternal as FrameworkElement;
+            if (oldFrameworkElement is not null) oldFrameworkElement.SizeChanged -= OnContentSizeChanged;
+            _contentInternal = null!;
+            if (windowXamlSource is not null)
             {
-                oldFrameworkElement.SizeChanged -= OnChildSizeChanged;
-            }
-
-            //ChildInternal?.ClearWrapper();
-
-            this._childInternal = null;
-
-            // Required by CA2213: _xamlSource?.Dispose() is insufficient.
-            if (_xamlSource != null)
-            {
-                _xamlSource.TakeFocusRequested -= OnTakeFocusRequested;
-                _xamlSource.Dispose();
+                windowXamlSource.TakeFocusRequested -= OnTakeFocusRequested;
+                windowXamlSource.Dispose();
             }
         }
-
         base.Dispose(disposing);
-    }
-
-    protected override void CreateHandle()
-    {
-        ControlDpiAwarenessHelper.AdjustControlDpiAwarenessForCurrentThread(this);
-        base.CreateHandle();
-    }
-
-    // Window Styles
-    public const uint WS_EX_CONTROLPARENT = 0x00010000;
-    public const uint WS_EX_LAYERED = 0x00080000;
-    public const int GWL_STYLE = -16;
-    public const int GWL_EXSTYLE = -20;
-
-    [DllImport("user32.dll")]
-    [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
-    static extern int SetWindowLong(nint hWnd, int nIndex, uint dwNewLong);
-
-    /// <summary>
-    /// Raises the HandleCreated event.  Assign window render target to UWP XAML content.
-    /// </summary>
-    /// <param name="e">EventArgs</param>
-    protected override void OnHandleCreated(EventArgs e)
-    {
-        base.OnHandleCreated(e);
-
-        if (!DesignMode)
-        {
-            // Attach window to DesktopWindowXamSource as a render target
-            _xamlSource.AttachToWindow(Handle);
-            _xamlIslandWindowHandle = /*XamlSourceNative*/_xamlSource.GetWindowHandle();
-
-            // Set window style required by container control to support Focus and background refresh
-            if (/*Interop.*//*UnsafeNativeMethods.*/SetWindowLong(Handle, /*Interop.*//*NativeDefines.*/GWL_EXSTYLE, /*Interop.*//*NativeDefines.*/WS_EX_CONTROLPARENT | /*Interop.*//*NativeDefines.*/WS_EX_LAYERED) == 0)
-            {
-                throw new InvalidOperationException("WindowsXamlHostBase::OnHandleCreated: Failed to set WS_EX_CONTROLPARENT and WS_EX_LAYERED on control window.");
-            }
-
-            if (ChildInternal != null)
-            {
-                SetContent(ChildInternal);
-                //ChildInternal.SetWrapper(this);
-            }
-
-            UpdateDpiScalingFactor();
-        }
-    }
-
-    /// <summary>
-    /// Override that disposes the current instance when the parent handle has been destroyed
-    /// </summary>
-    /// <param name="e">Ignored</param>
-    protected override void OnHandleDestroyed(EventArgs e)
-    {
-        this.Dispose(true);
-        base.OnHandleDestroyed(e);
     }
 }

@@ -17,8 +17,8 @@ public class DesktopXamlWindow : CoreUIHostWindow
 
     public UIElement Content
     {
-        get => windowsXamlHost.Child;
-        set => windowsXamlHost.Child = value;
+        get => windowsXamlHost.Content;
+        set => windowsXamlHost.Content = value;
     }
 
     public override CoreWindow CoreWindow { get; }
