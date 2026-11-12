@@ -48,7 +48,7 @@ public class CoreUIHostWindow : Form
 
     protected override void OnClientSizeChanged(EventArgs e)
     {
-        AsyncCoreWindowRect();
+        AsyncCoreWindowSize();
         base.OnClientSizeChanged(e);
     }
 
@@ -85,7 +85,7 @@ public class CoreUIHostWindow : Form
         if (!Win32CoreWindow.IsParent(this)) Win32CoreWindow.SetParent(this);
     }
 
-    protected virtual void AsyncCoreWindowRect() { }
+    protected virtual void AsyncCoreWindowSize() { }
 
     protected virtual void SetCoreWindowActivation(bool activate = true) { }
 

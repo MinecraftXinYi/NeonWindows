@@ -1,6 +1,4 @@
-﻿using NeonWindows.ABI.UI.Messaging;
-using NeonWindows.UI.Composition;
-using NeonWindows.UI.Messaging;
+﻿using NeonWindows.UI.Composition;
 using NeonWindows.UI.Modern.Core;
 using NeonWindows.UI.Scaling;
 using NeonWindows.UI.Windowing;
@@ -38,7 +36,6 @@ public class CoreUIHostWindow : Form
 
     protected override void OnActivated(EventArgs e)
     {
-        SetCoreWindowVisible();
         SetCoreWindowActivation();
         base.OnActivated(e);
     }
@@ -49,15 +46,9 @@ public class CoreUIHostWindow : Form
         base.OnDeactivate(e);
     }
 
-    protected override void OnResizeBegin(EventArgs e)
-    {
-        SetCoreWindowParent();
-        base.OnResizeBegin(e);
-    }
-
     protected override void OnClientSizeChanged(EventArgs e)
     {
-        AsyncCoreWindowRect();
+        AsyncCoreWindowSize();
         base.OnClientSizeChanged(e);
     }
 
@@ -80,12 +71,9 @@ public class CoreUIHostWindow : Form
 
     protected bool InitializeWin32CoreWindow()
     {
-        if (CoreWindow is not null)
-        {
-            Win32CoreWindow = new Win32Window(CoreWindow.GetWindowHandle());
-            return true;
-        }
-        return false;
+        if (CoreWindow is null) return false;
+        Win32CoreWindow = new Win32Window(CoreWindow.GetWindowHandle());
+        return true;
     }
 
     protected IWin32Window? Win32CoreWindow { get; private set; }
@@ -97,11 +85,9 @@ public class CoreUIHostWindow : Form
         if (!Win32CoreWindow.IsParent(this)) Win32CoreWindow.SetParent(this);
     }
 
-    protected void AsyncCoreWindowRect()
-        => Win32CoreWindow?.SetRectangle(new(default, ClientSize));
+    protected virtual void AsyncCoreWindowSize() { }
 
-    protected void SetCoreWindowActivation(bool activate = true)
-        => Win32CoreWindow?.SendMessage(Messages.WM_ACTIVATE, activate ? Messages.WA_CLICKACTIVE : Messages.WA_INACTIVE, default);
+    protected virtual void SetCoreWindowActivation(bool activate = true) { }
 
     protected void SetCoreWindowVisible()
         => Win32CoreWindow?.ShowAsync(false);

@@ -15,4 +15,6 @@ internal static class Messages
     internal const uint
         WA_CLICKACTIVE = 2U,
         WA_INACTIVE = 0U;
+
+    internal const uint SIZE_RESTORED = 0U;
 }

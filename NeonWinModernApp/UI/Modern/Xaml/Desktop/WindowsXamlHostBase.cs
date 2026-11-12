@@ -97,7 +97,9 @@ public abstract partial class WindowsXamlHostBase : ContainerControl
     protected override void CreateHandle()
     {
         ControlDpiAwarenessHelper.AdjustControlDpiAwarenessForCurrentThread(this);
+        shouldActivateCoreWindow = true;
         base.CreateHandle();
+        shouldActivateCoreWindow = false;
     }
 
     protected override void OnHandleCreated(EventArgs e)
@@ -106,7 +108,7 @@ public abstract partial class WindowsXamlHostBase : ContainerControl
         {
             windowXamlSource.AttachToWindow(Handle);
             InitializeXamlSourceWin32Window();
-            AsyncXamlSourceRect();
+            AsyncXamlSourceSize();
             // Set window style required by container control to support Focus and background refresh
             if (XamlSourceWin32Window?.SetLong(WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int)(WINDOW_EX_STYLE.WS_EX_CONTROLPARENT | WINDOW_EX_STYLE.WS_EX_LAYERED)) == default)
                 throw new Win32Exception();
@@ -119,7 +121,7 @@ public abstract partial class WindowsXamlHostBase : ContainerControl
     /// <summary>
     /// Sets XAML window size using dimensions of the host control
     /// </summary>
-    protected void AsyncXamlSourceRect()
+    protected void AsyncXamlSourceSize()
     {
         XamlSourceWin32Window?.SetRectangle(new(default, new(Width, Height)));
         XamlSourceWin32Window?.SetZOrder(new Win32Window());

@@ -1,5 +1,7 @@
-﻿using NeonWindows.ApplicationModel;
+﻿using NeonWindows.ABI.UI.Messaging;
+using NeonWindows.ApplicationModel;
 using NeonWindows.ApplicationModel.Modern.Core;
+using NeonWindows.UI.Messaging;
 using NeonWindows.UI.Modern.Desktop.Core;
 using System;
 using System.Threading;
@@ -51,7 +53,7 @@ public class DesktopXamlWindow : CoreUIHostWindow
         if (_current != null) throw new NotSupportedException();
         windowsXamlHost = new();
         CoreWindow = CoreWindow.GetForCurrentThread();
-        InitializeCoreUIFramework();
+        //InitializeCoreUIFramework();
         InitializeWin32CoreWindow();
         CoreApplicationView = CoreApplication2.CreateNonImmersiveView();
         SetXamlHostControl(true);
@@ -62,6 +64,16 @@ public class DesktopXamlWindow : CoreUIHostWindow
     protected void SetXamlHostControl(bool initialize = false)
     {
         if (initialize) Controls.Add(windowsXamlHost);
+        windowsXamlHost.AutoSize = true;
         windowsXamlHost.Dock = DockStyle.Fill;
     }
+
+    /// <summary>
+    /// Reference: https://github.com/microsoft/microsoft-ui-xaml/issues/3577
+    /// ContentDialogs don't resize themselves when the XAML island resizes.
+    /// However, if we manually resize our CoreWindow, that'll actually
+    /// trigger a resize of the ContentDialog.
+    /// </summary>
+    protected override void AsyncCoreWindowSize()
+        => Win32CoreWindow?.SendMessage(Messages.WM_SIZE, Messages.SIZE_RESTORED, (nint)IntDataHelper.MakeLong((ushort)Width, (ushort)Height));
 }

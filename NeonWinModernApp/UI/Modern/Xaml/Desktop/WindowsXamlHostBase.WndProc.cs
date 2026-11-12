@@ -11,6 +11,8 @@ namespace NeonWindows.UI.Modern.Xaml.Desktop;
 
 public unsafe partial class WindowsXamlHostBase
 {
+    protected bool shouldActivateCoreWindow = false;
+
     /// <summary>
     /// Draw a placeholder Rectangle with 'Xaml Content' in Design mode
     /// </summary>
@@ -71,21 +73,15 @@ public unsafe partial class WindowsXamlHostBase
     protected override void WndProc(ref Message m)
     {
         if (ComponentHelper.IsDesigntime) base.WndProc(ref m);
-
         switch (m.Msg)
         {
-            // AsyncXamlSourceRect must always be called after base.WndProc
+            // AsyncXamlSourceSize must always be called after base.WndProc
             case (int)Messages.WM_MOVE:
             case (int)Messages.WM_SIZE:
             case (int)Messages.WM_WINDOWPOSCHANGED:
                 base.WndProc(ref m);
-                AsyncXamlSourceRect();
-                // Reference: https://github.com/microsoft/microsoft-ui-xaml
-                //            /issues/3577
-                // ContentDialogs don't resize themselves when the XAML island
-                // resizes. However, if we manually resize our CoreWindow, that'll
-                // actually trigger a resize of the ContentDialog.
-                CoreWindowWin32Helper.SendMessageToCoreWindowForCurrentThread((uint)m.Msg, (nuint)m.WParam, m.LParam);
+                AsyncXamlSourceSize();
+                if (shouldActivateCoreWindow) CoreWindowWin32Helper.SendMessageToCoreWindowForCurrentThread((uint)m.Msg, (nuint)m.WParam, m.LParam);
                 break;
             // BUGBUG: Focus integration with Windows.UI.Xaml.Hosting.XamlSourceFocusNavigation is
             // skipping over nested elements. Update or move back to Windows.Xaml.Input.FocusManager.

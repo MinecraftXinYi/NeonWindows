@@ -1,7 +1,10 @@
-﻿using NeonWindows.ApplicationModel;
+﻿using NeonWindows.ABI.UI.Messaging;
+using NeonWindows.ApplicationModel;
 using NeonWindows.ApplicationModel.Modern.Core;
+using NeonWindows.UI.Messaging;
 using NeonWindows.UI.Modern.Core;
 using NeonWindows.UI.Modern.Desktop.Core;
+using NeonWindows.UI.Windowing;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -65,9 +68,27 @@ public class CoreAppViewWindow : CoreUIHostWindow
         InitializeCoreUIFramework();
         InitializeWin32CoreWindow();
         SetCoreWindowParent(true);
-        AsyncCoreWindowRect();
+        AsyncCoreWindowSize();
         CoreApplicationView = CoreApplication2.CreateNonImmersiveView();
         AsyncCoreWindowTitle();
         _current = this;
     }
+
+    protected override void OnActivated(EventArgs e)
+    {
+        SetCoreWindowVisible();
+        base.OnActivated(e);
+    }
+
+    protected override void OnResizeBegin(EventArgs e)
+    {
+        SetCoreWindowParent();
+        base.OnResizeBegin(e);
+    }
+
+    protected override void AsyncCoreWindowSize()
+        => Win32CoreWindow?.SetRectangle(new(default, ClientSize));
+
+    protected override void SetCoreWindowActivation(bool activate = true)
+        => Win32CoreWindow?.SendMessage(Messages.WM_ACTIVATE, activate ? Messages.WA_CLICKACTIVE : Messages.WA_INACTIVE, default);
 }

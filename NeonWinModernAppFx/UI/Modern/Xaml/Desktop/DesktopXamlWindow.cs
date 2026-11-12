@@ -1,9 +1,8 @@
-﻿using NeonWindows.ApplicationModel;
+﻿using NeonWindows.ABI.UI.Messaging;
+using NeonWindows.ApplicationModel;
 using NeonWindows.ApplicationModel.Modern.Core;
 using NeonWindows.UI.Messaging;
 using NeonWindows.UI.Modern.Desktop.Core;
-using NeonWindows.UI.Modern.Xaml.Hosting;
-using NeonWindows.UI.Windowing;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,28 +10,17 @@ using System.Windows.Forms;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Hosting;
 
 namespace NeonWindows.UI.Modern.Xaml.Desktop;
 
-public unsafe class DesktopXamlWindow : CoreUIHostWindow
+public class DesktopXamlWindow : CoreUIHostWindow
 {
-    //protected readonly WindowsXamlHost windowsXamlHost;
-
-    //public UIElement Content
-    //{
-    //    get => windowsXamlHost.Content;
-    //    set => windowsXamlHost.Content = value;
-    //}
-
-    protected readonly DesktopWindowXamlSource windowXamlSource;
-
-    protected readonly PreMessageListener preMessageListener;
+    protected readonly WindowsXamlHost windowsXamlHost;
 
     public UIElement Content
     {
-        get => windowXamlSource.Content;
-        set => windowXamlSource.Content = value;
+        get => windowsXamlHost.Content;
+        set => windowsXamlHost.Content = value;
     }
 
     public override CoreWindow CoreWindow { get; }
@@ -51,7 +39,7 @@ public unsafe class DesktopXamlWindow : CoreUIHostWindow
         {
             DesktopXamlWindow window = new();
             taskCompletionSource.SetResult(window);
-            window.Dispatcher.ProcessEvents(CoreProcessEventsOption.ProcessUntilQuit);
+            global::System.Windows.Forms.Application.Run(window);
         });
         wndThread.Start();
         return taskCompletionSource.Task;
@@ -63,91 +51,29 @@ public unsafe class DesktopXamlWindow : CoreUIHostWindow
     public DesktopXamlWindow()
     {
         if (_current != null) throw new NotSupportedException();
-        windowXamlSource = new();
-        //windowsXamlHost = new();
+        windowsXamlHost = new();
         CoreWindow = CoreWindow.GetForCurrentThread();
-        InitializeCoreUIFramework();
+        //InitializeCoreUIFramework();
         InitializeWin32CoreWindow();
-        SetCoreWindowParent(true);
-        AsyncCoreWindowRect();
         CoreApplicationView = CoreApplication2.CreateNonImmersiveView();
-        SetXamlSourceParent(true);
-        InitializeXamlSourceWin32Window();
-        AsyncXamlSourceRect();
-        preMessageListener = new();
-        SetXamlSourceMessagePreProcessing(true);
-        //SetXamlHostControl(true);
+        SetXamlHostControl(true);
         AsyncCoreWindowTitle();
         _current = this;
     }
 
-    //protected void SetXamlHostControl(bool initialize = false)
-    //{
-    //    if (initialize) Controls.Add(windowsXamlHost);
-    //    windowsXamlHost.Dock = DockStyle.Fill;
-    //}
-
-    protected override void OnActivated(EventArgs e)
+    protected void SetXamlHostControl(bool initialize = false)
     {
-        base.OnActivated(e);
-        SetXamlSourceVisible();
+        if (initialize) Controls.Add(windowsXamlHost);
+        windowsXamlHost.AutoSize = true;
+        windowsXamlHost.Dock = DockStyle.Fill;
     }
 
-    protected override void OnResizeBegin(EventArgs e)
-    {
-        base.OnResizeBegin(e);
-        SetXamlSourceParent();
-    }
-
-    protected override void OnClientSizeChanged(EventArgs e)
-    {
-        base.OnClientSizeChanged(e);
-        AsyncXamlSourceRect();
-    }
-
-    protected bool InitializeXamlSourceWin32Window()
-    {
-        if (windowXamlSource is not null)
-        {
-            XamlSourceWin32Window = new Win32Window(windowXamlSource.GetWindowHandle());
-            return true;
-        }
-        return false;
-    }
-
-    protected IWin32Window? XamlSourceWin32Window { get; private set; }
-
-    protected void SetXamlSourceParent(bool initialize = false)
-    {
-        if (initialize) windowXamlSource?.AttachToWindow(Handle);
-        else
-        {
-            if (XamlSourceWin32Window is null) return;
-            if (!XamlSourceWin32Window.IsParent(this)) XamlSourceWin32Window.SetParent(this);
-        }
-    }
-
-    protected void SetXamlSourceMessagePreProcessing(bool initialize = false)
-    {
-        if (initialize)
-        {
-            SuspendLayout();
-            preMessageListener.TabIndex = 0;
-            Controls.Add(preMessageListener);
-            ResumeLayout(false);
-        }
-        preMessageListener.OnPreProcessMessage += XamlSourcePreTranslateMessage;
-    }
-
-    protected void AsyncXamlSourceRect()
-        => XamlSourceWin32Window?.SetRectangle(new(default, ClientSize));
-
-    protected void SetXamlSourceVisible()
-        => XamlSourceWin32Window?.ShowAsync(false);
-
-    protected bool XamlSourcePreTranslateMessage(ref Message message)
-    {
-        Message msg = message;
-        return windowXamlSource?.PreTranslateMessage(&msg) ?? false;
-    }
+    /// <summary>
+    /// Reference: https://github.com/microsoft/microsoft-ui-xaml/issues/3577
+    /// ContentDialogs don't resize themselves when the XAML island resizes.
+    /// However, if we manually resize our CoreWindow, that'll actually
+    /// trigger a resize of the ContentDialog.
+    /// </summary>
+    protected override void AsyncCoreWindowSize()
+        => Win32CoreWindow?.SendMessage(Messages.WM_SIZE, Messages.SIZE_RESTORED, (nint)IntDataHelper.MakeLong((ushort)Width, (ushort)Height));
 }

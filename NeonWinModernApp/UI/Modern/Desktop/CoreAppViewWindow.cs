@@ -68,7 +68,7 @@ public class CoreAppViewWindow : CoreUIHostWindow
         InitializeCoreUIFramework();
         InitializeWin32CoreWindow();
         SetCoreWindowParent(true);
-        AsyncCoreWindowRect();
+        AsyncCoreWindowSize();
         CoreApplicationView = CoreApplication2.CreateNonImmersiveView();
         AsyncCoreWindowTitle();
         _current = this;
@@ -86,7 +86,7 @@ public class CoreAppViewWindow : CoreUIHostWindow
         base.OnResizeBegin(e);
     }
 
-    protected override void AsyncCoreWindowRect()
+    protected override void AsyncCoreWindowSize()
         => Win32CoreWindow?.SetRectangle(new(default, ClientSize));
 
     protected override void SetCoreWindowActivation(bool activate = true)
