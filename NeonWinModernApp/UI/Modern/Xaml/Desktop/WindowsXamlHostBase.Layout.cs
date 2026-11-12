@@ -23,7 +23,7 @@ public partial class WindowsXamlHostBase
     /// <returns>preferred size</returns>
     public override Size GetPreferredSize(Size proposedSize)
     {
-        if (DesignMode) return Size;
+        if (ComponentHelper.IsDesigntime) return Size;
         if (ContentInternal is not null)
         {
             double proposedWidth = proposedSize.Width;
@@ -66,7 +66,7 @@ public partial class WindowsXamlHostBase
     /// </summary>
     private void OnContentSizeChanged(object sender, object e)
     {
-        if (DesignMode) return;
+        if (ComponentHelper.IsDesigntime) return;
         // XAML content has changed. Re-run Windows.Forms.Control Layout if parent form is
         // set to AutoSize.
         if (AutoSize)
@@ -93,7 +93,7 @@ public partial class WindowsXamlHostBase
     /// </summary>
     private void OnWindowXamlHostSizeChanged(object? sender, EventArgs e)
     {
-        if (DesignMode) return;
+        if (ComponentHelper.IsDesigntime) return;
         if (AutoSize && ContentInternal is not null)
         {
             // XamlContenHost Control.Size has changed. XAML must perform an Arrange pass.

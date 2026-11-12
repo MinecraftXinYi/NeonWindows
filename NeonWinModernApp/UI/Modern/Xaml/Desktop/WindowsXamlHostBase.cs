@@ -35,11 +35,7 @@ public abstract partial class WindowsXamlHostBase : ContainerControl
     public WindowsXamlHostBase()
     {
         // Return immediately if control is instantiated by the Visual Studio Designer
-        // https://stackoverflow.com/questions/1166226/detecting-design-mode-from-a-controls-constructor
-        if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
-        {
-            return;
-        }
+        if (ComponentHelper.IsDesigntime) return;
 
         InitializeControlStyles();
 
@@ -67,7 +63,7 @@ public abstract partial class WindowsXamlHostBase : ContainerControl
         get => _contentInternal;
         set
         {
-            if (!DesignMode)
+            if (!ComponentHelper.IsDesigntime)
             {
                 if (value == ContentInternal) return;
                 FrameworkElement? newFrameworkElement = value as FrameworkElement, oldFrameworkElement = ContentInternal as FrameworkElement;
@@ -76,7 +72,7 @@ public abstract partial class WindowsXamlHostBase : ContainerControl
                 windowXamlSource.Content = value;
                 if (newFrameworkElement is not null) newFrameworkElement.SizeChanged += OnContentSizeChanged;
                 PerformLayout();
-                ContentChanged?.Invoke(this, new EventArgs());
+                ContentChanged?.Invoke(this, new());
             }
             else
             {
@@ -106,28 +102,27 @@ public abstract partial class WindowsXamlHostBase : ContainerControl
 
     protected override void OnHandleCreated(EventArgs e)
     {
-        base.OnHandleCreated(e);
-
-        if (!DesignMode)
+        if (!ComponentHelper.IsDesigntime)
         {
-            // Attach window to DesktopWindowXamSource as a render target
             windowXamlSource.AttachToWindow(Handle);
             InitializeXamlSourceWin32Window();
-
+            AsyncXamlSourceRect();
             // Set window style required by container control to support Focus and background refresh
             if (XamlSourceWin32Window?.SetLong(WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int)(WINDOW_EX_STYLE.WS_EX_CONTROLPARENT | WINDOW_EX_STYLE.WS_EX_LAYERED)) == default)
-            {
-                throw new InvalidOperationException("WindowsXamlHostBase::OnHandleCreated: Failed to set WS_EX_CONTROLPARENT and WS_EX_LAYERED on control window.");
-            }
-
-            if (ContentInternal is not null)
-            {
-                windowXamlSource.Content = ContentInternal;
-                //ChildInternal.SetWrapper(this);
-            }
-
+                throw new Win32Exception();
+            if (ContentInternal is not null) windowXamlSource.Content = ContentInternal;
             UpdateDpiScalingFactor();
         }
+        base.OnHandleCreated(e);
+    }
+
+    /// <summary>
+    /// Sets XAML window size using dimensions of the host control
+    /// </summary>
+    protected void AsyncXamlSourceRect()
+    {
+        XamlSourceWin32Window?.SetRectangle(new(default, new(Width, Height)));
+        XamlSourceWin32Window?.SetZOrder(new Win32Window());
     }
 
     /// <summary>
