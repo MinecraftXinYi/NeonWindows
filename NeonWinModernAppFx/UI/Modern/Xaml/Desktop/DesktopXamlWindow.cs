@@ -4,6 +4,7 @@ using NeonWindows.ApplicationModel.Modern.Core;
 using NeonWindows.UI.Messaging;
 using NeonWindows.UI.Modern.Desktop.Core;
 using System;
+using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -75,5 +76,8 @@ public class DesktopXamlWindow : CoreUIHostWindow
     /// trigger a resize of the ContentDialog.
     /// </summary>
     protected override void AsyncCoreWindowSize()
-        => Win32CoreWindow?.SendMessage(Messages.WM_SIZE, Messages.SIZE_RESTORED, (nint)IntDataHelper.MakeLong((ushort)Width, (ushort)Height));
+    {
+        Size clientSize = ClientSize;
+        Win32CoreWindow?.SendMessage(Messages.WM_SIZE, Messages.SIZE_RESTORED, (nint)IntDataHelper.MakeLong((ushort)clientSize.Width, (ushort)clientSize.Height));
+    }
 }

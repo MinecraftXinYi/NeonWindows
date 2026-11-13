@@ -30,7 +30,7 @@ public class CoreUIHostWindow : Form
     protected override void CreateHandle()
     {
         ModernDpiAwareness.SetThreadPerMonitorDpiAware(out _);
-        ControlDpiAwarenessHelper.AdjustControlDpiAwarenessForCurrentThread(this);
+        WinFormsDpiAwareness.AdjustControlDpiAwarenessForCurrentThread(this);
         base.CreateHandle();
     }
 

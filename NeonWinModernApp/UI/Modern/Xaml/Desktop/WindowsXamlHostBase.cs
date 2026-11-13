@@ -1,6 +1,6 @@
 ﻿using NeonWindows.ABI.UI.Windowing;
-using NeonWindows.UI.Modern.Desktop.Core;
 using NeonWindows.UI.Modern.Xaml.Hosting;
+using NeonWindows.UI.Scaling;
 using NeonWindows.UI.Windowing;
 using System;
 using System.ComponentModel;
@@ -96,7 +96,7 @@ public abstract partial class WindowsXamlHostBase : ContainerControl
 
     protected override void CreateHandle()
     {
-        ControlDpiAwarenessHelper.AdjustControlDpiAwarenessForCurrentThread(this);
+        WinFormsDpiAwareness.AdjustControlDpiAwarenessForCurrentThread(this);
         shouldActivateCoreWindow = true;
         base.CreateHandle();
         shouldActivateCoreWindow = false;

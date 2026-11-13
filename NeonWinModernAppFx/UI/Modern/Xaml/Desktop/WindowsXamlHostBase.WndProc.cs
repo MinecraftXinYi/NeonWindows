@@ -1,11 +1,12 @@
 ﻿using NeonWindows.ABI.UI.Messaging;
-using NeonWindows.UI.Modern.Desktop.Core;
+using NeonWindows.UI.Messaging;
+using NeonWindows.UI.Modern.Core;
 using NeonWindows.UI.Modern.Xaml.Hosting;
 using NeonWindows.UI.Windowing;
 using System.ComponentModel;
 using System.Drawing;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using Windows.UI.Core;
 
 namespace NeonWindows.UI.Modern.Xaml.Desktop;
 
@@ -82,7 +83,16 @@ public unsafe partial class WindowsXamlHostBase
             case (int)Messages.WM_WINDOWPOSCHANGED:
                 base.WndProc(ref m);
                 AsyncXamlSourceSize();
-                if (shouldActivateCoreWindow) CoreWindowWin32Helper.SendMessageToCoreWindowForCurrentThread((uint)m.Msg, (nuint)(nint)m.WParam, m.LParam);
+                if (shouldActivateCoreWindow)
+                {
+                    CoreWindow coreWindow = CoreWindow.GetForCurrentThread();
+                    if (coreWindow is not null)
+                    {
+                        IWin32Window win32CoreWindow = new Win32Window(coreWindow.GetWindowHandle());
+                        Rectangle coreWindowRect = win32CoreWindow.GetRectangle();
+                        win32CoreWindow.SendMessage(Messages.WM_SIZE, Messages.SIZE_RESTORED, (nint)IntDataHelper.MakeLong((ushort)coreWindowRect.Width, (ushort)coreWindowRect.Height));
+                    }
+                }
                 break;
             // BUGBUG: Focus integration with Windows.UI.Xaml.Hosting.XamlSourceFocusNavigation is
             // skipping over nested elements. Update or move back to Windows.Xaml.Input.FocusManager.

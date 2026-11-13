@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using Windows.Win32;
+using Windows.Win32.Foundation;
 using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace NeonWindows.UI.Windowing;
@@ -18,6 +19,18 @@ public static class Win32WindowExtensions
 
     public static bool SetParent(this IWin32Window window, IWin32Window parent)
         => !PInvoke.SetParent(new(window.Handle), new(parent.Handle)).IsNull;
+
+    public static Rectangle GetRectangle(this IWin32Window window)
+    {
+        PInvoke.GetWindowRect(new(window.Handle), out RECT lpRect);
+        return lpRect;
+    }
+
+    public static Size GetClientSize(this IWin32Window window)
+    {
+        PInvoke.GetClientRect(new(window.Handle), out RECT lpRect);
+        return lpRect.Size;
+    }
 
     public static bool SetRectangle(this IWin32Window window, Rectangle rectangle)
         => PInvoke.SetWindowPos(new(window.Handle), default, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height, SET_WINDOW_POS_FLAGS.SWP_NOZORDER | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE);

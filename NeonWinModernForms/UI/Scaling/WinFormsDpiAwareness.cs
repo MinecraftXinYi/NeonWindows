@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NeonWindows.UI.Windowing;
+using System;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -6,6 +7,9 @@ namespace NeonWindows.UI.Scaling;
 
 public static class WinFormsDpiAwareness
 {
+    public static void AdjustControlDpiAwarenessForCurrentThread(Control control)
+        => SetDpiAwarenessForNativeWindow(WinFormsNativeWindowInterop.GetNativeWindowForControl(control), AppDpiAwareness2.CurrentThreadDpiAwarenessMode);
+
     public static void SetDpiAwarenessForNativeWindow(NativeWindow nativeWindow, DpiAwarenessMode mode)
     {
         FieldInfo fieldInfo = GetFieldInfo_DpiContext_NativeWindow(out _, out FieldInfo[] fieldTypeStatics);
