@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace NeonWindows.UI.Composition.Desktop;
+namespace NeonWindows.UI.Desktop;
 
-public abstract class CompositionInteropControl : ContainerControl
+public abstract class ContentHostControl : ContainerControl
 {
     [Browsable(false)]
     [EditorBrowsable(EditorBrowsableState.Never)]

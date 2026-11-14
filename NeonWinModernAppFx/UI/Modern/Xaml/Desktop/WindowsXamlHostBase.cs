@@ -1,6 +1,6 @@
 ﻿using NeonWindows.ABI.UI.Messaging;
 using NeonWindows.ABI.UI.Windowing;
-using NeonWindows.UI.Composition.Desktop;
+using NeonWindows.UI.Desktop;
 using NeonWindows.UI.Messaging;
 using NeonWindows.UI.Modern.Core;
 using NeonWindows.UI.Modern.Xaml.Hosting;
@@ -20,7 +20,7 @@ namespace NeonWindows.UI.Modern.Xaml.Desktop;
 /// <summary>
 /// WindowsXamlHostBase hosts UWP XAML content inside Windows Forms
 /// </summary>
-public unsafe abstract class WindowsXamlHostBase : CompositionInteropControl
+public unsafe abstract class WindowsXamlHostBase : ContentHostControl
 {
     /// <summary>
     /// DesktopWindowXamlSource instance
