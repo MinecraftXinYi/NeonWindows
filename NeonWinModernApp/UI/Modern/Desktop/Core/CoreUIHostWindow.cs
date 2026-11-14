@@ -10,11 +10,11 @@ using Windows.UI.Core;
 
 namespace NeonWindows.UI.Modern.Desktop.Core;
 
-public class CoreUIHostWindow : Form
+public abstract class CoreUIHostWindow : Form
 {
-    public virtual CoreWindow CoreWindow { get; } = null!;
+    public abstract CoreWindow CoreWindow { get; }
 
-    public virtual CoreApplicationView CoreApplicationView { get; } = null!;
+    public abstract CoreApplicationView CoreApplicationView { get; }
 
     public virtual CoreDispatcher Dispatcher => CoreWindow.Dispatcher;
 

@@ -1,5 +1,6 @@
 ﻿using NeonWindows.ABI.UI.Messaging;
 using NeonWindows.ABI.UI.Windowing;
+using NeonWindows.UI.Composition.Desktop;
 using NeonWindows.UI.Messaging;
 using NeonWindows.UI.Modern.Core;
 using NeonWindows.UI.Modern.Xaml.Hosting;
@@ -8,7 +9,6 @@ using NeonWindows.UI.Windowing;
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -20,7 +20,7 @@ namespace NeonWindows.UI.Modern.Xaml.Desktop;
 /// <summary>
 /// WindowsXamlHostBase hosts UWP XAML content inside Windows Forms
 /// </summary>
-public abstract unsafe partial class WindowsXamlHostBase : ContainerControl
+public unsafe abstract class WindowsXamlHostBase : CompositionInteropControl
 {
     /// <summary>
     /// DesktopWindowXamlSource instance
@@ -276,6 +276,28 @@ public abstract unsafe partial class WindowsXamlHostBase : ContainerControl
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Draw a placeholder Rectangle with 'Xaml Content' in Design mode
+    /// </summary>
+    /// <param name="e">PaintEventArgs</param>
+    protected override void PaintOnDesignMode(PaintEventArgs e)
+    {
+        // Show 'XAML Content' with a gray Rectangle placeholder when running in the Designer
+        // Gray background Rectangle
+        e.Graphics.FillRectangle(new SolidBrush(Color.DarkGray), ClientRectangle);
+        // Text
+        string text = "XAML Content";
+        using Font font1 = new("Arial", 12, FontStyle.Bold, GraphicsUnit.Point);
+        StringFormat stringFormat = new()
+        {
+            Alignment = StringAlignment.Center,
+            LineAlignment = StringAlignment.Center
+        };
+        // Draw
+        e.Graphics.DrawString(text, font1, Brushes.White, ClientRectangle, stringFormat);
+        e.Graphics.DrawRectangle(Pens.Black, ClientRectangle);
     }
 
     /// <summary>
