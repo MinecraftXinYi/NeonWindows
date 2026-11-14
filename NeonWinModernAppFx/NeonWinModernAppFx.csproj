@@ -18,10 +18,13 @@
 	  <Compile Update="UI\Modern\Desktop\CoreAppViewWindow.cs">
 	    <SubType>Form</SubType>
 	  </Compile>
-	  <Compile Update="UI\Modern\Desktop\Core\CoreUIHostWindow.cs">
+	  <Compile Update="UI\Modern\Desktop\Core\CoreUIHostWindow2.cs">
 	    <SubType>Form</SubType>
 	  </Compile>
 	  <Compile Update="UI\Modern\Xaml\Desktop\DesktopXamlWindow.cs">
+	    <SubType>Form</SubType>
+	  </Compile>
+	  <Compile Update="UI\Modern\Xaml\Desktop\MinXamlWindow.cs">
 	    <SubType>Form</SubType>
 	  </Compile>
 	</ItemGroup>

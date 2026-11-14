@@ -1,4 +1,5 @@
 ﻿using NeonWindows.ApplicationModel;
+using NeonWindows.UI.Modern.Xaml.Desktop;
 using NeonWindows.UI.Scaling;
 using NWBXamlHostTest;
 using System.Threading;
@@ -10,8 +11,16 @@ App app = new();
 Thread thread = STAThreadingModel.CreateSTAThread(() =>
 {
     WindowsXamlManager xamlManager = WindowsXamlManager.InitializeForCurrentThread();
-    XamlHostForm form = new();
-    form.Content = new MainPage();
+    XamlHostForm form = new()
+    {
+        Content = new MainPage()
+    };
+    MinXamlWindow minXamlWindow = new(new MainPage())
+    {
+        Text = "Min Xaml",
+        Size = new(150, 150)
+    };
+    minXamlWindow.Show();
     System.Windows.Forms.Application.Run(form);
 });
 thread.Start();

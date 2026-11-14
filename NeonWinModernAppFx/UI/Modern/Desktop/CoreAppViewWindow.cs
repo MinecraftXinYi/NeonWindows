@@ -13,16 +13,13 @@ using Windows.UI.Core;
 
 namespace NeonWindows.UI.Modern.Desktop;
 
-public class CoreAppViewWindow : CoreUIHostWindow
+public class CoreAppViewWindow : CoreUIHostWindow2
 {
     public override CoreWindow CoreWindow { get; }
 
     public override CoreApplicationView CoreApplicationView { get; }
 
-    public static CoreAppViewWindow? Current => _current;
-
-    [ThreadStatic]
-    private static CoreAppViewWindow? _current;
+    public static CoreAppViewWindow? Current => _current as CoreAppViewWindow;
 
     public static Task<CoreAppViewWindow> CreateOnNewThread(IFrameworkViewSource frameworkViewSource)
     {
@@ -63,7 +60,6 @@ public class CoreAppViewWindow : CoreUIHostWindow
 
     public CoreAppViewWindow()
     {
-        if (_current != null) throw new NotSupportedException();
         CoreWindow = CoreWindowFactory.CreateImmersiveHostedCoreWindow(string.Empty, new(), Handle);
         InitializeCoreUIFramework();
         InitializeWin32CoreWindow();

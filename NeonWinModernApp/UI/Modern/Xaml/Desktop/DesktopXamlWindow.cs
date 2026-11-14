@@ -3,7 +3,6 @@ using NeonWindows.ApplicationModel;
 using NeonWindows.ApplicationModel.Modern.Core;
 using NeonWindows.UI.Messaging;
 using NeonWindows.UI.Modern.Desktop.Core;
-using System;
 using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,7 +13,7 @@ using Windows.UI.Xaml;
 
 namespace NeonWindows.UI.Modern.Xaml.Desktop;
 
-public class DesktopXamlWindow : CoreUIHostWindow
+public class DesktopXamlWindow : CoreUIHostWindow2
 {
     protected readonly WindowsXamlHost windowsXamlHost;
 
@@ -28,10 +27,7 @@ public class DesktopXamlWindow : CoreUIHostWindow
 
     public override CoreApplicationView CoreApplicationView { get; }
 
-    public static DesktopXamlWindow? Current => _current;
-
-    [ThreadStatic]
-    private static DesktopXamlWindow? _current;
+    public static DesktopXamlWindow? Current => _current as DesktopXamlWindow;
 
     public static Task<DesktopXamlWindow> CreateOnNewThread()
     {
@@ -51,20 +47,19 @@ public class DesktopXamlWindow : CoreUIHostWindow
 
     public DesktopXamlWindow()
     {
-        if (_current != null) throw new NotSupportedException();
         windowsXamlHost = new();
         CoreWindow = CoreWindow.GetForCurrentThread();
         //InitializeCoreUIFramework();
         InitializeWin32CoreWindow();
         CoreApplicationView = CoreApplication2.CreateNonImmersiveView();
-        SetXamlHostControl(true);
+        SetXamlHostControl();
         AsyncCoreWindowTitle();
         _current = this;
     }
 
-    protected void SetXamlHostControl(bool initialize = false)
+    protected void SetXamlHostControl()
     {
-        if (initialize) Controls.Add(windowsXamlHost);
+        if (!Controls.Contains(windowsXamlHost)) Controls.Add(windowsXamlHost);
         windowsXamlHost.AutoSize = true;
         windowsXamlHost.Dock = DockStyle.Fill;
     }
