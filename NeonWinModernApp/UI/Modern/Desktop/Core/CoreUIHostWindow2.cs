@@ -64,11 +64,6 @@ public abstract class CoreUIHostWindow2 : CoreUIHostWindow
         base.OnTextChanged(e);
     }
 
-    protected override void OnPaintBackground(PaintEventArgs e)
-    {
-        return;
-    }
-
     protected void InitializeCoreUIFramework()
     {
         if (CoreWindow is not null) CoreUITextInputPatch.FixTextInputBehavioursForCoreWindow(CoreWindow);

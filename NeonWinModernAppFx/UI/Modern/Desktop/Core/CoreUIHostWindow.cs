@@ -9,4 +9,9 @@ public abstract class CoreUIHostWindow : Form
     public abstract CoreDispatcher Dispatcher { get; }
 
     public abstract DispatcherQueue DispatcherQueue { get; }
+
+    protected override void OnPaintBackground(PaintEventArgs e)
+    {
+        return;
+    }
 }
