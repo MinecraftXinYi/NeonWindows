@@ -1,4 +1,6 @@
-﻿using NeonWindows.UI.Composition;
+﻿using NeonWindows.ABI.UI.Messaging;
+using NeonWindows.UI.Composition;
+using NeonWindows.UI.Messaging;
 using NeonWindows.UI.Modern.Core;
 using NeonWindows.UI.Scaling;
 using NeonWindows.UI.Windowing;
@@ -88,7 +90,8 @@ public abstract class CoreUIHostWindow2 : CoreUIHostWindow
 
     protected virtual void AsyncCoreWindowSize() { }
 
-    protected virtual void SetCoreWindowActivation(bool activate = true) { }
+    protected void SetCoreWindowActivation(bool activate = true)
+        => Win32CoreWindow?.SendMessage(Messages.WM_ACTIVATE, activate ? Messages.WA_CLICKACTIVE : Messages.WA_INACTIVE, default);
 
     protected void SetCoreWindowVisible()
         => Win32CoreWindow?.ShowAsync(false);

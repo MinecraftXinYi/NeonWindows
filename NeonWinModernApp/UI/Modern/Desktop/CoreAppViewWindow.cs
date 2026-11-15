@@ -84,7 +84,4 @@ public class CoreAppViewWindow : CoreUIHostWindow2
 
     protected override void AsyncCoreWindowSize()
         => Win32CoreWindow?.SetRectangle(new(default, ClientSize));
-
-    protected override void SetCoreWindowActivation(bool activate = true)
-        => Win32CoreWindow?.SendMessage(Messages.WM_ACTIVATE, activate ? Messages.WA_CLICKACTIVE : Messages.WA_INACTIVE, default);
 }
