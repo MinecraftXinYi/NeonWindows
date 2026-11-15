@@ -1,7 +1,5 @@
-﻿using NeonWindows.ABI.UI.Messaging;
-using NeonWindows.ApplicationModel;
+﻿using NeonWindows.ApplicationModel;
 using NeonWindows.ApplicationModel.Modern.Core;
-using NeonWindows.UI.Messaging;
 using NeonWindows.UI.Modern.Core;
 using NeonWindows.UI.Modern.Desktop.Core;
 using NeonWindows.UI.Windowing;
