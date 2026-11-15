@@ -20,6 +20,8 @@ public abstract class CoreUIHostWindow2 : CoreUIHostWindow
 
     public override DispatcherQueue DispatcherQueue => CoreWindow.DispatcherQueue;
 
+    public static CoreUIHostWindow2? GetForCurrentThread() => _current;
+
     [ThreadStatic]
     protected static CoreUIHostWindow2? _current;
 
