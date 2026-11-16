@@ -45,12 +45,14 @@ public abstract class CoreUIHostWindow2 : CoreUIHostWindow
     protected override void OnActivated(EventArgs e)
     {
         SetCoreWindowActivation();
+        AsyncCoreWindowVisibleProperty();
         base.OnActivated(e);
     }
 
     protected override void OnDeactivate(EventArgs e)
     {
         SetCoreWindowActivation(false);
+        AsyncCoreWindowVisibleProperty();
         base.OnDeactivate(e);
     }
 
@@ -98,4 +100,7 @@ public abstract class CoreUIHostWindow2 : CoreUIHostWindow
 
     protected void AsyncCoreWindowTitle()
         => Win32CoreWindow?.SetTitle(Text);
+
+    protected void AsyncCoreWindowVisibleProperty()
+        => Win32CoreWindow?.SendMessage(Messages.WM_ICONERASEBKGND, default, Convert.ToByte(Visible && WindowState is not FormWindowState.Minimized));
 }

@@ -5,6 +5,7 @@ internal static class Messages
     internal const uint
         WM_ACTIVATE = 6U,
         WM_DPICHANGED_AFTERPARENT = 739U,
+        WM_ICONERASEBKGND = 39U,
         WM_KILLFOCUS = 8U,
         WM_MOVE = 3U,
         WM_SETFOCUS = 7U,

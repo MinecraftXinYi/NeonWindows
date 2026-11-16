@@ -17,8 +17,14 @@ namespace WinFormsPreMsgTest
 
         public override bool PreProcessMessage(ref Message msg)
         {
-            Console.WriteLine("Control" + msg.ToString());
+            Console.WriteLine("Control" + " " + msg.ToString());
             return base.PreProcessMessage(ref msg);
+        }
+
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            Console.WriteLine("Control" + " " + "VisibleChanged");
+            base.OnVisibleChanged(e);
         }
     }
 }

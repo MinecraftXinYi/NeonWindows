@@ -61,6 +61,13 @@
     </Project>
   </Folder>
   <Folder Name="/Test/LabTest/">
+    <Project Path="Test/LabTest/CoreWndVisibleTest/CoreWndVisibleTest.csproj" Id="83258b26-3c3b-4eb2-b0a0-6461f2341d0b">
+      <Platform Solution="*|Any CPU" Project="x64" />
+      <Platform Solution="*|ARM64" Project="ARM64" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+      <Deploy />
+    </Project>
     <Project Path="Test/LabTest/NWBCoreWndApiTest/NWBCoreWndApiTest.csproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
