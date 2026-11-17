@@ -49,7 +49,6 @@ public class DesktopXamlWindow : CoreUIHostWindow2
     {
         windowsXamlHost = new();
         CoreWindow = CoreWindow.GetForCurrentThread();
-        //InitializeCoreUIFramework();
         InitializeWin32CoreWindow();
         CoreApplicationView = CoreApplication2.CreateNonImmersiveView();
         SetXamlHostControl();

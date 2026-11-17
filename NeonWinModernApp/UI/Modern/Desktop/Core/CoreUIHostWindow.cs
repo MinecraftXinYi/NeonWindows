@@ -1,4 +1,7 @@
-﻿using System.Windows.Forms;
+﻿using NeonWindows.UI.Composition;
+using NeonWindows.UI.Scaling;
+using System;
+using System.Windows.Forms;
 using Windows.System;
 using Windows.UI.Core;
 
@@ -10,8 +13,25 @@ public abstract class CoreUIHostWindow : Form
 
     public abstract DispatcherQueue DispatcherQueue { get; }
 
-    protected override void OnPaintBackground(PaintEventArgs e)
+    public CoreUIHostWindow()
     {
-        return;
+        Size = DesktopWindowInitialization.ModernWindowDefaultSize;
+        MinimumSize = DesktopWindowInitialization.ModernWindowMinimumSize;
+        Text = DesktopWindowInitialization.ModernWindowDefaultTitle;
     }
+
+    protected override void CreateHandle()
+    {
+        ModernDpiAwareness.SetThreadPerMonitorDpiAware(out _);
+        WinFormsDpiAwareness.AdjustControlDpiAwarenessForCurrentThread(this);
+        base.CreateHandle();
+    }
+
+    protected override void OnHandleCreated(EventArgs e)
+    {
+        BackdropComposition.EnableHostBackdropBrush(Handle);
+        base.OnHandleCreated(e);
+    }
+
+    protected override void OnPaintBackground(PaintEventArgs e) { }
 }

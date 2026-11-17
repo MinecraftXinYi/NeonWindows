@@ -59,7 +59,7 @@ public class CoreAppViewWindow : CoreUIHostWindow2
     public CoreAppViewWindow()
     {
         CoreWindow = CoreWindowFactory.CreateImmersiveHostedCoreWindow(string.Empty, new(), Handle);
-        InitializeCoreUIFramework();
+        InitializeCoreUIInputFramework();
         InitializeWin32CoreWindow();
         SetCoreWindowParent(true);
         AsyncCoreWindowSize();

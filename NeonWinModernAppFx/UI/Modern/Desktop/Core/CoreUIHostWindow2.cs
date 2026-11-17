@@ -1,8 +1,6 @@
 ﻿using NeonWindows.ABI.UI.Messaging;
-using NeonWindows.UI.Composition;
 using NeonWindows.UI.Messaging;
 using NeonWindows.UI.Modern.Core;
-using NeonWindows.UI.Scaling;
 using NeonWindows.UI.Windowing;
 using System;
 using System.Windows.Forms;
@@ -30,16 +28,6 @@ public abstract class CoreUIHostWindow2 : CoreUIHostWindow
     public CoreUIHostWindow2()
     {
         if (_current is not null) throw new NotSupportedException();
-        Size = DesktopWindowInitialization.ModernWindowDefaultSize;
-        MinimumSize = DesktopWindowInitialization.ModernWindowMinimumSize;
-        Text = DesktopWindowInitialization.ModernWindowDefaultTitle;
-    }
-
-    protected override void CreateHandle()
-    {
-        ModernDpiAwareness.SetThreadPerMonitorDpiAware(out _);
-        WinFormsDpiAwareness.AdjustControlDpiAwarenessForCurrentThread(this);
-        base.CreateHandle();
     }
 
     protected override void OnActivated(EventArgs e)
@@ -68,10 +56,9 @@ public abstract class CoreUIHostWindow2 : CoreUIHostWindow
         base.OnTextChanged(e);
     }
 
-    protected void InitializeCoreUIFramework()
+    protected virtual void InitializeCoreUIInputFramework()
     {
         if (CoreWindow is not null) CoreUITextInputPatch.FixTextInputBehavioursForCoreWindow(CoreWindow);
-        BackdropComposition.EnableHostBackdropBrush(Handle);
     }
 
     protected bool InitializeWin32CoreWindow()
@@ -102,5 +89,5 @@ public abstract class CoreUIHostWindow2 : CoreUIHostWindow
         => Win32CoreWindow?.SetTitle(Text);
 
     protected void AsyncCoreWindowVisibleProperty()
-        => Win32CoreWindow?.SendMessage(Messages.WM_ICONERASEBKGND, default, Convert.ToByte(Visible && WindowState is not FormWindowState.Minimized));
+        => Win32CoreWindow?.SendMessage(Messages.WM_ICONERASEBKGND, default, Convert.ToByte(Visible && WindowState != FormWindowState.Minimized));
 }
