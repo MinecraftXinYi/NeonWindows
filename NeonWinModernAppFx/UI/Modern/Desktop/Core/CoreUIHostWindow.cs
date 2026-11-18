@@ -29,9 +29,15 @@ public abstract class CoreUIHostWindow : Form
 
     protected override void OnHandleCreated(EventArgs e)
     {
-        BackdropComposition.EnableHostBackdropBrush(Handle);
+        SetHostWindowCompositionAttribute();
         base.OnHandleCreated(e);
     }
 
-    protected override void OnPaintBackground(PaintEventArgs e) { }
+    protected virtual void SetHostWindowCompositionAttribute()
+        => BackdropComposition.EnableHostBackdropBrush(Handle);
+
+    protected override void OnPaintBackground(PaintEventArgs e)
+    {
+        return;
+    }
 }
