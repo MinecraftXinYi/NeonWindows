@@ -1,10 +1,9 @@
 ﻿using NeonWindows.ABI.UI.Messaging;
 using NeonWindows.ABI.UI.Windowing;
-using NeonWindows.UI.Desktop;
 using NeonWindows.UI.Messaging;
 using NeonWindows.UI.Modern.Core;
+using NeonWindows.UI.Modern.Desktop.Core;
 using NeonWindows.UI.Modern.Xaml.Hosting;
-using NeonWindows.UI.Scaling;
 using NeonWindows.UI.Windowing;
 using System;
 using System.ComponentModel;
@@ -20,7 +19,7 @@ namespace NeonWindows.UI.Modern.Xaml.Desktop;
 /// <summary>
 /// WindowsXamlHostBase hosts UWP XAML content inside Windows Forms
 /// </summary>
-public unsafe abstract class WindowsXamlHostBase : ContentHostControl
+public unsafe abstract class WindowsXamlHostBase : CoreUIHostControl
 {
     /// <summary>
     /// DesktopWindowXamlSource instance
@@ -96,7 +95,6 @@ public unsafe abstract class WindowsXamlHostBase : ContentHostControl
 
     protected override void CreateHandle()
     {
-        WinFormsDpiAwareness.AdjustControlDpiAwarenessForCurrentThread(this);
         shouldActivateCoreWindow = true;
         base.CreateHandle();
         shouldActivateCoreWindow = false;
@@ -279,26 +277,12 @@ public unsafe abstract class WindowsXamlHostBase : ContentHostControl
     }
 
     /// <summary>
-    /// Draw a placeholder Rectangle with 'Xaml Content' in Design mode
+    /// Draw a placeholder Rectangle with 'UWP XAML Content' in Design mode
     /// </summary>
     /// <param name="e">PaintEventArgs</param>
     protected override void PaintOnDesignMode(PaintEventArgs e)
-    {
-        // Show 'XAML Content' with a gray Rectangle placeholder when running in the Designer
-        // Gray background Rectangle
-        e.Graphics.FillRectangle(new SolidBrush(Color.DarkGray), ClientRectangle);
-        // Text
-        string text = "XAML Content";
-        using Font font1 = new("Arial", 12, FontStyle.Bold, GraphicsUnit.Point);
-        StringFormat stringFormat = new()
-        {
-            Alignment = StringAlignment.Center,
-            LineAlignment = StringAlignment.Center
-        };
-        // Draw
-        e.Graphics.DrawString(text, font1, Brushes.White, ClientRectangle, stringFormat);
-        e.Graphics.DrawRectangle(Pens.Black, ClientRectangle);
-    }
+        // Show 'UWP XAML Content' with a gray Rectangle placeholder when running in the Designer
+        => DefaultPaintOnDesignMode(e, new SolidBrush(Color.DarkGray), Brushes.White, "UWP XAML Content");
 
     /// <summary>
     /// Override that disposes the current instance when the parent handle has been destroyed

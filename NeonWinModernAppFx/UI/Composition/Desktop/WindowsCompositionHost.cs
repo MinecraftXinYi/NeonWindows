@@ -1,13 +1,12 @@
 ﻿using NeonWindows.System;
-using NeonWindows.UI.Desktop;
-using NeonWindows.UI.Scaling;
+using NeonWindows.UI.Modern.Desktop.Core;
 using Windows.System;
 using Windows.UI.Composition;
 using Windows.UI.Composition.Desktop;
 
 namespace NeonWindows.UI.Composition.Desktop;
 
-public class WindowsCompositionHost : ContentHostControl
+public class WindowsCompositionHost : CoreUIHostControl
 {
     public DispatcherQueue DispatcherQueue { get; }
 
@@ -27,11 +26,5 @@ public class WindowsCompositionHost : ContentHostControl
         Compositor = new();
         compositionTarget = Compositor.CreateDesktopWindowTarget(Handle, true);
         Root = Compositor.CreateContainerVisual();
-    }
-
-    protected override void CreateHandle()
-    {
-        WinFormsDpiAwareness.AdjustControlDpiAwarenessForCurrentThread(this);
-        base.CreateHandle();
     }
 }

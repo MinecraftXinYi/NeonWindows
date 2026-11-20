@@ -1,4 +1,5 @@
-﻿using NeonWindows.UI.Composition;
+﻿using NeonWindows.ABI.UI.Windowing;
+using NeonWindows.UI.Composition;
 using NeonWindows.UI.Scaling;
 using System;
 using System.Windows.Forms;
@@ -25,6 +26,16 @@ public abstract class CoreUIHostWindow : Form
         ModernDpiAwareness.SetThreadPerMonitorDpiAware(out _);
         WinFormsDpiAwareness.AdjustControlDpiAwarenessForCurrentThread(this);
         base.CreateHandle();
+    }
+
+    protected override CreateParams CreateParams
+    {
+        get
+        {
+            CreateParams cp = base.CreateParams;
+            cp.ExStyle |= (int)WINDOW_EX_STYLE.WS_EX_NOREDIRECTIONBITMAP;
+            return cp;
+        }
     }
 
     protected override void OnHandleCreated(EventArgs e)
