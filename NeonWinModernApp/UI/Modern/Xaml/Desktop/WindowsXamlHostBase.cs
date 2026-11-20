@@ -108,9 +108,8 @@ public unsafe abstract class WindowsXamlHostBase : CoreUIHostControl
             windowXamlSource.AttachToWindow(Handle);
             InitializeXamlSourceWin32Window();
             AsyncXamlSourceSize();
-            // Set window style required by container control to support Focus and background refresh
-            if (XamlSourceWin32Window?.SetLong(WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int)(WINDOW_EX_STYLE.WS_EX_CONTROLPARENT | WINDOW_EX_STYLE.WS_EX_LAYERED)) == default)
-                throw new Win32Exception();
+            // Set window style required by container control to support Focus
+            XamlSourceWin32Window?.SetLong(WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int)WINDOW_EX_STYLE.WS_EX_CONTROLPARENT);
             if (ContentInternal is not null) windowXamlSource.Content = ContentInternal;
         }
         base.OnHandleCreated(e);
